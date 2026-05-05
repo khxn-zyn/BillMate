@@ -16,6 +16,12 @@ export default function Dashboard() {
   const paid = invoices.filter(i => i.status === 'paid').reduce((s, i) => s + (i.total || 0), 0)
   const outstanding = total - paid
 
+  const handleUpgrade = async () => {
+    const response = await fetch('/api/checkout', { method: 'POST' })
+    const data = await response.json()
+    if (data.url) window.location.href = data.url
+  }
+
   return (
     <main className="min-h-screen bg-[#0a0a0f] relative overflow-hidden flex justify-center">
       <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
@@ -33,7 +39,7 @@ export default function Dashboard() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-3 gap-4 mb-6">
           <div className="bg-white/5 border border-white/10 rounded-2xl p-5">
             <p className="text-xs text-gray-500 mb-2">Total invoiced</p>
             <p className="text-2xl font-semibold text-white">${total.toFixed(2)}</p>
@@ -46,6 +52,17 @@ export default function Dashboard() {
             <p className="text-xs text-gray-500 mb-2">Outstanding</p>
             <p className="text-2xl font-semibold text-amber-400">${outstanding.toFixed(2)}</p>
           </div>
+        </div>
+
+        {/* Upgrade banner */}
+        <div className="bg-indigo-600/10 border border-indigo-500/20 rounded-2xl p-5 mb-6 flex justify-between items-center">
+          <div>
+            <p className="text-white font-medium">Upgrade to Pro</p>
+            <p className="text-gray-400 text-sm mt-1">Unlimited invoices, email sending & more</p>
+          </div>
+          <button onClick={handleUpgrade} className="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition">
+            $7/month →
+          </button>
         </div>
 
         {/* Invoice list */}
