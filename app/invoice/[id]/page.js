@@ -28,15 +28,15 @@ export default function ViewInvoice() {
     }
   }
 
-  if (!inv) return <div style={{minHeight:'100vh', background:'#0a0a0f'}} className="flex items-center justify-center text-gray-400">Invoice not found</div>
+  if (!inv) return <div style={{minHeight:'100vh', background:'#0a0a0f', display:'flex', alignItems:'center', justifyContent:'center', color:'#9ca3af'}}>Invoice not found</div>
 
   return (
-    <main style={{minHeight:'100vh', background:'#0a0a0f'}} className="p-6 relative overflow-hidden flex justify-center">
-      <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
+    <div style={{minHeight:'100vh', background:'#0a0a0f', position:'relative', overflow:'hidden', display:'flex', justifyContent:'center', padding:'24px'}}>
+      <div style={{position:'fixed', top:-200, left:'50%', transform:'translateX(-50%)', width:600, height:600, background:'rgba(99,102,241,0.1)', borderRadius:'50%', filter:'blur(120px)', pointerEvents:'none'}} />
 
-      <div className="w-full max-w-3xl px-8 py-12 relative z-10">
+      <div style={{width:'100%', maxWidth:768, paddingLeft:32, paddingRight:32, paddingTop:48, paddingBottom:48, position:'relative', zIndex:10}}>
         {/* Action buttons - hidden on print */}
-        <div className="flex justify-between items-center mb-8 print:hidden">
+        <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:32}} className="print:hidden">
           <button onClick={() => router.push('/dashboard')} className="text-sm text-gray-500 hover:text-white transition bg-transparent">
             ← Back
           </button>
@@ -149,6 +149,6 @@ export default function ViewInvoice() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   )
 }

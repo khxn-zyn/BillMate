@@ -51,7 +51,7 @@ button {
     display: none !important;
   }
 
-  main {
+  .invoice-page {
     background: white !important;
     display: block !important;
     padding: 0 !important;
