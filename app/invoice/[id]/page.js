@@ -28,10 +28,10 @@ export default function ViewInvoice() {
     }
   }
 
-  if (!inv) return <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center text-gray-400">Invoice not found</div>
+  if (!inv) return <div style={{minHeight:'100vh', background:'#0a0a0f'}} className="flex items-center justify-center text-gray-400">Invoice not found</div>
 
   return (
-    <main className="min-h-screen bg-[#0a0a0f] p-6 relative overflow-hidden flex justify-center">
+    <main style={{minHeight:'100vh', background:'#0a0a0f'}} className="p-6 relative overflow-hidden flex justify-center">
       <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="w-full max-w-3xl px-8 py-12 relative z-10">
