@@ -1,11 +1,12 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 export default function Dashboard() {
   const [invoices, setInvoices] = useState([])
   const [tab, setTab] = useState('active')
+  const [searchTerm, setSearchTerm] = useState('')
   const router = useRouter()
 
   useEffect(() => {
@@ -20,6 +21,15 @@ export default function Dashboard() {
   const activeInvoices = invoices.filter(i => i.status !== 'paid')
   const paidInvoices = invoices.filter(i => i.status === 'paid')
 
+  const filteredInvoices = useMemo(() => {
+    const list = tab === 'active' ? activeInvoices : paidInvoices
+    if (!searchTerm) return list
+    return list.filter(inv =>
+      inv.clientName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      inv.num?.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  }, [activeInvoices, paidInvoices, tab, searchTerm])
+
   const handleUpgrade = async () => {
     const response = await fetch('/api/checkout', { method: 'POST' })
     const data = await response.json()
@@ -29,107 +39,121 @@ export default function Dashboard() {
   const InvoiceRow = ({ inv }) => (
     <div
       onClick={() => router.push(`/invoice/${inv.id}`)}
-      className="flex items-center justify-between px-6 py-4 border-b border-white/5 hover:bg-white/5 transition cursor-pointer"
+      style={{display:'flex', alignItems:'center', justifyContent:'space-between', padding:'20px 24px', borderBottom:'1px solid rgba(255,255,255,0.08)', cursor:'pointer'}}
+      onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,0.03)'}
+      onMouseLeave={e => e.currentTarget.style.background='transparent'}
     >
       <div>
-        <p className="font-medium text-white text-sm">{inv.clientName}</p>
-        <p className="text-xs text-gray-500 mt-0.5">{inv.num} · {inv.date}</p>
+        <p style={{color:'white', fontWeight:600, fontSize:16}}>{inv.clientName}</p>
+        <p style={{color:'#6b7280', fontSize:13, marginTop:4}}>{inv.num} · {inv.date}</p>
       </div>
-      <div className="flex items-center gap-3">
-        <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${inv.status === 'paid' ? 'bg-green-500/20 text-green-400' : 'bg-amber-500/20 text-amber-400'}`}>
-          {inv.status === 'paid' ? 'Paid' : 'Unpaid'}
+      <div style={{display:'flex', alignItems:'center', gap:24}}>
+        <span style={{
+          fontSize:11, padding:'4px 12px', borderRadius:999, fontWeight:700,
+          background: inv.status === 'paid' ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)',
+          color: inv.status === 'paid' ? '#4ade80' : '#fbbf24'
+        }}>
+          {inv.status === 'paid' ? 'PAID' : 'UNPAID'}
         </span>
-        <span className="font-medium text-white text-sm">${inv.total.toFixed(2)}</span>
+        <span style={{color:'white', fontWeight:700, fontSize:18}}>${inv.total.toFixed(2)}</span>
       </div>
     </div>
   )
 
   return (
-    <main className="min-h-screen bg-[#0a0a0f] relative overflow-hidden flex justify-center">
-      <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
+    <div style={{minHeight:'100vh', background:'#0a0a0f', display:'flex', flexDirection:'column', alignItems:'center', padding:'60px 20px'}}>
 
-      <div className="w-full max-w-3xl px-8 py-12 relative z-10">
+      {/* Glow */}
+      <div style={{position:'fixed', top:-200, left:'50%', transform:'translateX(-50%)', width:600, height:600, background:'rgba(99,102,241,0.15)', borderRadius:'50%', filter:'blur(100px)', pointerEvents:'none'}} />
+
+      {/* All content in one fixed-width column */}
+      <div style={{width:'100%', maxWidth:560, position:'relative', zIndex:10}}>
+
         {/* Header */}
-        <div className="flex justify-between items-center mb-10">
-          <div>
-            <h1 className="text-3xl font-bold text-white">BillMate</h1>
-            <p className="text-gray-500 text-sm mt-1">Welcome back 👋</p>
-          </div>
-          <Link href="/invoice/new" className="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition">
-            + New invoice
-          </Link>
+        <div style={{textAlign:'center', marginBottom:40}}>
+          <h1 style={{fontSize:48, fontWeight:700, color:'white', letterSpacing:'-2px'}}>BillMate</h1>
+          <p style={{color:'#6b7280', fontSize:16, marginTop:8}}>Welcome back 👋</p>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-5">
-            <p className="text-xs text-gray-500 mb-2">Total invoiced</p>
-            <p className="text-2xl font-semibold text-white">${total.toFixed(2)}</p>
+        <div style={{display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:12, marginBottom:12}}>
+          <div style={{background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.1)', borderRadius:16, padding:'20px 16px', textAlign:'center'}}>
+            <p style={{color:'#6b7280', fontSize:11, fontWeight:700, textTransform:'uppercase', letterSpacing:1, marginBottom:8}}>Total</p>
+            <p style={{color:'white', fontSize:22, fontWeight:700}}>${total.toFixed(2)}</p>
           </div>
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-5">
-            <p className="text-xs text-gray-500 mb-2">Paid</p>
-            <p className="text-2xl font-semibold text-green-400">${paid.toFixed(2)}</p>
+          <div style={{background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.1)', borderRadius:16, padding:'20px 16px', textAlign:'center'}}>
+            <p style={{color:'#6b7280', fontSize:11, fontWeight:700, textTransform:'uppercase', letterSpacing:1, marginBottom:8}}>Paid</p>
+            <p style={{color:'#4ade80', fontSize:22, fontWeight:700}}>${paid.toFixed(2)}</p>
           </div>
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-5">
-            <p className="text-xs text-gray-500 mb-2">Outstanding</p>
-            <p className="text-2xl font-semibold text-amber-400">${outstanding.toFixed(2)}</p>
+          <div style={{background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.1)', borderRadius:16, padding:'20px 16px', textAlign:'center'}}>
+            <p style={{color:'#6b7280', fontSize:11, fontWeight:700, textTransform:'uppercase', letterSpacing:1, marginBottom:8}}>Outstanding</p>
+            <p style={{color:'#fbbf24', fontSize:22, fontWeight:700}}>${outstanding.toFixed(2)}</p>
           </div>
         </div>
 
-        {/* Upgrade banner */}
-        <div className="bg-indigo-600/10 border border-indigo-500/20 rounded-2xl p-5 mb-6 flex justify-between items-center">
-          <div>
-            <p className="text-white font-medium">Upgrade to Pro</p>
-            <p className="text-gray-400 text-sm mt-1">Unlimited invoices, email sending & more</p>
-          </div>
-          <button onClick={handleUpgrade} className="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition">
-            $7/month →
-          </button>
-        </div>
+        {/* New Invoice */}
+        <Link href="/invoice/new" style={{display:'block', width:'100%', background:'#4f46e5', color:'white', textAlign:'center', padding:'14px', borderRadius:16, fontWeight:700, fontSize:14, marginBottom:12, textDecoration:'none'}}>
+          + New Invoice
+        </Link>
+
+        {/* Search */}
+        <input
+          type="text"
+          placeholder="Search by client or invoice number..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{width:'100%', background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.1)', borderRadius:16, padding:'14px 20px', color:'white', fontSize:14, marginBottom:12, outline:'none'}}
+        />
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-4">
+        <div style={{display:'flex', gap:8, marginBottom:12}}>
           <button
-            onClick={() => setTab('active')}
-            className={`px-4 py-2 rounded-xl text-sm font-medium transition ${tab === 'active' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-white bg-transparent'}`}
+            onClick={() => { setTab('active'); setSearchTerm('') }}
+            style={{padding:'10px 20px', borderRadius:12, fontSize:13, fontWeight:600, cursor:'pointer', background: tab === 'active' ? 'rgba(255,255,255,0.1)' : 'transparent', color: tab === 'active' ? 'white' : '#6b7280', border:'none'}}
           >
             Active ({activeInvoices.length})
           </button>
           <button
-            onClick={() => setTab('history')}
-            className={`px-4 py-2 rounded-xl text-sm font-medium transition ${tab === 'history' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-white bg-transparent'}`}
+            onClick={() => { setTab('history'); setSearchTerm('') }}
+            style={{padding:'10px 20px', borderRadius:12, fontSize:13, fontWeight:600, cursor:'pointer', background: tab === 'history' ? 'rgba(255,255,255,0.1)' : 'transparent', color: tab === 'history' ? 'white' : '#6b7280', border:'none'}}
           >
             History ({paidInvoices.length})
           </button>
         </div>
 
-        {/* Invoice list */}
-        <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
-          <div className="px-6 py-4 border-b border-white/10">
-            <h2 className="font-medium text-white">{tab === 'active' ? 'Unpaid invoices' : 'Paid invoices'}</h2>
+        {/* Invoice List */}
+        <div style={{background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.1)', borderRadius:16, overflow:'hidden', marginBottom:12}}>
+          <div style={{padding:'16px 24px', borderBottom:'1px solid rgba(255,255,255,0.08)', textAlign:'center'}}>
+            <h2 style={{color:'white', fontWeight:700, fontSize:13, textTransform:'uppercase', letterSpacing:2}}>
+              {tab === 'active' ? 'Unpaid Invoices' : 'Paid Invoices'}
+            </h2>
           </div>
-          {tab === 'active' ? (
-            activeInvoices.length === 0 ? (
-              <div className="p-12 text-center">
-                <p className="text-gray-500 text-sm mb-4">No active invoices</p>
-                <Link href="/invoice/new" className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition">
-                  Create your first invoice
+          {filteredInvoices.length === 0 ? (
+            <div style={{padding:'60px 24px', textAlign:'center'}}>
+              <p style={{color:'#6b7280', marginBottom:20}}>
+                {searchTerm ? 'No matching invoices' : tab === 'active' ? 'No active invoices yet' : 'No paid invoices yet'}
+              </p>
+              {tab === 'active' && !searchTerm && (
+                <Link href="/invoice/new" style={{background:'#4f46e5', color:'white', padding:'10px 24px', borderRadius:12, fontWeight:700, fontSize:13, textDecoration:'none'}}>
+                  Create Your First Invoice
                 </Link>
-              </div>
-            ) : (
-              activeInvoices.map(inv => <InvoiceRow key={inv.id} inv={inv} />)
-            )
+              )}
+            </div>
           ) : (
-            paidInvoices.length === 0 ? (
-              <div className="p-12 text-center">
-                <p className="text-gray-500 text-sm">No paid invoices yet</p>
-              </div>
-            ) : (
-              paidInvoices.map(inv => <InvoiceRow key={inv.id} inv={inv} />)
-            )
+            filteredInvoices.map(inv => <InvoiceRow key={inv.id} inv={inv} />)
           )}
         </div>
+
+        {/* Upgrade Banner */}
+        <div style={{background:'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(168,85,247,0.1))', border:'1px solid rgba(99,102,241,0.3)', borderRadius:16, padding:24, textAlign:'center'}}>
+          <p style={{color:'white', fontWeight:700, fontSize:18, marginBottom:8}}>Upgrade to Pro</p>
+          <p style={{color:'#9ca3af', fontSize:14, marginBottom:20}}>Unlimited invoices, email sending & more</p>
+          <button onClick={handleUpgrade} style={{width:'100%', background:'#4f46e5', color:'white', padding:'14px', borderRadius:12, fontWeight:700, fontSize:14, cursor:'pointer', border:'none'}}>
+            $7/month →
+          </button>
+        </div>
+
       </div>
-    </main>
+    </div>
   )
 }
