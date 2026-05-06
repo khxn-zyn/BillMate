@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 
 export default function Dashboard() {
   const [invoices, setInvoices] = useState([])
+  const [tab, setTab] = useState('active')
   const router = useRouter()
 
   useEffect(() => {
@@ -16,11 +17,32 @@ export default function Dashboard() {
   const paid = invoices.filter(i => i.status === 'paid').reduce((s, i) => s + (i.total || 0), 0)
   const outstanding = total - paid
 
+  const activeInvoices = invoices.filter(i => i.status !== 'paid')
+  const paidInvoices = invoices.filter(i => i.status === 'paid')
+
   const handleUpgrade = async () => {
     const response = await fetch('/api/checkout', { method: 'POST' })
     const data = await response.json()
     if (data.url) window.location.href = data.url
   }
+
+  const InvoiceRow = ({ inv }) => (
+    <div
+      onClick={() => router.push(`/invoice/${inv.id}`)}
+      className="flex items-center justify-between px-6 py-4 border-b border-white/5 hover:bg-white/5 transition cursor-pointer"
+    >
+      <div>
+        <p className="font-medium text-white text-sm">{inv.clientName}</p>
+        <p className="text-xs text-gray-500 mt-0.5">{inv.num} · {inv.date}</p>
+      </div>
+      <div className="flex items-center gap-3">
+        <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${inv.status === 'paid' ? 'bg-green-500/20 text-green-400' : 'bg-amber-500/20 text-amber-400'}`}>
+          {inv.status === 'paid' ? 'Paid' : 'Unpaid'}
+        </span>
+        <span className="font-medium text-white text-sm">${inv.total.toFixed(2)}</span>
+      </div>
+    </div>
+  )
 
   return (
     <main className="min-h-screen bg-[#0a0a0f] relative overflow-hidden flex justify-center">
@@ -65,37 +87,46 @@ export default function Dashboard() {
           </button>
         </div>
 
+        {/* Tabs */}
+        <div className="flex gap-2 mb-4">
+          <button
+            onClick={() => setTab('active')}
+            className={`px-4 py-2 rounded-xl text-sm font-medium transition ${tab === 'active' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-white bg-transparent'}`}
+          >
+            Active ({activeInvoices.length})
+          </button>
+          <button
+            onClick={() => setTab('history')}
+            className={`px-4 py-2 rounded-xl text-sm font-medium transition ${tab === 'history' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-white bg-transparent'}`}
+          >
+            History ({paidInvoices.length})
+          </button>
+        </div>
+
         {/* Invoice list */}
         <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
           <div className="px-6 py-4 border-b border-white/10">
-            <h2 className="font-medium text-white">Invoices</h2>
+            <h2 className="font-medium text-white">{tab === 'active' ? 'Unpaid invoices' : 'Paid invoices'}</h2>
           </div>
-          {invoices.length === 0 ? (
-            <div className="p-12 text-center">
-              <p className="text-gray-500 text-sm mb-4">No invoices yet</p>
-              <Link href="/invoice/new" className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition">
-                Create your first invoice
-              </Link>
-            </div>
-          ) : (
-            invoices.map(inv => (
-              <div
-                key={inv.id}
-                onClick={() => router.push(`/invoice/${inv.id}`)}
-                className="flex items-center justify-between px-6 py-4 border-b border-white/5 hover:bg-white/5 transition cursor-pointer"
-              >
-                <div>
-                  <p className="font-medium text-white text-sm">{inv.clientName}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">{inv.num} · {inv.date}</p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${inv.status === 'paid' ? 'bg-green-500/20 text-green-400' : 'bg-amber-500/20 text-amber-400'}`}>
-                    {inv.status === 'paid' ? 'Paid' : 'Unpaid'}
-                  </span>
-                  <span className="font-medium text-white text-sm">${inv.total.toFixed(2)}</span>
-                </div>
+          {tab === 'active' ? (
+            activeInvoices.length === 0 ? (
+              <div className="p-12 text-center">
+                <p className="text-gray-500 text-sm mb-4">No active invoices</p>
+                <Link href="/invoice/new" className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition">
+                  Create your first invoice
+                </Link>
               </div>
-            ))
+            ) : (
+              activeInvoices.map(inv => <InvoiceRow key={inv.id} inv={inv} />)
+            )
+          ) : (
+            paidInvoices.length === 0 ? (
+              <div className="p-12 text-center">
+                <p className="text-gray-500 text-sm">No paid invoices yet</p>
+              </div>
+            ) : (
+              paidInvoices.map(inv => <InvoiceRow key={inv.id} inv={inv} />)
+            )
           )}
         </div>
       </div>
