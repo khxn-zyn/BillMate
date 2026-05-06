@@ -1,180 +1,170 @@
 'use client'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 
 export default function NewInvoice() {
   const router = useRouter()
-  const [invoice, setInvoice] = useState({
-    clientName: '',
-    clientEmail: '',
-    date: new Date().toISOString().split('T')[0],
-    num: 'INV-001',
-    items: [{ id: 1, description: '', qty: 1, price: 0 }],
-    notes: ''
+  const [lines, setLines] = useState([{ id: 1, desc: '', qty: 1, price: '' }])
+  const [form, setForm] = useState({
+    bizName: '', bizEmail: '', clientName: '', clientEmail: '',
+    num: 'INV-001', due: '', notes: ''
   })
 
-  const addItem = () => {
-    setInvoice({
-      ...invoice,
-      items: [...invoice.items, { id: Date.now(), description: '', qty: 1, price: 0 }]
-    })
-  }
+  const updateForm = (k, v) => setForm(f => ({ ...f, [k]: v }))
+  const addLine = () => setLines(l => [...l, { id: Date.now(), desc: '', qty: 1, price: '' }])
+  const removeLine = (id) => setLines(l => l.filter(x => x.id !== id))
+  const updateLine = (id, k, v) => setLines(l => l.map(x => x.id === id ? { ...x, [k]: v } : x))
 
-  const updateItem = (id, field, value) => {
-    const newItems = invoice.items.map(item => 
-      item.id === id ? { ...item, [field]: value } : item
-    )
-    setInvoice({ ...invoice, items: newItems })
-  }
-
-  const subtotal = invoice.items.reduce((acc, item) => acc + (item.qty * item.price), 0)
+  const subtotal = lines.reduce((s, l) => s + ((parseFloat(l.qty) || 0) * (parseFloat(l.price) || 0)), 0)
   const gst = subtotal * 0.1
   const total = subtotal + gst
 
-  const saveInvoice = () => {
-    const saved = JSON.parse(localStorage.getItem('billmate_invoices') || '[]')
-    const newInv = { ...invoice, id: Date.now(), total: total, status: 'unpaid' }
-    localStorage.setItem('billmate_invoices', JSON.stringify([newInv, ...saved]))
+  const save = () => {
+    if (!form.clientName) { alert('Please enter a client name'); return }
+    const invoices = JSON.parse(localStorage.getItem('billmate_invoices') || '[]')
+    const inv = { ...form, id: Date.now(), lines, subtotal, gst, total, status: 'unpaid', date: new Date().toISOString().split('T')[0] }
+    invoices.unshift(inv)
+    localStorage.setItem('billmate_invoices', JSON.stringify(invoices))
     router.push('/dashboard')
   }
 
+  const inputStyle = {
+    width: '100%',
+    background: 'rgba(255,255,255,0.05)',
+    border: '1px solid rgba(255,255,255,0.1)',
+    borderRadius: 12,
+    padding: '12px 16px',
+    color: 'white',
+    fontSize: 14,
+    outline: 'none',
+  }
+
+  const cardStyle = {
+    background: 'rgba(255,255,255,0.05)',
+    border: '1px solid rgba(255,255,255,0.1)',
+    borderRadius: 16,
+    padding: 24,
+    marginBottom: 12,
+  }
+
+  const labelStyle = {
+    color: '#6b7280',
+    fontSize: 11,
+    fontWeight: 700,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 6,
+    display: 'block',
+  }
+
   return (
-    <main className="min-h-screen bg-[#0a0a0f] text-white py-20 px-6">
-      {/* Centered Container */}
-      <div className="max-w-3xl mx-auto">
-        
-        {/* Header Area */}
-        <div className="flex justify-between items-start mb-10">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">New invoice</h1>
-            <p className="text-gray-500 mt-1">Fill in the details below</p>
+    <div style={{minHeight:'100vh', background:'#0a0a0f', display:'flex', flexDirection:'column', alignItems:'center', padding:'60px 20px'}}>
+      <div style={{position:'fixed', top:-200, left:'50%', transform:'translateX(-50%)', width:600, height:600, background:'rgba(99,102,241,0.15)', borderRadius:'50%', filter:'blur(100px)', pointerEvents:'none'}} />
+
+      <div style={{width:'100%', maxWidth:560, position:'relative', zIndex:10}}>
+
+        {/* Header */}
+        <div style={{textAlign:'center', marginBottom:40}}>
+          <h1 style={{fontSize:36, fontWeight:700, color:'white', letterSpacing:'-1px'}}>New Invoice</h1>
+          <p style={{color:'#6b7280', fontSize:15, marginTop:8}}>Fill in the details below</p>
+        </div>
+
+        {/* Business details */}
+        <div style={cardStyle}>
+          <p style={{...labelStyle, marginBottom:16}}>Your details</p>
+          <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:12}}>
+            <div>
+              <label style={labelStyle}>Business name</label>
+              <input style={inputStyle} placeholder="Acme Co." value={form.bizName} onChange={e => updateForm('bizName', e.target.value)} />
+            </div>
+            <div>
+              <label style={labelStyle}>Your email</label>
+              <input style={inputStyle} placeholder="you@example.com" value={form.bizEmail} onChange={e => updateForm('bizEmail', e.target.value)} />
+            </div>
           </div>
-          <Link href="/dashboard" className="text-gray-500 hover:text-white transition text-sm flex items-center gap-2">
-            ← Back
-          </Link>
         </div>
 
-        <div className="space-y-6">
-          {/* Your Details */}
-          <section className="bg-white/5 border border-white/10 rounded-2xl p-8">
-            <h2 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6">Your Details</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input type="text" placeholder="Business name" className="bg-white/5 border border-white/10 rounded-xl p-4 focus:outline-none focus:border-indigo-500 transition" />
-              <input type="email" placeholder="Your email" className="bg-white/5 border border-white/10 rounded-xl p-4 focus:outline-none focus:border-indigo-500 transition" />
+        {/* Client details */}
+        <div style={cardStyle}>
+          <p style={{...labelStyle, marginBottom:16}}>Client details</p>
+          <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, marginBottom:12}}>
+            <div>
+              <label style={labelStyle}>Client name</label>
+              <input style={inputStyle} placeholder="Client name" value={form.clientName} onChange={e => updateForm('clientName', e.target.value)} />
             </div>
-          </section>
-
-          {/* Client Details */}
-          <section className="bg-white/5 border border-white/10 rounded-2xl p-8">
-            <h2 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6">Client Details</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              <input 
-                type="text" 
-                placeholder="Client name" 
-                className="bg-white/5 border border-white/10 rounded-xl p-4 focus:outline-none focus:border-indigo-500 transition"
-                onChange={(e) => setInvoice({...invoice, clientName: e.target.value})}
-              />
-              <input 
-                type="email" 
-                placeholder="Client email" 
-                className="bg-white/5 border border-white/10 rounded-xl p-4 focus:outline-none focus:border-indigo-500 transition"
-                onChange={(e) => setInvoice({...invoice, clientEmail: e.target.value})}
-              />
+            <div>
+              <label style={labelStyle}>Client email</label>
+              <input style={inputStyle} placeholder="client@example.com" value={form.clientEmail} onChange={e => updateForm('clientEmail', e.target.value)} />
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <input 
-                type="text" 
-                value={invoice.num}
-                className="bg-white/5 border border-white/10 rounded-xl p-4 focus:outline-none focus:border-indigo-500 transition"
-                onChange={(e) => setInvoice({...invoice, num: e.target.value})}
-              />
-              <input 
-                type="date" 
-                value={invoice.date}
-                className="bg-white/5 border border-white/10 rounded-xl p-4 focus:outline-none focus:border-indigo-500 transition text-white"
-                onChange={(e) => setInvoice({...invoice, date: e.target.value})}
-              />
+          </div>
+          <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:12}}>
+            <div>
+              <label style={labelStyle}>Invoice number</label>
+              <input style={inputStyle} placeholder="INV-001" value={form.num} onChange={e => updateForm('num', e.target.value)} />
             </div>
-          </section>
-
-          {/* Line Items */}
-          <section className="bg-white/5 border border-white/10 rounded-2xl p-8">
-            <h2 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6">Line Items</h2>
-            {invoice.items.map((item) => (
-              <div key={item.id} className="grid grid-cols-12 gap-4 mb-4 items-center">
-                <div className="col-span-6">
-                  <input 
-                    type="text" 
-                    placeholder="Description" 
-                    className="w-full bg-white/5 border border-white/10 rounded-xl p-4 focus:outline-none focus:border-indigo-500 transition"
-                    onChange={(e) => updateItem(item.id, 'description', e.target.value)}
-                  />
-                </div>
-                <div className="col-span-2">
-                  <input 
-                    type="number" 
-                    value={item.qty}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl p-4 focus:outline-none focus:border-indigo-500 transition text-center"
-                    onChange={(e) => updateItem(item.id, 'qty', parseInt(e.target.value))}
-                  />
-                </div>
-                <div className="col-span-3">
-                  <input 
-                    type="number" 
-                    placeholder="0.00"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl p-4 focus:outline-none focus:border-indigo-500 transition"
-                    onChange={(e) => updateItem(item.id, 'price', parseFloat(e.target.value))}
-                  />
-                </div>
-                <div className="col-span-1 text-right">
-                  <button className="text-gray-600 hover:text-red-500 transition">×</button>
-                </div>
-              </div>
-            ))}
-            <button 
-              onClick={addItem}
-              className="text-indigo-400 hover:text-indigo-300 font-bold text-sm mt-2"
-            >
-              + Add item
-            </button>
-
-            {/* Totals Section */}
-            <div className="mt-10 pt-10 border-t border-white/10 space-y-3">
-              <div className="flex justify-between text-gray-500">
-                <span>Subtotal</span>
-                <span>${subtotal.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between text-gray-500">
-                <span>GST (10%)</span>
-                <span>${gst.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between text-2xl font-bold text-white pt-2">
-                <span>Total</span>
-                <span>${total.toFixed(2)}</span>
-              </div>
+            <div>
+              <label style={labelStyle}>Due date</label>
+              <input style={{...inputStyle, colorScheme:'dark'}} type="date" value={form.due} onChange={e => updateForm('due', e.target.value)} />
             </div>
-          </section>
+          </div>
+        </div>
 
-          {/* Notes */}
-          <section className="bg-white/5 border border-white/10 rounded-2xl p-8">
-            <h2 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6">Notes</h2>
-            <textarea 
-              placeholder="Payment terms, bank details, thank you message..."
-              rows={4}
-              className="w-full bg-white/5 border border-white/10 rounded-xl p-4 focus:outline-none focus:border-indigo-500 transition resize-none"
-              onChange={(e) => setInvoice({...invoice, notes: e.target.value})}
-            />
-          </section>
-
-          <button 
-            onClick={saveInvoice}
-            className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-5 rounded-2xl transition shadow-xl shadow-indigo-500/20 text-lg"
-          >
-            Save invoice
+        {/* Line items */}
+        <div style={cardStyle}>
+          <p style={{...labelStyle, marginBottom:16}}>Line items</p>
+          <div style={{display:'grid', gridTemplateColumns:'2fr 1fr 1fr 32px', gap:8, marginBottom:8}}>
+            <span style={labelStyle}>Description</span>
+            <span style={labelStyle}>Qty</span>
+            <span style={labelStyle}>Price</span>
+            <span></span>
+          </div>
+          {lines.map(l => (
+            <div key={l.id} style={{display:'grid', gridTemplateColumns:'2fr 1fr 1fr 32px', gap:8, marginBottom:8}}>
+              <input style={inputStyle} placeholder="Description" value={l.desc} onChange={e => updateLine(l.id, 'desc', e.target.value)} />
+              <input style={inputStyle} type="number" placeholder="1" value={l.qty} onChange={e => updateLine(l.id, 'qty', e.target.value)} />
+              <input style={inputStyle} type="number" placeholder="0.00" value={l.price} onChange={e => updateLine(l.id, 'price', e.target.value)} />
+              <button onClick={() => removeLine(l.id)} style={{background:'transparent', color:'#ef4444', fontSize:18, cursor:'pointer', border:'none', padding:0}}>×</button>
+            </div>
+          ))}
+          <button onClick={addLine} style={{background:'transparent', color:'#818cf8', fontSize:13, fontWeight:600, cursor:'pointer', border:'none', marginTop:8, padding:0}}>
+            + Add item
           </button>
+
+          {/* Totals */}
+          <div style={{marginTop:20, paddingTop:16, borderTop:'1px solid rgba(255,255,255,0.08)'}}>
+            <div style={{display:'flex', justifyContent:'space-between', color:'#6b7280', fontSize:13, marginBottom:6}}>
+              <span>Subtotal</span><span>${subtotal.toFixed(2)}</span>
+            </div>
+            <div style={{display:'flex', justifyContent:'space-between', color:'#6b7280', fontSize:13, marginBottom:6}}>
+              <span>GST (10%)</span><span>${gst.toFixed(2)}</span>
+            </div>
+            <div style={{display:'flex', justifyContent:'space-between', color:'white', fontSize:16, fontWeight:700, marginTop:8, paddingTop:8, borderTop:'1px solid rgba(255,255,255,0.08)'}}>
+              <span>Total</span><span>${total.toFixed(2)}</span>
+            </div>
+          </div>
         </div>
+
+        {/* Notes */}
+        <div style={cardStyle}>
+          <label style={labelStyle}>Notes</label>
+          <textarea
+            placeholder="Payment terms, bank details, thank you message..."
+            value={form.notes}
+            onChange={e => updateForm('notes', e.target.value)}
+            rows={3}
+            style={{...inputStyle, resize:'vertical'}}
+          />
+        </div>
+
+        {/* Buttons */}
+        <button onClick={save} style={{width:'100%', background:'#4f46e5', color:'white', padding:'16px', borderRadius:16, fontWeight:700, fontSize:15, cursor:'pointer', border:'none', marginBottom:8}}>
+          Save Invoice
+        </button>
+        <button onClick={() => router.push('/dashboard')} style={{width:'100%', background:'rgba(255,255,255,0.05)', color:'#6b7280', padding:'14px', borderRadius:16, fontWeight:600, fontSize:14, cursor:'pointer', border:'1px solid rgba(255,255,255,0.1)'}}>
+          Cancel
+        </button>
+
       </div>
-    </main>
+    </div>
   )
 }
