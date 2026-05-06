@@ -31,7 +31,7 @@ export default function ViewInvoice() {
   if (!inv) return <div style={{minHeight:'100vh', background:'#0a0a0f', display:'flex', alignItems:'center', justifyContent:'center', color:'#9ca3af'}}>Invoice not found</div>
 
   return (
-    <div style={{minHeight:'100vh', background:'#0a0a0f', position:'relative', overflow:'hidden', display:'flex', justifyContent:'center', padding:'24px'}}>
+    <div style={{minHeight:'100vh', background:'#0a0a0f', position:'relative', overflow:'hidden', display:'flex', justifyContent:'center', padding:'40px'}}>
       <div style={{position:'fixed', top:-200, left:'50%', transform:'translateX(-50%)', width:600, height:600, background:'rgba(99,102,241,0.1)', borderRadius:'50%', filter:'blur(120px)', pointerEvents:'none'}} />
 
       <div style={{width:'100%', maxWidth:768, paddingLeft:32, paddingRight:32, paddingTop:48, paddingBottom:48, position:'relative', zIndex:10}}>
@@ -97,7 +97,7 @@ export default function ViewInvoice() {
           {/* Line items table */}
           <table className="w-full mb-8 text-sm">
             <thead>
-              <tr className="text-white" style={{backgroundColor: '#60a5fa'}}>
+              <tr className="text-white" style={{backgroundColor: '#38bdf8'}}>
                 <th className="text-left py-3 px-4 font-semibold">QTY</th>
                 <th className="text-left py-3 px-4 font-semibold">Description</th>
                 <th className="text-right py-3 px-4 font-semibold">Unit Price</th>
