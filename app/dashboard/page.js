@@ -71,7 +71,7 @@ export default function Dashboard() {
 
         {/* Header */}
         <div style={{textAlign:'center', marginBottom:40}}>
-          <h1 style={{fontSize:48, fontWeight:700, color:'white', letterSpacing:'-2px'}}>BillMate</h1>
+          <Link href="/" style={{fontSize:48, fontWeight:700, color:'white', letterSpacing:'-2px', textDecoration:'none'}}>BillMate</Link>
           <p style={{color:'#6b7280', fontSize:16, marginTop:8}}>Welcome back 👋</p>
         </div>
 
