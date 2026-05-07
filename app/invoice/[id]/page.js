@@ -101,7 +101,7 @@ export default function ViewInvoice() {
           <div className="overflow-x-auto mb-8">
           <table className="w-full text-sm" style={{minWidth:400}}>
             <thead>
-              <tr className="text-white" style={{backgroundColor: '#38bdf8'}}>
+              <tr className="text-white" style={{backgroundColor: '#a78bfa'}}>
                 <th className="text-left py-3 px-4 font-semibold">QTY</th>
                 <th className="text-left py-3 px-4 font-semibold">Description</th>
                 <th className="text-right py-3 px-4 font-semibold">Unit Price</th>
