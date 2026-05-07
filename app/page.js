@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div style={{minHeight:'100vh', background:'#0a0a0f'}}>
+    <div style={{minHeight:'100vh', background:'#0a0a0f', overflowX:'hidden'}}>
 
       {/* Nav — sticky requires no overflow:hidden ancestor */}
       <nav className="backdrop-blur-md" style={{position:'sticky', top:0, zIndex:50, background:'rgba(10,10,15,0.95)', borderBottom:'1px solid #2a2a3d', padding:'16px 48px', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
