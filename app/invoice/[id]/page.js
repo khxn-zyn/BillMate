@@ -54,7 +54,7 @@ export default function ViewInvoice() {
         </div>
 
         {/* Invoice document */}
-        <div id="invoice-doc" className="bg-white text-black p-6 sm:p-12 rounded-none shadow-2xl">
+        <div id="invoice-doc" className="bg-white text-black p-10 sm:p-14 rounded-none shadow-2xl">
 
           {/* Header */}
           <div className="flex flex-col sm:flex-row justify-between items-start mb-10 gap-4">
@@ -95,7 +95,7 @@ export default function ViewInvoice() {
           </div>
 
           {/* Line items table */}
-          <div className="overflow-x-auto -mx-6 sm:mx-0 mb-8">
+          <div className="overflow-x-auto mb-8">
           <table className="w-full text-sm" style={{minWidth:400}}>
             <thead>
               <tr className="text-white" style={{backgroundColor: '#38bdf8'}}>
