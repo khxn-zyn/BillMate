@@ -2,10 +2,6 @@
 import Link from 'next/link'
 
 export default function Home() {
-  const scrollToFeatures = (e) => {
-    e.preventDefault()
-    document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
-  }
   return (
     <div style={{minHeight:'100vh', background:'#0a0a0f'}}>
 
@@ -49,9 +45,9 @@ export default function Home() {
             <Link href="/dashboard" className="text-white rounded-xl font-semibold transition text-base" style={{background:'#7c5cfc', padding:'12px 36px', whiteSpace:'nowrap'}}>
               Start for free
             </Link>
-            <a href="#features" onClick={scrollToFeatures} className="text-white rounded-xl font-medium transition text-base" style={{border:'1px solid #2a2a3d', padding:'12px 36px', whiteSpace:'nowrap', cursor:'pointer'}}>
+            <button onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })} className="text-white rounded-xl font-medium transition text-base" style={{border:'1px solid #2a2a3d', padding:'12px 36px', whiteSpace:'nowrap', cursor:'pointer', background:'transparent'}}>
               See how it works
-            </a>
+            </button>
           </div>
 
           {/* Stats */}
