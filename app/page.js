@@ -17,7 +17,7 @@ export default function Home() {
       </nav>
 
       {/* Page content */}
-      <main className="flex flex-col items-center px-6 pb-16 relative" style={{paddingTop:'64px', overflowX:'hidden'}}>
+      <main className="flex flex-col items-center px-6 pb-16 relative" style={{paddingTop:'64px'}}>
 
         {/* Glow effects */}
         <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#7c5cfc]/15 rounded-full blur-[120px] pointer-events-none" />
