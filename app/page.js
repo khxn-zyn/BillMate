@@ -10,7 +10,7 @@ export default function Home() {
 
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 backdrop-blur-md z-10" style={{background:'rgba(10,10,15,0.85)', borderBottom:'1px solid #2a2a3d', padding:'16px 48px', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-        <span className="text-white font-bold text-xl">BillMate</span>
+        <Link href="/" className="text-white font-bold text-xl">BillMate</Link>
         <div style={{display:'flex', gap:'12px', alignItems:'center'}}>
           <Link href="/dashboard" className="text-gray-400 hover:text-white text-sm transition" style={{padding:'8px 16px', whiteSpace:'nowrap'}}>Log in</Link>
           <Link href="/dashboard" className="text-white text-sm font-medium rounded-lg transition" style={{background:'#7c5cfc', padding:'9px 24px', whiteSpace:'nowrap'}}>
