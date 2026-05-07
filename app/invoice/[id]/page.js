@@ -63,14 +63,14 @@ export default function ViewInvoice() {
               <p className="text-sm text-gray-500 mt-1">{inv.bizEmail}</p>
             </div>
             <div className="sm:text-right">
-              <h1 className="text-4xl font-bold tracking-widest" style={{color:'#38bdf8'}}>INVOICE</h1>
+              <h1 className="text-4xl font-bold tracking-widest" style={{color:'#7c5cfc'}}>INVOICE</h1>
             </div>
           </div>
 
           {/* Bill to + invoice details */}
           <div className="flex flex-col sm:flex-row justify-between mb-10 gap-6">
             <div>
-              <p className="text-xs font-bold text-indigo-600 uppercase mb-2">Bill To</p>
+              <p className="text-xs font-bold uppercase mb-2" style={{color:'#7c5cfc'}}>Bill To</p>
               <p className="text-lg font-semibold text-gray-800">{inv.clientName}</p>
               <p className="text-sm text-gray-500">{inv.clientEmail}</p>
             </div>
@@ -78,15 +78,15 @@ export default function ViewInvoice() {
               <table className="text-sm">
   <tbody>
     <tr>
-      <td className="text-indigo-600 font-semibold py-1" style={{paddingRight: '2rem'}}>Invoice #</td>
+      <td className="font-semibold py-1" style={{paddingRight: '2rem', color:'#7c5cfc'}}>Invoice #</td>
       <td className="text-gray-700">{inv.num}</td>
     </tr>
     <tr>
-      <td className="text-indigo-600 font-semibold py-1" style={{paddingRight: '2rem'}}>Invoice date</td>
+      <td className="font-semibold py-1" style={{paddingRight: '2rem', color:'#7c5cfc'}}>Invoice date</td>
       <td className="text-gray-700">{inv.date}</td>
     </tr>
     <tr>
-      <td className="text-indigo-600 font-semibold py-1" style={{paddingRight: '2rem'}}>Due date</td>
+      <td className="font-semibold py-1" style={{paddingRight: '2rem', color:'#7c5cfc'}}>Due date</td>
       <td className="text-gray-700">{inv.due || 'On receipt'}</td>
     </tr>
   </tbody>
@@ -129,7 +129,7 @@ export default function ViewInvoice() {
                 <span>GST (10%)</span>
                 <span>${inv.gst.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between py-2 font-bold text-indigo-600 text-base">
+              <div className="flex justify-between py-2 font-bold text-base" style={{color:'#7c5cfc'}}>
                 <span>Total (AUD)</span>
                 <span>${inv.total.toFixed(2)}</span>
               </div>
@@ -139,7 +139,7 @@ export default function ViewInvoice() {
           {/* Notes */}
           {inv.notes && (
             <div className="border-t border-gray-100 pt-6">
-              <p className="text-xs font-bold text-indigo-600 uppercase mb-2">Notes</p>
+              <p className="text-xs font-bold uppercase mb-2" style={{color:'#7c5cfc'}}>Notes</p>
               <p className="text-sm text-gray-600">{inv.notes}</p>
             </div>
           )}
@@ -147,7 +147,7 @@ export default function ViewInvoice() {
           {/* Footer */}
           <div className="flex flex-col sm:flex-row justify-between items-center mt-10 pt-6 border-t border-gray-100 gap-2">
             <p className="text-xs text-gray-400">Thank you for your business!</p>
-            <p className="text-lg font-bold text-indigo-600">BillMate</p>
+            <p className="text-lg font-bold" style={{color:'#7c5cfc'}}>BillMate</p>
           </div>
         </div>
       </div>
