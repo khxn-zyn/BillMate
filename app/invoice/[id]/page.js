@@ -54,7 +54,7 @@ export default function ViewInvoice() {
         </div>
 
         {/* Invoice document */}
-        <div id="invoice-doc" className="bg-white text-black p-10 sm:p-14 rounded-none shadow-2xl">
+        <div id="invoice-doc" className="bg-white text-black rounded-none shadow-2xl" style={{padding:'40px'}}>
 
           {/* Header */}
           <div className="flex flex-col sm:flex-row justify-between items-start mb-10 gap-4">
