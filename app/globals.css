@@ -11,6 +11,7 @@ html, body {
   color: white;
   font-family: 'Inter', system-ui, sans-serif;
   min-height: 100vh;
+  scroll-behavior: smooth;
 }
 
 input, textarea, select {

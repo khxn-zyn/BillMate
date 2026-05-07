@@ -44,13 +44,13 @@ export default function Home() {
             <Link href="/dashboard" className="text-white rounded-xl font-semibold transition text-base" style={{background:'#7c5cfc', padding:'12px 36px', whiteSpace:'nowrap'}}>
               Start for free
             </Link>
-            <Link href="/dashboard" className="text-white rounded-xl font-medium transition text-base" style={{border:'1px solid #2a2a3d', padding:'12px 36px', whiteSpace:'nowrap'}}>
+            <a href="#features" className="text-white rounded-xl font-medium transition text-base" style={{border:'1px solid #2a2a3d', padding:'12px 36px', whiteSpace:'nowrap'}}>
               See how it works
-            </Link>
+            </a>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-5" style={{marginBottom:'48px'}}>
+          <div id="features" className="grid grid-cols-3 gap-5" style={{marginBottom:'48px'}}>
             <div className="rounded-2xl border transition" style={{background:'#13131a', borderColor:'#2a2a3d', padding:'24px'}}>
               <p className="text-3xl font-bold text-white mb-1">30s</p>
               <p className="text-gray-500 text-sm">To create an invoice</p>
