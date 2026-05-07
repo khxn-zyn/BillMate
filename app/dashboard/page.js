@@ -2,6 +2,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
 
 export default function Dashboard() {
   const [invoices, setInvoices] = useState([])
@@ -29,6 +30,12 @@ export default function Dashboard() {
       inv.num?.toLowerCase().includes(searchTerm.toLowerCase())
     )
   }, [activeInvoices, paidInvoices, tab, searchTerm])
+
+  const handleLogout = async () => {
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    router.push('/login')
+  }
 
   const handleUpgrade = async () => {
     const response = await fetch('/api/checkout', { method: 'POST' })
@@ -70,9 +77,17 @@ export default function Dashboard() {
       <div style={{width:'100%', maxWidth:560, position:'relative', zIndex:10}}>
 
         {/* Header */}
-        <div style={{textAlign:'center', marginBottom:40}}>
+        <div style={{position:'relative', textAlign:'center', marginBottom:40}}>
           <Link href="/" style={{fontSize:48, fontWeight:700, color:'white', letterSpacing:'-2px', textDecoration:'none'}}>BillMate</Link>
           <p style={{color:'#6b7280', fontSize:16, marginTop:8}}>Welcome back 👋</p>
+          <button
+            onClick={handleLogout}
+            style={{position:'absolute', top:8, right:0, background:'transparent', border:'1px solid rgba(255,255,255,0.15)', color:'#9ca3af', padding:'8px 16px', borderRadius:10, cursor:'pointer', fontSize:13, fontWeight:600}}
+            onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(124,92,252,0.5)'; e.currentTarget.style.color='white' }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(255,255,255,0.15)'; e.currentTarget.style.color='#9ca3af' }}
+          >
+            Log out
+          </button>
         </div>
 
         {/* Stats */}
