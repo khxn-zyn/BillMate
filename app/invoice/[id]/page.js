@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
 
 export default function ViewInvoice() {
   const { id } = useParams()
@@ -8,22 +9,29 @@ export default function ViewInvoice() {
   const [inv, setInv] = useState(null)
 
   useEffect(() => {
-    const invoices = JSON.parse(localStorage.getItem('billmate_invoices') || '[]')
-    const found = invoices.find(i => String(i.id) === String(id))
-    setInv(found)
+    const fetchInvoice = async () => {
+      const supabase = createClient()
+      const { data: row } = await supabase
+        .from('invoices')
+        .select('id, status, data')
+        .eq('id', id)
+        .single()
+      if (row) setInv({ ...row.data, id: row.id, status: row.status })
+    }
+    fetchInvoice()
   }, [id])
 
-  const markPaid = () => {
-    const invoices = JSON.parse(localStorage.getItem('billmate_invoices') || '[]')
-    const updated = invoices.map(i => String(i.id) === String(id) ? { ...i, status: i.status === 'paid' ? 'unpaid' : 'paid' } : i)
-    localStorage.setItem('billmate_invoices', JSON.stringify(updated))
-    setInv(v => ({ ...v, status: v.status === 'paid' ? 'unpaid' : 'paid' }))
+  const markPaid = async () => {
+    const newStatus = inv.status === 'paid' ? 'unpaid' : 'paid'
+    const supabase = createClient()
+    await supabase.from('invoices').update({ status: newStatus }).eq('id', id)
+    setInv(v => ({ ...v, status: newStatus }))
   }
 
-  const deleteInvoice = () => {
+  const deleteInvoice = async () => {
     if (confirm('Delete this invoice?')) {
-      const invoices = JSON.parse(localStorage.getItem('billmate_invoices') || '[]')
-      localStorage.setItem('billmate_invoices', JSON.stringify(invoices.filter(i => String(i.id) !== String(id))))
+      const supabase = createClient()
+      await supabase.from('invoices').delete().eq('id', id)
       router.push('/dashboard')
     }
   }
@@ -79,46 +87,46 @@ export default function ViewInvoice() {
             </div>
             <div className="sm:text-right">
               <table className="text-sm">
-  <tbody>
-    <tr>
-      <td className="font-semibold py-1 inv-accent" style={{paddingRight: '2rem'}}>Invoice #</td>
-      <td className="text-gray-700">{inv.num}</td>
-    </tr>
-    <tr>
-      <td className="font-semibold py-1 inv-accent" style={{paddingRight: '2rem'}}>Invoice date</td>
-      <td className="text-gray-700">{inv.date}</td>
-    </tr>
-    <tr>
-      <td className="font-semibold py-1 inv-accent" style={{paddingRight: '2rem'}}>Due date</td>
-      <td className="text-gray-700">{inv.due || 'On receipt'}</td>
-    </tr>
-  </tbody>
-</table>
+                <tbody>
+                  <tr>
+                    <td className="font-semibold py-1 inv-accent" style={{paddingRight: '2rem'}}>Invoice #</td>
+                    <td className="text-gray-700">{inv.num}</td>
+                  </tr>
+                  <tr>
+                    <td className="font-semibold py-1 inv-accent" style={{paddingRight: '2rem'}}>Invoice date</td>
+                    <td className="text-gray-700">{inv.date}</td>
+                  </tr>
+                  <tr>
+                    <td className="font-semibold py-1 inv-accent" style={{paddingRight: '2rem'}}>Due date</td>
+                    <td className="text-gray-700">{inv.due || 'On receipt'}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
 
           {/* Line items table */}
           <div className="overflow-x-auto mb-8">
-          <table className="w-full text-sm" style={{minWidth:400}}>
-            <thead>
-              <tr className="text-white" style={{backgroundColor: '#a78bfa'}}>
-                <th className="text-left py-3 px-4 font-semibold">QTY</th>
-                <th className="text-left py-3 px-4 font-semibold">Description</th>
-                <th className="text-right py-3 px-4 font-semibold">Unit Price</th>
-                <th className="text-right py-3 px-4 font-semibold">Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              {inv.lines.map((l, i) => (
-                <tr key={l.id} className={i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
-                  <td className="py-3 px-4 text-gray-700">{l.qty}</td>
-                  <td className="py-3 px-4 text-gray-700">{l.desc}</td>
-                  <td className="py-3 px-4 text-right text-gray-700">${parseFloat(l.price || 0).toFixed(2)}</td>
-                  <td className="py-3 px-4 text-right text-gray-700">${((l.qty || 0) * (l.price || 0)).toFixed(2)}</td>
+            <table className="w-full text-sm" style={{minWidth:400}}>
+              <thead>
+                <tr className="text-white" style={{backgroundColor: '#a78bfa'}}>
+                  <th className="text-left py-3 px-4 font-semibold">QTY</th>
+                  <th className="text-left py-3 px-4 font-semibold">Description</th>
+                  <th className="text-right py-3 px-4 font-semibold">Unit Price</th>
+                  <th className="text-right py-3 px-4 font-semibold">Amount</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {inv.lines.map((l, i) => (
+                  <tr key={l.id} className={i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                    <td className="py-3 px-4 text-gray-700">{l.qty}</td>
+                    <td className="py-3 px-4 text-gray-700">{l.desc}</td>
+                    <td className="py-3 px-4 text-right text-gray-700">${parseFloat(l.price || 0).toFixed(2)}</td>
+                    <td className="py-3 px-4 text-right text-gray-700">${((l.qty || 0) * (l.price || 0)).toFixed(2)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
 
           {/* Totals */}

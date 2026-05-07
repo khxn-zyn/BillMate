@@ -11,8 +11,15 @@ export default function Dashboard() {
   const router = useRouter()
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem('billmate_invoices') || '[]')
-    setInvoices(saved)
+    const fetchInvoices = async () => {
+      const supabase = createClient()
+      const { data } = await supabase
+        .from('invoices')
+        .select('id, status, data')
+        .order('created_at', { ascending: false })
+      if (data) setInvoices(data.map(row => ({ ...row.data, id: row.id, status: row.status })))
+    }
+    fetchInvoices()
   }, [])
 
   const total = invoices.reduce((s, i) => s + (i.total || 0), 0)

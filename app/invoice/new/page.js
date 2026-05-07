@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
 
 export default function NewInvoice() {
   const router = useRouter()
@@ -9,6 +10,7 @@ export default function NewInvoice() {
     bizName: '', bizEmail: '', clientName: '', clientEmail: '',
     num: 'INV-001', due: '', notes: ''
   })
+  const [saving, setSaving] = useState(false)
 
   const updateForm = (k, v) => setForm(f => ({ ...f, [k]: v }))
   const addLine = () => setLines(l => [...l, { id: Date.now(), desc: '', qty: 1, price: '' }])
@@ -19,13 +21,30 @@ export default function NewInvoice() {
   const gst = subtotal * 0.1
   const total = subtotal + gst
 
-  const save = () => {
+  const save = async () => {
     if (!form.clientName) { alert('Please enter a client name'); return }
-    const invoices = JSON.parse(localStorage.getItem('billmate_invoices') || '[]')
-    const inv = { ...form, id: Date.now(), lines, subtotal, gst, total, status: 'unpaid', date: new Date().toISOString().split('T')[0] }
-    invoices.unshift(inv)
-    localStorage.setItem('billmate_invoices', JSON.stringify(invoices))
-    router.push('/dashboard')
+    setSaving(true)
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    const invData = {
+      ...form,
+      lines,
+      subtotal,
+      gst,
+      total,
+      date: new Date().toISOString().split('T')[0],
+    }
+    const { error } = await supabase.from('invoices').insert({
+      user_id: user.id,
+      status: 'unpaid',
+      data: invData,
+    })
+    if (!error) {
+      router.push('/dashboard')
+    } else {
+      alert('Failed to save invoice. Please try again.')
+      setSaving(false)
+    }
   }
 
   const inputStyle = {
@@ -157,8 +176,12 @@ export default function NewInvoice() {
         </div>
 
         {/* Buttons */}
-        <button onClick={save} style={{width:'100%', background:'#4f46e5', color:'white', padding:'16px', borderRadius:16, fontWeight:700, fontSize:15, cursor:'pointer', border:'none', marginBottom:8}}>
-          Save Invoice
+        <button
+          onClick={save}
+          disabled={saving}
+          style={{width:'100%', background:'#4f46e5', color:'white', padding:'16px', borderRadius:16, fontWeight:700, fontSize:15, cursor:saving?'not-allowed':'pointer', border:'none', marginBottom:8, opacity:saving?0.7:1}}
+        >
+          {saving ? 'Saving…' : 'Save Invoice'}
         </button>
         <button onClick={() => router.push('/dashboard')} style={{width:'100%', background:'rgba(255,255,255,0.05)', color:'#6b7280', padding:'14px', borderRadius:16, fontWeight:600, fontSize:14, cursor:'pointer', border:'1px solid rgba(255,255,255,0.1)'}}>
           Cancel

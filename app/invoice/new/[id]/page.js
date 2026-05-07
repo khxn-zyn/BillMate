@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
 
 export default function ViewInvoice() {
   const { id } = useParams()
@@ -8,16 +9,23 @@ export default function ViewInvoice() {
   const [inv, setInv] = useState(null)
 
   useEffect(() => {
-    const invoices = JSON.parse(localStorage.getItem('billmate_invoices') || '[]')
-    const found = invoices.find(i => String(i.id) === String(id))
-    setInv(found)
+    const fetchInvoice = async () => {
+      const supabase = createClient()
+      const { data: row } = await supabase
+        .from('invoices')
+        .select('id, status, data')
+        .eq('id', id)
+        .single()
+      if (row) setInv({ ...row.data, id: row.id, status: row.status })
+    }
+    fetchInvoice()
   }, [id])
 
-  const markPaid = () => {
-    const invoices = JSON.parse(localStorage.getItem('billmate_invoices') || '[]')
-    const updated = invoices.map(i => String(i.id) === String(id) ? { ...i, status: i.status === 'paid' ? 'unpaid' : 'paid' } : i)
-    localStorage.setItem('billmate_invoices', JSON.stringify(updated))
-    setInv(v => ({ ...v, status: v.status === 'paid' ? 'unpaid' : 'paid' }))
+  const markPaid = async () => {
+    const newStatus = inv.status === 'paid' ? 'unpaid' : 'paid'
+    const supabase = createClient()
+    await supabase.from('invoices').update({ status: newStatus }).eq('id', id)
+    setInv(v => ({ ...v, status: newStatus }))
   }
 
   if (!inv) return <div className="p-8 text-center text-gray-400">Invoice not found</div>
