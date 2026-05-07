@@ -2,18 +2,18 @@ import Link from 'next/link'
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#0a0a0f] flex flex-col items-center justify-center p-8 pt-16 relative overflow-hidden">
+    <main className="min-h-screen bg-[#0a0a0f] flex flex-col items-center justify-center px-6 pt-24 pb-16 relative overflow-hidden">
 
       {/* Glow effects */}
       <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#7c5cfc]/15 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-200px] left-1/4 w-[400px] h-[400px] bg-[#7c5cfc]/10 rounded-full blur-[120px] pointer-events-none" />
 
       {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 flex justify-between items-center px-8 py-4 border-b border-[#2a2a3d] backdrop-blur-md z-10" style={{background:'rgba(10,10,15,0.85)'}}>
+      <nav className="fixed top-0 left-0 right-0 backdrop-blur-md z-10" style={{background:'rgba(10,10,15,0.85)', borderBottom:'1px solid #2a2a3d', padding:'16px 48px', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
         <span className="text-white font-bold text-xl">BillMate</span>
-        <div className="flex gap-3">
-          <Link href="/dashboard" className="text-gray-400 hover:text-white text-sm transition px-4 py-2">Log in</Link>
-          <Link href="/dashboard" className="text-white text-sm font-medium px-4 py-2 rounded-lg transition" style={{background:'#7c5cfc'}}>
+        <div style={{display:'flex', gap:'12px', alignItems:'center'}}>
+          <Link href="/dashboard" className="text-gray-400 hover:text-white text-sm transition" style={{padding:'8px 16px', whiteSpace:'nowrap'}}>Log in</Link>
+          <Link href="/dashboard" className="text-white text-sm font-medium rounded-lg transition" style={{background:'#7c5cfc', padding:'9px 24px', whiteSpace:'nowrap'}}>
             Get started free
           </Link>
         </div>
@@ -26,7 +26,7 @@ export default function Home() {
           Built for Australian small businesses
         </div>
 
-        <h1 className="text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
+        <h1 className="font-bold text-white mb-6 leading-tight tracking-tight" style={{fontSize:'clamp(32px, 6vw, 52px)'}}>
           Get paid faster.<br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7c5cfc] to-purple-400">
             Stress less.
@@ -37,64 +37,50 @@ export default function Home() {
           Create professional invoices in 30 seconds. Auto-calculate GST. Export to PDF. Track who owes you money.
         </p>
 
-        <div className="flex gap-3 justify-center mb-16">
-          <Link href="/dashboard" className="text-white py-3 px-8 rounded-xl font-semibold transition text-base" style={{background:'#7c5cfc'}}>
+        <div style={{display:'flex', gap:'12px', justifyContent:'center', marginBottom:'80px', flexWrap:'wrap'}}>
+          <Link href="/dashboard" className="text-white rounded-xl font-semibold transition text-base" style={{background:'#7c5cfc', padding:'12px 36px', whiteSpace:'nowrap'}}>
             Start for free
           </Link>
-          <Link href="/dashboard" className="border border-[#2a2a3d] hover:border-[#3a3a5c] text-white py-3 px-8 rounded-xl font-medium transition text-base hover:bg-white/5">
+          <Link href="/dashboard" className="text-white rounded-xl font-medium transition text-base" style={{border:'1px solid #2a2a3d', padding:'12px 36px', whiteSpace:'nowrap'}}>
             See how it works
           </Link>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-16">
-          <div className="rounded-2xl p-5 border transition" style={{background:'#13131a', borderColor:'#2a2a3d'}}>
+        <div className="grid grid-cols-3 gap-5 mb-20">
+          <div className="rounded-2xl border transition" style={{background:'#13131a', borderColor:'#2a2a3d', padding:'24px'}}>
             <p className="text-3xl font-bold text-white mb-1">30s</p>
             <p className="text-gray-500 text-sm">To create an invoice</p>
           </div>
-          <div className="rounded-2xl p-5 border transition" style={{background:'#13131a', borderColor:'#2a2a3d'}}>
+          <div className="rounded-2xl border transition" style={{background:'#13131a', borderColor:'#2a2a3d', padding:'24px'}}>
             <p className="text-3xl font-bold text-white mb-1">GST</p>
             <p className="text-gray-500 text-sm">Auto calculated</p>
           </div>
-          <div className="rounded-2xl p-5 border transition" style={{background:'#13131a', borderColor:'#2a2a3d'}}>
+          <div className="rounded-2xl border transition" style={{background:'#13131a', borderColor:'#2a2a3d', padding:'24px'}}>
             <p className="text-3xl font-bold text-white mb-1">PDF</p>
             <p className="text-gray-500 text-sm">One click export</p>
           </div>
         </div>
 
         {/* Features */}
-        <div className="grid grid-cols-2 gap-4 text-left">
-          <div className="rounded-2xl p-5 border" style={{background:'#13131a', borderColor:'#2a2a3d'}}>
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-3" style={{background:'rgba(124,92,252,0.15)'}}>
-              <span className="text-sm" style={{color:'#7c5cfc'}}>$</span>
+        <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gridAutoRows:'1fr', gap:'24px', textAlign:'left'}}>
+          {[
+            {icon:'$', color:'#7c5cfc', title:'Track payments', desc:'See who has paid and who still owes you at a glance.'},
+            {icon:'✓', color:'#a78bfa', title:'GST ready', desc:'Australian GST automatically calculated on every invoice.'},
+            {icon:'↓', color:'#c4b5fd', title:'PDF export', desc:'Download or print professional invoices instantly.'},
+            {icon:'∞', color:'#7c5cfc', title:'Free to start', desc:"Get started for free. Upgrade when you're ready to grow."},
+          ].map(({icon, color, title, desc}) => (
+            <div key={title} style={{background:'#13131a', border:'1px solid #2a2a3d', borderRadius:'16px', padding:'24px', display:'flex', flexDirection:'column'}}>
+              <div style={{width:'40px', height:'40px', minHeight:'40px', background:'rgba(124,92,252,0.15)', borderRadius:'10px', display:'flex', alignItems:'center', justifyContent:'center', marginBottom:'16px'}}>
+                <span style={{color, fontWeight:'600', fontSize:'16px'}}>{icon}</span>
+              </div>
+              <p style={{color:'#fff', fontWeight:'600', marginBottom:'8px', fontSize:'15px'}}>{title}</p>
+              <p style={{color:'#6b7280', fontSize:'14px', lineHeight:'1.6', margin:0}}>{desc}</p>
             </div>
-            <p className="text-white font-medium mb-1">Track payments</p>
-            <p className="text-gray-500 text-sm">See who has paid and who still owes you at a glance.</p>
-          </div>
-          <div className="rounded-2xl p-5 border" style={{background:'#13131a', borderColor:'#2a2a3d'}}>
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-3" style={{background:'rgba(124,92,252,0.15)'}}>
-              <span className="text-sm" style={{color:'#a78bfa'}}>✓</span>
-            </div>
-            <p className="text-white font-medium mb-1">GST ready</p>
-            <p className="text-gray-500 text-sm">Australian GST automatically calculated on every invoice.</p>
-          </div>
-          <div className="rounded-2xl p-5 border" style={{background:'#13131a', borderColor:'#2a2a3d'}}>
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-3" style={{background:'rgba(124,92,252,0.15)'}}>
-              <span className="text-sm" style={{color:'#c4b5fd'}}>↓</span>
-            </div>
-            <p className="text-white font-medium mb-1">PDF export</p>
-            <p className="text-gray-500 text-sm">Download or print professional invoices instantly.</p>
-          </div>
-          <div className="rounded-2xl p-5 border" style={{background:'#13131a', borderColor:'#2a2a3d'}}>
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-3" style={{background:'rgba(124,92,252,0.15)'}}>
-              <span className="text-sm" style={{color:'#7c5cfc'}}>∞</span>
-            </div>
-            <p className="text-white font-medium mb-1">Free to start</p>
-            <p className="text-gray-500 text-sm">Get started for free. Upgrade when you're ready to grow.</p>
-          </div>
+          ))}
         </div>
 
-        <p className="text-gray-600 text-xs mt-10">No credit card required · Cancel anytime · Made in Australia</p>
+        <p className="text-gray-600 text-xs mt-12">No credit card required · Cancel anytime · Made in Australia</p>
       </div>
     </main>
   )
