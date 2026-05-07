@@ -31,10 +31,10 @@ export default function ViewInvoice() {
   if (!inv) return <div style={{minHeight:'100vh', background:'#0a0a0f', display:'flex', alignItems:'center', justifyContent:'center', color:'#9ca3af'}}>Invoice not found</div>
 
   return (
-    <div style={{minHeight:'100vh', background:'#0a0a0f', position:'relative', overflow:'hidden', display:'flex', justifyContent:'center', padding:'40px'}}>
+    <div style={{minHeight:'100vh', background:'#0a0a0f', position:'relative', overflow:'hidden', display:'flex', justifyContent:'center'}} className="p-4 sm:p-10">
       <div style={{position:'fixed', top:-200, left:'50%', transform:'translateX(-50%)', width:600, height:600, background:'rgba(99,102,241,0.1)', borderRadius:'50%', filter:'blur(120px)', pointerEvents:'none'}} />
 
-      <div style={{width:'100%', maxWidth:768, paddingLeft:32, paddingRight:32, paddingTop:48, paddingBottom:48, position:'relative', zIndex:10}}>
+      <div style={{width:'100%', maxWidth:768, position:'relative', zIndex:10}} className="py-8 sm:py-12">
         {/* Action buttons - hidden on print */}
         <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:32}} className="print:hidden">
           <button onClick={() => router.push('/dashboard')} className="text-sm text-gray-500 hover:text-white transition bg-transparent">
@@ -54,27 +54,27 @@ export default function ViewInvoice() {
         </div>
 
         {/* Invoice document */}
-        <div id="invoice-doc" className="bg-white text-black p-12 rounded-none shadow-2xl">
-          
+        <div id="invoice-doc" className="bg-white text-black p-6 sm:p-12 rounded-none shadow-2xl">
+
           {/* Header */}
-          <div className="flex justify-between items-start mb-10">
+          <div className="flex flex-col sm:flex-row justify-between items-start mb-10 gap-4">
             <div>
               <p className="text-xl font-bold text-gray-800">{inv.bizName || 'Your Business'}</p>
               <p className="text-sm text-gray-500 mt-1">{inv.bizEmail}</p>
             </div>
-            <div className="text-right">
-              <h1 className="text-4xl font-bold text-indigo-600 tracking-widest">INVOICE</h1>
+            <div className="sm:text-right">
+              <h1 className="text-4xl font-bold tracking-widest" style={{color:'#38bdf8'}}>INVOICE</h1>
             </div>
           </div>
 
           {/* Bill to + invoice details */}
-          <div className="flex justify-between mb-10">
+          <div className="flex flex-col sm:flex-row justify-between mb-10 gap-6">
             <div>
               <p className="text-xs font-bold text-indigo-600 uppercase mb-2">Bill To</p>
               <p className="text-lg font-semibold text-gray-800">{inv.clientName}</p>
               <p className="text-sm text-gray-500">{inv.clientEmail}</p>
             </div>
-            <div className="text-right">
+            <div className="sm:text-right">
               <table className="text-sm">
   <tbody>
     <tr>
@@ -95,7 +95,8 @@ export default function ViewInvoice() {
           </div>
 
           {/* Line items table */}
-          <table className="w-full mb-8 text-sm">
+          <div className="overflow-x-auto -mx-6 sm:mx-0 mb-8">
+          <table className="w-full text-sm" style={{minWidth:400}}>
             <thead>
               <tr className="text-white" style={{backgroundColor: '#38bdf8'}}>
                 <th className="text-left py-3 px-4 font-semibold">QTY</th>
@@ -115,10 +116,11 @@ export default function ViewInvoice() {
               ))}
             </tbody>
           </table>
+          </div>
 
           {/* Totals */}
           <div className="flex justify-end mb-8">
-            <div className="w-64">
+            <div className="w-full sm:w-64">
               <div className="flex justify-between py-2 text-sm text-gray-600 border-b border-gray-100">
                 <span>Subtotal</span>
                 <span>${inv.subtotal.toFixed(2)}</span>
@@ -143,7 +145,7 @@ export default function ViewInvoice() {
           )}
 
           {/* Footer */}
-          <div className="flex justify-between items-center mt-10 pt-6 border-t border-gray-100">
+          <div className="flex flex-col sm:flex-row justify-between items-center mt-10 pt-6 border-t border-gray-100 gap-2">
             <p className="text-xs text-gray-400">Thank you for your business!</p>
             <p className="text-lg font-bold text-indigo-600">BillMate</p>
           </div>
