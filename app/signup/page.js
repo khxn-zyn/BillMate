@@ -12,6 +12,29 @@ const GoogleIcon = () => (
   </svg>
 )
 
+const Spinner = () => (
+  <>
+    <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+    <span style={{display:'inline-block', width:14, height:14, border:'2px solid rgba(255,255,255,0.3)', borderTop:'2px solid white', borderRadius:'50%', animation:'spin 0.7s linear infinite', verticalAlign:'middle', marginRight:8}} />
+  </>
+)
+
+function friendlyError(msg) {
+  if (!msg) return 'Something went wrong. Please try again.'
+  const m = msg.toLowerCase()
+  if (m.includes('user already registered') || m.includes('already registered') || m.includes('already been registered'))
+    return 'An account with this email already exists. Try signing in instead.'
+  if (m.includes('password should be at least') || m.includes('password must be at least'))
+    return 'Password must be at least 6 characters.'
+  if (m.includes('unable to validate email') || m.includes('invalid format') || m.includes('valid email'))
+    return 'Please enter a valid email address.'
+  if (m.includes('too many requests') || m.includes('rate limit'))
+    return 'Too many attempts. Please wait a moment and try again.'
+  if (m.includes('network') || m.includes('fetch'))
+    return 'Connection error. Check your internet and try again.'
+  return 'Something went wrong. Please try again.'
+}
+
 export default function Signup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -27,7 +50,7 @@ export default function Signup() {
     const supabase = createClient()
     const { error } = await supabase.auth.signUp({ email, password })
     if (error) {
-      setError(error.message)
+      setError(friendlyError(error.message))
       setLoading(false)
     } else {
       setSuccess(true)
@@ -43,7 +66,7 @@ export default function Signup() {
       options: { redirectTo: `${window.location.origin}/auth/callback` },
     })
     if (error) {
-      setError(error.message)
+      setError(friendlyError(error.message))
       setGoogleLoading(false)
     }
   }
@@ -66,7 +89,7 @@ export default function Signup() {
         ) : (
           <div style={{background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.1)', borderRadius:20, padding:32}}>
             <button onClick={handleGoogleSignup} disabled={googleLoading} style={{width:'100%', display:'flex', alignItems:'center', justifyContent:'center', gap:10, background:'rgba(255,255,255,0.07)', border:'1px solid rgba(255,255,255,0.15)', borderRadius:12, padding:'12px 16px', color:'white', fontSize:14, fontWeight:600, cursor:googleLoading?'not-allowed':'pointer', opacity:googleLoading?0.7:1, marginBottom:20}}>
-              <GoogleIcon />
+              {googleLoading ? <Spinner /> : <GoogleIcon />}
               {googleLoading ? 'Redirecting…' : 'Continue with Google'}
             </button>
             <div style={{display:'flex', alignItems:'center', gap:12, marginBottom:20}}>
@@ -84,7 +107,8 @@ export default function Signup() {
                 <input type="password" value={password} onChange={e => setPassword(e.target.value)} required minLength={6} placeholder="Min. 6 characters" style={{width:'100%', background:'rgba(255,255,255,0.07)', border:'1px solid rgba(255,255,255,0.1)', borderRadius:12, padding:'12px 16px', color:'white', fontSize:14, outline:'none', boxSizing:'border-box'}} />
               </div>
               {error && <p style={{color:'#f87171', fontSize:13, background:'rgba(248,113,113,0.1)', border:'1px solid rgba(248,113,113,0.2)', borderRadius:10, padding:'10px 14px', margin:0}}>{error}</p>}
-              <button type="submit" disabled={loading} style={{width:'100%', background:'#7c5cfc', color:'white', padding:'14px', borderRadius:12, fontWeight:700, fontSize:14, cursor:loading?'not-allowed':'pointer', border:'none', opacity:loading?0.7:1, marginTop:4}}>
+              <button type="submit" disabled={loading} style={{width:'100%', background:'#7c5cfc', color:'white', padding:'14px', borderRadius:12, fontWeight:700, fontSize:14, cursor:loading?'not-allowed':'pointer', border:'none', opacity:loading?0.7:1, marginTop:4, display:'flex', alignItems:'center', justifyContent:'center'}}>
+                {loading && <Spinner />}
                 {loading ? 'Creating account…' : 'Create account'}
               </button>
             </form>

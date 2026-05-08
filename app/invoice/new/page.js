@@ -11,6 +11,8 @@ export default function NewInvoice() {
     num: 'INV-001', due: '', notes: ''
   })
   const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState('')
+  const [formError, setFormError] = useState('')
 
   const updateForm = (k, v) => setForm(f => ({ ...f, [k]: v }))
   const addLine = () => setLines(l => [...l, { id: Date.now(), desc: '', qty: 1, price: '' }])
@@ -22,7 +24,9 @@ export default function NewInvoice() {
   const total = subtotal + gst
 
   const save = async () => {
-    if (!form.clientName) { alert('Please enter a client name'); return }
+    setSaveError('')
+    if (!form.clientName) { setFormError('Please enter a client name.'); return }
+    setFormError('')
     setSaving(true)
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
@@ -42,7 +46,7 @@ export default function NewInvoice() {
     if (!error) {
       router.push('/dashboard')
     } else {
-      alert('Failed to save invoice. Please try again.')
+      setSaveError('Failed to save invoice. Please check your connection and try again.')
       setSaving(false)
     }
   }
@@ -176,11 +180,15 @@ export default function NewInvoice() {
         </div>
 
         {/* Buttons */}
+        <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+        {formError && <p style={{color:'#f87171', fontSize:13, background:'rgba(248,113,113,0.1)', border:'1px solid rgba(248,113,113,0.2)', borderRadius:12, padding:'12px 16px', marginBottom:8}}>{formError}</p>}
+        {saveError && <p style={{color:'#f87171', fontSize:13, background:'rgba(248,113,113,0.1)', border:'1px solid rgba(248,113,113,0.2)', borderRadius:12, padding:'12px 16px', marginBottom:8}}>{saveError}</p>}
         <button
           onClick={save}
           disabled={saving}
-          style={{width:'100%', background:'#4f46e5', color:'white', padding:'16px', borderRadius:16, fontWeight:700, fontSize:15, cursor:saving?'not-allowed':'pointer', border:'none', marginBottom:8, opacity:saving?0.7:1}}
+          style={{width:'100%', background:'#4f46e5', color:'white', padding:'16px', borderRadius:16, fontWeight:700, fontSize:15, cursor:saving?'not-allowed':'pointer', border:'none', marginBottom:8, opacity:saving?0.7:1, display:'flex', alignItems:'center', justifyContent:'center', gap:10}}
         >
+          {saving && <span style={{display:'inline-block', width:16, height:16, border:'2px solid rgba(255,255,255,0.35)', borderTop:'2px solid white', borderRadius:'50%', animation:'spin 0.7s linear infinite'}} />}
           {saving ? 'Saving…' : 'Save Invoice'}
         </button>
         <button onClick={() => router.push('/dashboard')} style={{width:'100%', background:'rgba(255,255,255,0.05)', color:'#6b7280', padding:'14px', borderRadius:16, fontWeight:600, fontSize:14, cursor:'pointer', border:'1px solid rgba(255,255,255,0.1)'}}>

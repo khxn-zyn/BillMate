@@ -49,6 +49,7 @@ const themes = {
 
 export default function Dashboard() {
   const [invoices, setInvoices] = useState([])
+  const [loadingInvoices, setLoadingInvoices] = useState(true)
   const [tab, setTab] = useState('active')
   const [searchTerm, setSearchTerm] = useState('')
   const [userEmail, setUserEmail] = useState('')
@@ -79,6 +80,7 @@ export default function Dashboard() {
         .select('id, status, data')
         .order('created_at', { ascending: false })
       if (data) setInvoices(data.map(row => ({ ...row.data, id: row.id, status: row.status })))
+      setLoadingInvoices(false)
     }
     fetchInvoices()
   }, [])
@@ -139,6 +141,20 @@ export default function Dashboard() {
       inv.num?.toLowerCase().includes(searchTerm.toLowerCase())
     )
   }, [activeInvoices, paidInvoices, tab, searchTerm])
+
+  const SkeletonRow = () => (
+    <div style={{display:'flex', alignItems:'center', justifyContent:'space-between', padding:'20px 24px', borderBottom:`1px solid ${t.rowBorder}`}}>
+      <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}`}</style>
+      <div>
+        <div style={{width:140, height:13, background:t.rowBorder, borderRadius:6, marginBottom:9, animation:'pulse 1.5s ease-in-out infinite'}} />
+        <div style={{width:100, height:11, background:t.rowBorder, borderRadius:6, animation:'pulse 1.5s ease-in-out infinite 0.2s'}} />
+      </div>
+      <div style={{display:'flex', alignItems:'center', gap:24}}>
+        <div style={{width:52, height:20, background:t.rowBorder, borderRadius:999, animation:'pulse 1.5s ease-in-out infinite 0.1s'}} />
+        <div style={{width:60, height:16, background:t.rowBorder, borderRadius:6, animation:'pulse 1.5s ease-in-out infinite 0.3s'}} />
+      </div>
+    </div>
+  )
 
   const InvoiceRow = ({ inv }) => (
     <div
@@ -267,7 +283,9 @@ export default function Dashboard() {
               {tab === 'active' ? 'Unpaid Invoices' : 'Paid Invoices'}
             </h2>
           </div>
-          {filteredInvoices.length === 0 ? (
+          {loadingInvoices ? (
+            [0, 1, 2].map(i => <SkeletonRow key={i} />)
+          ) : filteredInvoices.length === 0 ? (
             <div style={{padding:'60px 24px', textAlign:'center'}}>
               <p style={{color:t.textMuted, marginBottom:20}}>
                 {searchTerm ? 'No matching invoices' : tab === 'active' ? 'No active invoices yet' : 'No paid invoices yet'}

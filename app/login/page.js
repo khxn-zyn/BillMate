@@ -13,6 +13,29 @@ const GoogleIcon = () => (
   </svg>
 )
 
+const Spinner = () => (
+  <>
+    <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+    <span style={{display:'inline-block', width:14, height:14, border:'2px solid rgba(255,255,255,0.3)', borderTop:'2px solid white', borderRadius:'50%', animation:'spin 0.7s linear infinite', verticalAlign:'middle', marginRight:8}} />
+  </>
+)
+
+function friendlyError(msg) {
+  if (!msg) return 'Something went wrong. Please try again.'
+  const m = msg.toLowerCase()
+  if (m.includes('invalid login credentials') || m.includes('invalid credentials'))
+    return 'Incorrect email or password.'
+  if (m.includes('email not confirmed'))
+    return 'Please confirm your email before signing in. Check your inbox.'
+  if (m.includes('too many requests') || m.includes('rate limit'))
+    return 'Too many attempts. Please wait a moment and try again.'
+  if (m.includes('user not found'))
+    return 'No account found with that email.'
+  if (m.includes('network') || m.includes('fetch'))
+    return 'Connection error. Check your internet and try again.'
+  return 'Something went wrong. Please try again.'
+}
+
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -28,7 +51,7 @@ export default function Login() {
     const supabase = createClient()
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) {
-      setError(error.message)
+      setError(friendlyError(error.message))
       setLoading(false)
     } else {
       router.push('/dashboard')
@@ -45,7 +68,7 @@ export default function Login() {
       options: { redirectTo: `${window.location.origin}/auth/callback` },
     })
     if (error) {
-      setError(error.message)
+      setError(friendlyError(error.message))
       setGoogleLoading(false)
     }
   }
@@ -60,7 +83,7 @@ export default function Login() {
         </div>
         <div style={{background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.1)', borderRadius:20, padding:32}}>
           <button onClick={handleGoogleLogin} disabled={googleLoading} style={{width:'100%', display:'flex', alignItems:'center', justifyContent:'center', gap:10, background:'rgba(255,255,255,0.07)', border:'1px solid rgba(255,255,255,0.15)', borderRadius:12, padding:'12px 16px', color:'white', fontSize:14, fontWeight:600, cursor:googleLoading?'not-allowed':'pointer', opacity:googleLoading?0.7:1, marginBottom:20}}>
-            <GoogleIcon />
+            {googleLoading ? <Spinner /> : <GoogleIcon />}
             {googleLoading ? 'Redirecting…' : 'Continue with Google'}
           </button>
           <div style={{display:'flex', alignItems:'center', gap:12, marginBottom:20}}>
@@ -78,7 +101,8 @@ export default function Login() {
               <input type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="••••••••" style={{width:'100%', background:'rgba(255,255,255,0.07)', border:'1px solid rgba(255,255,255,0.1)', borderRadius:12, padding:'12px 16px', color:'white', fontSize:14, outline:'none', boxSizing:'border-box'}} />
             </div>
             {error && <p style={{color:'#f87171', fontSize:13, background:'rgba(248,113,113,0.1)', border:'1px solid rgba(248,113,113,0.2)', borderRadius:10, padding:'10px 14px', margin:0}}>{error}</p>}
-            <button type="submit" disabled={loading} style={{width:'100%', background:'#7c5cfc', color:'white', padding:'14px', borderRadius:12, fontWeight:700, fontSize:14, cursor:loading?'not-allowed':'pointer', border:'none', opacity:loading?0.7:1, marginTop:4}}>
+            <button type="submit" disabled={loading} style={{width:'100%', background:'#7c5cfc', color:'white', padding:'14px', borderRadius:12, fontWeight:700, fontSize:14, cursor:loading?'not-allowed':'pointer', border:'none', opacity:loading?0.7:1, marginTop:4, display:'flex', alignItems:'center', justifyContent:'center'}}>
+              {loading && <Spinner />}
               {loading ? 'Signing in…' : 'Sign in'}
             </button>
             <p style={{textAlign:'right', margin:0}}>
