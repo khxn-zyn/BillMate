@@ -13,15 +13,19 @@ export default function Home() {
           box-shadow: 0 0 24px rgba(124, 92, 252, 0.15);
         }
         @media (max-width: 640px) {
+          .lp-nav { padding: 14px 20px !important; }
+          .lp-main { padding-left: 20px !important; padding-right: 20px !important; }
           .stat-grid { gap: 8px !important; }
           .stat-card { padding: 12px 8px !important; }
           .stat-value { font-size: 1.1rem !important; }
           .stat-label { font-size: 0.65rem !important; }
+          .lp-cta-row { flex-direction: column !important; align-items: stretch !important; }
+          .lp-cta-row a, .lp-cta-row button { text-align: center !important; }
         }
       `}</style>
 
       {/* Nav */}
-      <nav className="backdrop-blur-md" style={{position:'sticky', top:0, zIndex:50, background:'rgba(10,10,15,0.95)', borderBottom:'1px solid #2a2a3d', padding:'16px 48px', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+      <nav className="lp-nav backdrop-blur-md" style={{position:'sticky', top:0, zIndex:50, background:'rgba(10,10,15,0.95)', borderBottom:'1px solid #2a2a3d', padding:'16px 48px', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
         <Link href="/" className="text-white font-bold text-xl">BillMate</Link>
         <div style={{display:'flex', gap:'12px', alignItems:'center'}}>
           <Link href="/login" className="text-gray-400 hover:text-white text-sm transition" style={{padding:'8px 16px', whiteSpace:'nowrap'}}>Log in</Link>
@@ -32,14 +36,14 @@ export default function Home() {
       </nav>
 
       {/* Page content */}
-      <main className="flex flex-col items-center px-6 pb-16 relative" style={{paddingTop:'64px', overflowX:'hidden'}}>
+      <main className="lp-main flex flex-col items-center pb-16 relative" style={{paddingTop:'64px', paddingLeft:'24px', paddingRight:'24px', overflowX:'hidden'}}>
 
         {/* Background glow effects */}
         <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#7c5cfc]/15 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-[-200px] left-1/4 w-[400px] h-[400px] bg-[#7c5cfc]/10 rounded-full blur-[120px] pointer-events-none" />
 
         {/* Hero */}
-        <div className="max-w-2xl w-full text-center relative z-10">
+        <div style={{width:'100%', maxWidth:672, position:'relative', zIndex:10, textAlign:'center'}}>
 
           {/* Hero headline glow */}
           <div style={{position:'absolute', top:'-40px', left:'50%', transform:'translateX(-50%)', width:'480px', height:'240px', background:'radial-gradient(ellipse at center, rgba(124,92,252,0.22) 0%, transparent 70%)', pointerEvents:'none', zIndex:0}} />
@@ -57,11 +61,11 @@ export default function Home() {
             </span>
           </h1>
 
-          <p className="text-gray-400 mb-10 leading-relaxed" style={{fontSize:'clamp(14px, 2vw, 17px)', position:'relative', zIndex:1}}>
+          <p className="text-gray-400 mb-10 leading-relaxed" style={{fontSize:'clamp(14px, 2vw, 17px)', position:'relative', zIndex:1, wordBreak:'break-word', overflowWrap:'break-word', maxWidth:'100%'}}>
             Create professional invoices in 30 seconds. Auto-calculate GST. Export to PDF. Track who owes you money.
           </p>
 
-          <div style={{display:'flex', gap:'12px', justifyContent:'center', marginBottom:'80px', flexWrap:'wrap', position:'relative', zIndex:1}}>
+          <div className="lp-cta-row" style={{display:'flex', gap:'12px', justifyContent:'center', marginBottom:'80px', flexWrap:'wrap', position:'relative', zIndex:1}}>
             <Link href="/signup" className="text-white rounded-xl font-semibold transition text-base" style={{background:'#7c5cfc', padding:'12px 36px', whiteSpace:'nowrap'}}>
               Start for free
             </Link>
@@ -92,13 +96,13 @@ export default function Home() {
               {icon:'↓', color:'#c4b5fd', title:'PDF export', desc:'Download or print professional invoices instantly.'},
               {icon:'∞', color:'#7c5cfc', title:'Free to start', desc:"Get started for free. Upgrade when you're ready to grow."},
             ].map(({icon, color, title, desc}) => (
-              <div key={title} style={{background:'#13131a', border:'1px solid #2a2a3d', borderLeft:'3px solid #7c5cfc', borderRadius:'16px', padding:'20px 24px', display:'flex', alignItems:'flex-start', gap:'16px'}}>
+              <div key={title} style={{background:'#13131a', border:'1px solid #2a2a3d', borderLeft:'3px solid #7c5cfc', borderRadius:'16px', padding:'20px 24px', display:'flex', alignItems:'flex-start', gap:'16px', boxSizing:'border-box', minWidth:0}}>
                 <div style={{width:'40px', height:'40px', minWidth:'40px', background:'rgba(124,92,252,0.15)', borderRadius:'10px', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0}}>
                   <span style={{color, fontWeight:'600', fontSize:'16px'}}>{icon}</span>
                 </div>
-                <div>
+                <div style={{minWidth:0}}>
                   <p style={{color:'#fff', fontWeight:'600', marginBottom:'4px', fontSize:'15px'}}>{title}</p>
-                  <p style={{color:'#6b7280', fontSize:'14px', lineHeight:'1.6', margin:0}}>{desc}</p>
+                  <p style={{color:'#6b7280', fontSize:'14px', lineHeight:'1.6', margin:0, wordBreak:'break-word'}}>{desc}</p>
                 </div>
               </div>
             ))}
