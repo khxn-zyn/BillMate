@@ -39,12 +39,12 @@ export default function ViewInvoice() {
   if (!inv) return <div style={{minHeight:'100vh', background:'#0a0a0f', display:'flex', alignItems:'center', justifyContent:'center', color:'#9ca3af'}}>Invoice not found</div>
 
   return (
-    <div style={{minHeight:'100vh', background:'#0a0a0f', position:'relative', overflow:'hidden', display:'flex', justifyContent:'center'}} className="p-4 sm:p-10">
-      <div style={{position:'fixed', top:-200, left:'50%', transform:'translateX(-50%)', width:600, height:600, background:'rgba(99,102,241,0.1)', borderRadius:'50%', filter:'blur(120px)', pointerEvents:'none'}} />
+    <div id="invoice-page" style={{background:'#0a0a0f', position:'relative', overflow:'hidden', display:'flex', justifyContent:'center'}} className="p-4 sm:p-10 min-h-screen">
+      <div style={{position:'fixed', top:-200, left:'50%', transform:'translateX(-50%)', width:600, height:600, background:'rgba(99,102,241,0.1)', borderRadius:'50%', filter:'blur(120px)', pointerEvents:'none'}} className="no-print" />
 
       <div style={{width:'100%', maxWidth:768, position:'relative', zIndex:10}} className="py-8 sm:py-12">
         {/* Action buttons - hidden on print */}
-        <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:32}} className="print:hidden">
+        <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:32}} className="print:hidden no-print">
           <button onClick={() => router.push('/dashboard')} className="text-sm text-gray-500 hover:text-white transition bg-transparent">
             ← Back
           </button>
@@ -64,6 +64,12 @@ export default function ViewInvoice() {
         {/* Invoice document */}
         <style>{`
           .inv-accent { color: #7c5cfc !important; }
+          @media print {
+            body, html { background: white !important; margin: 0; padding: 0; }
+            .no-print { display: none !important; }
+            #invoice-page { background: white !important; min-height: unset !important; padding: 0 !important; display: block !important; }
+            #invoice-doc { box-shadow: none !important; border-radius: 0 !important; padding: 24px !important; }
+          }
         `}</style>
         <div id="invoice-doc" className="bg-white text-black rounded-none shadow-2xl" style={{padding:'40px'}}>
 

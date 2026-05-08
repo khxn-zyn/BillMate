@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div style={{minHeight:'100vh', background:'#0a0a0f'}}>
+    <div style={{minHeight:'100vh', background:'#0a0a0f', overflowX:'hidden'}}>
       <style>{`
         .stat-card {
           transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -11,6 +11,12 @@ export default function Home() {
         .stat-card:hover {
           border-color: rgba(124, 92, 252, 0.5) !important;
           box-shadow: 0 0 24px rgba(124, 92, 252, 0.15);
+        }
+        @media (max-width: 640px) {
+          .stat-grid { gap: 8px !important; }
+          .stat-card { padding: 12px 8px !important; }
+          .stat-value { font-size: 1.1rem !important; }
+          .stat-label { font-size: 0.65rem !important; }
         }
       `}</style>
 
@@ -26,7 +32,7 @@ export default function Home() {
       </nav>
 
       {/* Page content */}
-      <main className="flex flex-col items-center px-6 pb-16 relative" style={{paddingTop:'64px'}}>
+      <main className="flex flex-col items-center px-6 pb-16 relative" style={{paddingTop:'64px', overflowX:'hidden'}}>
 
         {/* Background glow effects */}
         <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#7c5cfc]/15 rounded-full blur-[120px] pointer-events-none" />
@@ -65,15 +71,15 @@ export default function Home() {
           </div>
 
           {/* Stats */}
-          <div id="features" className="grid grid-cols-3 gap-5" style={{marginBottom:'48px'}}>
+          <div id="features" className="stat-grid grid grid-cols-3 gap-5" style={{marginBottom:'48px'}}>
             {[
               {value:'30s', label:'To create an invoice'},
               {value:'GST', label:'Auto calculated'},
               {value:'PDF', label:'One click export'},
             ].map(({value, label}) => (
               <div key={value} className="stat-card rounded-2xl border" style={{background:'#13131a', borderColor:'#2a2a3d', padding:'24px'}}>
-                <p className="text-3xl font-bold text-white mb-1">{value}</p>
-                <p className="text-gray-500 text-sm">{label}</p>
+                <p className="stat-value text-3xl font-bold text-white mb-1">{value}</p>
+                <p className="stat-label text-gray-500 text-sm">{label}</p>
               </div>
             ))}
           </div>
