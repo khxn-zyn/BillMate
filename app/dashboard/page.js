@@ -106,9 +106,19 @@ export default function Dashboard() {
   }
 
   const handleUpgrade = async () => {
-    const response = await fetch('/api/checkout', { method: 'POST' })
-    const data = await response.json()
-    if (data.url) window.location.href = data.url
+    try {
+      const response = await fetch('/api/checkout', { method: 'POST' })
+      const data = await response.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        console.error('Checkout error:', data.error)
+        alert(`Upgrade failed: ${data.error ?? 'Unknown error'}`)
+      }
+    } catch (err) {
+      console.error('Checkout fetch error:', err)
+      alert('Something went wrong. Please try again.')
+    }
   }
 
   const t = themes[theme]
