@@ -157,7 +157,7 @@ export default function ViewInvoice() {
           {inv.notes && (
             <div className="border-t border-gray-100 pt-6">
               <p className="text-xs font-bold uppercase mb-2 inv-accent">Notes</p>
-              <p className="text-sm text-gray-600">{inv.notes}</p>
+              <p className="text-sm text-gray-600" style={{wordBreak:'break-word', overflowWrap:'break-word'}}>{inv.notes}</p>
             </div>
           )}
 
