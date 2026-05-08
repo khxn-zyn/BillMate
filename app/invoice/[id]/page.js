@@ -42,9 +42,9 @@ export default function ViewInvoice() {
     <div id="invoice-page" style={{background:'#0a0a0f', position:'relative', overflow:'hidden', display:'flex', justifyContent:'center'}} className="p-4 sm:p-10 min-h-screen">
       <div style={{position:'fixed', top:-200, left:'50%', transform:'translateX(-50%)', width:600, height:600, background:'rgba(99,102,241,0.1)', borderRadius:'50%', filter:'blur(120px)', pointerEvents:'none'}} className="no-print" />
 
-      <div style={{width:'100%', maxWidth:768, position:'relative', zIndex:10}} className="py-8 sm:py-12">
+      <div style={{width:'100%', maxWidth:768, position:'relative', zIndex:10, paddingTop:32, paddingBottom:40}}>
         {/* Action buttons - hidden on print */}
-        <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:32}} className="print:hidden no-print">
+        <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:24, paddingTop:8}} className="print:hidden no-print">
           <button onClick={() => router.push('/dashboard')} className="text-sm text-gray-500 hover:text-white transition bg-transparent">
             ← Back
           </button>
