@@ -39,16 +39,16 @@ export default function ViewInvoice() {
   if (!inv) return <div style={{minHeight:'100vh', background:'#0a0a0f', display:'flex', alignItems:'center', justifyContent:'center', color:'#9ca3af'}}>Invoice not found</div>
 
   return (
-    <div id="invoice-page" style={{background:'#0a0a0f', position:'relative', overflow:'hidden', display:'flex', justifyContent:'center'}} className="p-4 sm:p-10 min-h-screen">
+    <div id="invoice-page" style={{background:'#0a0a0f', position:'relative', overflow:'hidden', display:'flex', justifyContent:'center', paddingBottom:40}} className="p-4 sm:p-10">
       <div style={{position:'fixed', top:-200, left:'50%', transform:'translateX(-50%)', width:600, height:600, background:'rgba(99,102,241,0.1)', borderRadius:'50%', filter:'blur(120px)', pointerEvents:'none'}} className="no-print" />
 
       <div style={{width:'100%', maxWidth:768, position:'relative', zIndex:10, paddingTop:32, paddingBottom:40}}>
         {/* Action buttons - hidden on print */}
-        <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:24, paddingTop:8}} className="print:hidden no-print">
-          <button onClick={() => router.push('/dashboard')} className="text-sm text-gray-500 hover:text-white transition bg-transparent">
+        <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:24, paddingTop:8, flexWrap:'wrap', gap:12}} className="print:hidden no-print">
+          <button onClick={() => router.push('/dashboard')} className="text-sm text-gray-500 hover:text-white transition bg-transparent" style={{flexShrink:0}}>
             ← Back
           </button>
-          <div className="flex gap-3">
+          <div style={{display:'flex', gap:8, flexWrap:'wrap'}}>
             <button onClick={markPaid} className={`text-sm px-4 py-2 rounded-xl font-medium transition ${inv.status === 'paid' ? 'bg-amber-500/20 text-amber-400 hover:bg-amber-500/30' : 'bg-green-500/20 text-green-400 hover:bg-green-500/30'}`}>
               {inv.status === 'paid' ? 'Mark unpaid' : 'Mark paid'}
             </button>
