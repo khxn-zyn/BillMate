@@ -77,6 +77,10 @@ export default function Login() {
             >
               {loading ? 'Signing in…' : 'Sign in'}
             </button>
+
+            <p style={{textAlign:'right', margin:0}}>
+              <Link href="/forgot-password" style={{color:'#a78bfa', fontSize:13, fontWeight:600, textDecoration:'none'}}>Forgot password?</Link>
+            </p>
           </form>
         </div>
 
