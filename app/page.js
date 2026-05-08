@@ -109,6 +109,9 @@ export default function Home() {
           </div>
 
           <p className="text-gray-600 text-xs mt-12">No credit card required · Cancel anytime · Made in Australia</p>
+          <p className="text-gray-600 text-xs mt-3">
+            <a href="mailto:support@bill-mate.com.au?subject=BillMate%20Feedback" style={{color:'#6b7280', textDecoration:'underline', textDecorationColor:'rgba(107,114,128,0.4)'}}>Feedback? Contact us</a>
+          </p>
         </div>
       </main>
     </div>

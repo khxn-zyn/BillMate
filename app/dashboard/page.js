@@ -219,6 +219,15 @@ export default function Dashboard() {
                   <span>{theme === 'dark' ? '☀️  Light mode' : '🌙  Dark mode'}</span>
                 </button>
 
+                <a
+                  href="mailto:support@bill-mate.com.au?subject=BillMate%20Feedback"
+                  style={{width:'100%', display:'flex', alignItems:'center', padding:'12px 16px', background:'transparent', borderTop:`1px solid ${t.divider}`, borderBottom:`1px solid ${t.divider}`, cursor:'pointer', color:t.text, fontSize:13, fontWeight:600, textDecoration:'none'}}
+                  onMouseEnter={e => e.currentTarget.style.background = t.dropdownHover}
+                  onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                >
+                  Send feedback
+                </a>
+
                 <button
                   onClick={handleLogout}
                   style={{width:'100%', display:'flex', alignItems:'center', padding:'12px 16px', background:'transparent', border:'none', cursor:'pointer', color:'#f87171', fontSize:13, fontWeight:600}}
