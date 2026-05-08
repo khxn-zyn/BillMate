@@ -18,8 +18,8 @@ export default function Home() {
       <nav className="backdrop-blur-md" style={{position:'sticky', top:0, zIndex:50, background:'rgba(10,10,15,0.95)', borderBottom:'1px solid #2a2a3d', padding:'16px 48px', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
         <Link href="/" className="text-white font-bold text-xl">BillMate</Link>
         <div style={{display:'flex', gap:'12px', alignItems:'center'}}>
-          <Link href="/dashboard" className="text-gray-400 hover:text-white text-sm transition" style={{padding:'8px 16px', whiteSpace:'nowrap'}}>Log in</Link>
-          <Link href="/dashboard" className="text-white text-sm font-medium rounded-lg transition" style={{background:'#7c5cfc', padding:'9px 24px', whiteSpace:'nowrap'}}>
+          <Link href="/login" className="text-gray-400 hover:text-white text-sm transition" style={{padding:'8px 16px', whiteSpace:'nowrap'}}>Log in</Link>
+          <Link href="/signup" className="text-white text-sm font-medium rounded-lg transition" style={{background:'#7c5cfc', padding:'9px 24px', whiteSpace:'nowrap'}}>
             Sign up
           </Link>
         </div>
@@ -56,7 +56,7 @@ export default function Home() {
           </p>
 
           <div style={{display:'flex', gap:'12px', justifyContent:'center', marginBottom:'80px', flexWrap:'wrap', position:'relative', zIndex:1}}>
-            <Link href="/dashboard" className="text-white rounded-xl font-semibold transition text-base" style={{background:'#7c5cfc', padding:'12px 36px', whiteSpace:'nowrap'}}>
+            <Link href="/signup" className="text-white rounded-xl font-semibold transition text-base" style={{background:'#7c5cfc', padding:'12px 36px', whiteSpace:'nowrap'}}>
               Start for free
             </Link>
             <button onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })} className="text-white rounded-xl font-medium transition text-base" style={{border:'1px solid rgba(255,255,255,0.25)', padding:'12px 36px', whiteSpace:'nowrap', cursor:'pointer', background:'transparent'}}>

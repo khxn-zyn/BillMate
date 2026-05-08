@@ -53,6 +53,7 @@ export default function Dashboard() {
   const [tab, setTab] = useState('active')
   const [searchTerm, setSearchTerm] = useState('')
   const [userEmail, setUserEmail] = useState('')
+  const [userName, setUserName] = useState('')
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [theme, setTheme] = useState('dark')
   const router = useRouter()
@@ -67,7 +68,11 @@ export default function Dashboard() {
     const getUser = async () => {
       const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
-      if (user) setUserEmail(user.email)
+      if (user) {
+        setUserEmail(user.email)
+        const name = user.user_metadata?.full_name || user.email?.split('@')[0] || ''
+        setUserName(name)
+      }
     }
     getUser()
   }, [])
@@ -104,7 +109,7 @@ export default function Dashboard() {
   const handleLogout = async () => {
     const supabase = createClient()
     await supabase.auth.signOut()
-    router.push('/login')
+    router.replace('/login')
   }
 
   const handleUpgrade = async () => {
@@ -227,7 +232,7 @@ export default function Dashboard() {
           </div>
 
           <span style={{fontSize:48, fontWeight:700, color:t.text, letterSpacing:'-2px'}}>BillMate</span>
-          <p style={{color:t.textMuted, fontSize:16, marginTop:8}}>Welcome back 👋</p>
+          <p style={{color:t.textMuted, fontSize:16, marginTop:8}}>{userName ? `Welcome back, ${userName} 👋` : 'Welcome back 👋'}</p>
         </div>
 
         {/* Stats */}
