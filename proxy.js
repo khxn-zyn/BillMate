@@ -34,7 +34,7 @@ export async function proxy(request) {
   const { pathname } = request.nextUrl
 
   // Redirect unauthenticated users away from protected routes
-  if (!user && (pathname.startsWith('/dashboard') || pathname.startsWith('/invoice')) && !pathname.startsWith('/forgot-password') && !pathname.startsWith('/reset-password')) {
+  if (!user && (pathname.startsWith('/dashboard') || pathname.startsWith('/invoice')) && !pathname.startsWith('/forgot-password') && !pathname.startsWith('/reset-password') && !pathname.startsWith('/auth/callback')) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
