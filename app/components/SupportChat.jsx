@@ -2,6 +2,24 @@
 
 import { useState, useRef, useEffect } from "react";
 
+function renderMarkdown(text) {
+  return text.split("\n").map((line, i, arr) => {
+    const isHeading = line.startsWith("#");
+    const stripped = isHeading ? line.replace(/^#+\s*/, "") : line;
+    const parts = stripped.split(/(\*\*[^*]+\*\*)/g).map((part, j) =>
+      part.startsWith("**") && part.endsWith("**")
+        ? <strong key={j}>{part.slice(2, -2)}</strong>
+        : part
+    );
+    return (
+      <span key={i} style={isHeading ? { fontWeight: 700, fontSize: 16, display: "block" } : undefined}>
+        {isHeading ? <strong>{parts}</strong> : parts}
+        {i < arr.length - 1 && !isHeading && <br />}
+      </span>
+    );
+  });
+}
+
 const OPENING_MESSAGE = {
   role: "assistant",
   content: "Hey! I'm your BillMate assistant 👋 Ask me anything about invoicing, GST, or using the app.",
@@ -110,10 +128,11 @@ export default function SupportChat() {
                   color: "#fff",
                   fontSize: 14,
                   lineHeight: 1.5,
-                  whiteSpace: "pre-wrap",
                   wordBreak: "break-word",
                 }}>
-                  {m.content}
+                  {m.role === "assistant"
+                    ? renderMarkdown(m.content)
+                    : m.content}
                 </div>
               </div>
             ))}

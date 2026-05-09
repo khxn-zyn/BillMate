@@ -15,14 +15,20 @@ export async function POST(request) {
       "anthropic-version": "2023-06-01",
     },
     body: JSON.stringify({
-      model: "claude-sonnet-4-20250514",
+      model: "claude-sonnet-4-6",
       max_tokens: 1024,
       system: SYSTEM_PROMPT,
-      messages: messages.map(m => ({ role: m.role, content: m.content })),
+      messages: messages
+        .filter((_, i, arr) => i >= arr.findIndex(m => m.role === "user"))
+        .map(m => ({ role: m.role, content: m.content })),
     }),
   });
 
   const data = await res.json();
+  if (!res.ok) {
+    console.error("Anthropic API error:", data);
+    return Response.json({ text: "Sorry, I couldn't get a response. Please try again." }, { status: 200 });
+  }
   const text = data.content?.[0]?.text ?? "Sorry, I couldn't get a response. Please try again.";
 
   return Response.json({ text });
