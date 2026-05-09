@@ -9,22 +9,20 @@
 
 | | |
 |---|---|
-| **Session** | .05 (in progress) |
+| **Session** | .06 (in progress) |
 | **Live** | bill-mate-lake.vercel.app |
 | **Repo** | github.com/khxn-zyn/BillMate |
 | **Stack** | Next.js · Supabase · Stripe · Vercel |
 | **Auth** | Email/password + Google OAuth |
 | **Payments** | Stripe A$7/month Pro |
-| **Domain** | bill-mate.com.au (GoDaddy — reconnect pending) |
+| **Domain** | bill-mate.com.au (GoDaddy — live) |
 | **ABN** | 46 849 678 875 (Sole Trader, NSW) |
 | **Dev env** | Windows, Node v24.15.0, VS Code, Claude Code v2.1.133 |
 
-### 📋 .05 Queue
-- [ ] AI support chat widget (Claude-powered)
-- [ ] bill-mate.com.au reconnect
-- [ ] Obsidian second brain setup
-- [ ] First users strategy
-- [ ] Dark space below invoice on mobile (minor)
+### 📋 .06 Queue
+1. Landing page upgrade (Grok feedback — pricing section, screenshots, how it works, footer with ABN/privacy/terms)
+2. Facebook tradie groups posting
+3. Obsidian second brain setup
 
 ---
 
@@ -97,15 +95,24 @@
 
 ---
 
-### BillMate .05 — Current Session
+### BillMate .05 ✅
+- SESSIONS.md created and live in repo
+- bill-mate.com.au reconnected to Vercel
+- Purple B favicon (app/icon.svg)
+- AI support chat widget (Claude-powered, app/components/SupportChat.jsx)
+- Anthropic API key added to Vercel env vars
+- Domain redirect fixed (NEXT_PUBLIC_APP_URL updated)
+- First users strategy — Facebook tradie groups identified
+
+---
+
+### BillMate .06 — Current Session
 > This is where we are right now.
 
-**Still to do this session:**
-- AI support chat widget
-- bill-mate.com.au reconnect
-- Obsidian second brain
-- First users strategy
-- Mobile dark space below invoice (minor)
+**Queue:**
+1. Landing page upgrade (Grok feedback — pricing section, screenshots, how it works, footer with ABN/privacy/terms)
+2. Facebook tradie groups posting
+3. Obsidian second brain setup
 
 ---
 
