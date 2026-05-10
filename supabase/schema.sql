@@ -1,6 +1,29 @@
 -- Run this in the Supabase SQL editor (Dashboard > SQL Editor > New query)
 
-create table invoices (
+-- Profiles table (run this if not already created)
+create table if not exists profiles (
+  id uuid references auth.users primary key,
+  display_name text,
+  business_name text,
+  business_email text,
+  abn text,
+  phone text,
+  logo_url text,
+  payment_terms text default '14',
+  next_invoice_num int default 1,
+  updated_at timestamptz default now()
+);
+
+alter table profiles enable row level security;
+
+create policy "Users manage own profile"
+  on profiles for all
+  using (auth.uid() = id)
+  with check (auth.uid() = id);
+
+-- ----
+
+create table if not exists invoices (
   id uuid default gen_random_uuid() primary key,
   user_id uuid references auth.users not null,
   status text not null default 'unpaid',

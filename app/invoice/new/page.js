@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
@@ -9,11 +9,32 @@ export default function NewInvoice() {
   const [lines, setLines] = useState([{ id: 1, desc: '', qty: 1, price: '' }])
   const [form, setForm] = useState({
     bizName: '', bizEmail: '', clientName: '', clientEmail: '',
-    num: 'INV-001', due: '', notes: ''
+    num: 'INV-0001', due: '', notes: ''
   })
+  const [profile, setProfile] = useState(null)
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState('')
   const [formError, setFormError] = useState('')
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) return
+      const { data } = await supabase.from('profiles').select('*').eq('id', user.id).single()
+      if (data) {
+        setProfile(data)
+        const nextNum = data.next_invoice_num || 1
+        setForm(f => ({
+          ...f,
+          bizName: data.business_name || '',
+          bizEmail: data.business_email || user.email || '',
+          num: `INV-${String(nextNum).padStart(4, '0')}`,
+        }))
+      }
+    }
+    loadProfile()
+  }, [])
 
   const updateForm = (k, v) => setForm(f => ({ ...f, [k]: v }))
   const addLine = () => setLines(l => [...l, { id: Date.now(), desc: '', qty: 1, price: '' }])
@@ -34,6 +55,8 @@ export default function NewInvoice() {
     const invData = { ...form, lines, subtotal, gst, total, date: new Date().toISOString().split('T')[0] }
     const { error } = await supabase.from('invoices').insert({ user_id: user.id, status: 'unpaid', data: invData })
     if (!error) {
+      const nextNum = (profile?.next_invoice_num || 1) + 1
+      await supabase.from('profiles').upsert({ id: user.id, next_invoice_num: nextNum, updated_at: new Date().toISOString() })
       router.push('/dashboard')
     } else {
       setSaveError('Failed to save invoice. Please check your connection and try again.')
