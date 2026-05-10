@@ -22,7 +22,11 @@
       "Bash(vercel *)",
       "Bash(npm run *)",
       "Bash(New-Item -ItemType Directory -Path \"C:\\\\Obsidian\\\\BillMate\\\\Reviews\" -Force)",
-      "Skill(billmate-feature)"
+      "Skill(billmate-feature)",
+      "mcp__claude_ai_Vercel__list_deployments",
+      "Bash(npx vercel *)",
+      "mcp__claude_ai_Vercel__web_fetch_vercel_url",
+      "WebFetch(domain:bill-mate.com.au)"
     ]
   }
 }

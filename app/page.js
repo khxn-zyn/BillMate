@@ -197,7 +197,7 @@ export default function Home() {
         </div>
 
         {/* Pricing */}
-        <div id="pricing" style={{width:'100%', maxWidth:'800px', marginTop:'96px', position:'relative', zIndex:10}}>
+        <div id="pricing" style={{width:'100%', maxWidth:'800px', marginTop:'96px', paddingBottom:'48px', position:'relative', zIndex:10}}>
           <h2 style={{color:'#fff', fontWeight:'700', fontSize:'clamp(22px, 3vw, 32px)', textAlign:'center', marginBottom:'8px'}}>
             Simple, honest pricing
           </h2>
