@@ -15,7 +15,7 @@ export default function Home() {
         @media (max-width: 640px) {
           .lp-nav { padding: 14px 20px !important; }
           .lp-main { padding-left: 20px !important; padding-right: 20px !important; }
-          .stat-grid { gap: 8px !important; }
+          .stat-grid { gap: 8px !important; grid-template-columns: repeat(2, 1fr) !important; }
           .stat-card { padding: 12px 8px !important; }
           .stat-value { font-size: 1.1rem !important; }
           .stat-label { font-size: 0.65rem !important; }
@@ -79,11 +79,12 @@ export default function Home() {
           </p>
 
           {/* Stats */}
-          <div id="features" className="stat-grid grid grid-cols-3 gap-5" style={{marginBottom:'48px'}}>
+          <div id="features" className="stat-grid grid grid-cols-4 gap-5" style={{marginBottom:'48px'}}>
             {[
-              {value:'30s', label:'To create an invoice'},
-              {value:'GST', label:'Auto calculated'},
-              {value:'PDF', label:'One click export'},
+              {value:'30s',   label:'To create an invoice'},
+              {value:'Auto',  label:'GST calculated'},
+              {value:'1-tap', label:'Quote to invoice'},
+              {value:'Free',  label:'To get started'},
             ].map(({value, label}) => (
               <div key={value} className="stat-card rounded-2xl border" style={{background:'#13131a', borderColor:'#2a2a3d', padding:'24px'}}>
                 <p className="stat-value text-3xl font-bold text-white mb-1">{value}</p>
