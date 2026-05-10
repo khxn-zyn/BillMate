@@ -194,12 +194,109 @@ export default function Home() {
             </div>
           </div>
 
-          <p className="text-gray-600 text-xs mt-12">No credit card required · Cancel anytime · Made in Australia</p>
-          <p className="text-gray-600 text-xs mt-3">
-            <a href="mailto:support@bill-mate.com.au?subject=BillMate%20Feedback" style={{color:'#6b7280', textDecoration:'underline', textDecorationColor:'rgba(107,114,128,0.4)'}}>Feedback? Contact us</a>
+        </div>
+
+        {/* Pricing */}
+        <div id="pricing" style={{width:'100%', maxWidth:'800px', marginTop:'96px', position:'relative', zIndex:10}}>
+          <h2 style={{color:'#fff', fontWeight:'700', fontSize:'clamp(22px, 3vw, 32px)', textAlign:'center', marginBottom:'8px'}}>
+            Simple, honest pricing
+          </h2>
+          <p style={{color:'#6b7280', fontSize:'15px', textAlign:'center', marginBottom:'48px'}}>
+            No lock-in contracts. No surprise fees.
+          </p>
+          <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))', gap:'24px'}}>
+
+            {/* Free tier */}
+            <div style={{background:'#13131a', border:'1px solid #2a2a3d', borderRadius:'20px', padding:'32px', display:'flex', flexDirection:'column'}}>
+              <p style={{color:'#a78bfa', fontSize:'12px', fontWeight:'600', letterSpacing:'0.08em', textTransform:'uppercase', marginBottom:'12px'}}>Free</p>
+              <p style={{color:'#fff', fontSize:'42px', fontWeight:'700', marginBottom:'4px', lineHeight:1}}>A$0</p>
+              <p style={{color:'#6b7280', fontSize:'14px', marginBottom:'28px'}}>Forever free — no credit card needed</p>
+              <div style={{flex:1}}>
+                {['Unlimited invoices','PDF export','GST auto-calculation','Track payments'].map(f => (
+                  <div key={f} style={{display:'flex', alignItems:'center', gap:'12px', marginBottom:'14px'}}>
+                    <span style={{color:'#7c5cfc', fontWeight:'700', fontSize:'16px', lineHeight:1}}>✓</span>
+                    <span style={{color:'#d1d5db', fontSize:'14px'}}>{f}</span>
+                  </div>
+                ))}
+              </div>
+              <Link href="/signup" style={{display:'block', textAlign:'center', border:'1px solid rgba(124,92,252,0.4)', color:'#a78bfa', borderRadius:'12px', padding:'12px', fontWeight:'600', fontSize:'15px', marginTop:'28px', textDecoration:'none'}}>
+                Get started free
+              </Link>
+            </div>
+
+            {/* Pro tier */}
+            <div style={{background:'#13131a', border:'2px solid #7c5cfc', borderRadius:'20px', padding:'32px', display:'flex', flexDirection:'column', position:'relative', boxShadow:'0 0 40px rgba(124,92,252,0.15)'}}>
+              <div style={{position:'absolute', top:'-13px', left:'50%', transform:'translateX(-50%)', background:'#7c5cfc', color:'#fff', fontSize:'11px', fontWeight:'700', letterSpacing:'0.06em', textTransform:'uppercase', padding:'4px 14px', borderRadius:'999px', whiteSpace:'nowrap'}}>
+                Coming soon
+              </div>
+              <p style={{color:'#a78bfa', fontSize:'12px', fontWeight:'600', letterSpacing:'0.08em', textTransform:'uppercase', marginBottom:'12px'}}>Pro</p>
+              <div style={{display:'flex', alignItems:'baseline', gap:'4px', marginBottom:'4px'}}>
+                <p style={{color:'#fff', fontSize:'42px', fontWeight:'700', lineHeight:1, margin:0}}>A$7</p>
+                <p style={{color:'#6b7280', fontSize:'14px', margin:0}}>/month</p>
+              </div>
+              <p style={{color:'#6b7280', fontSize:'14px', marginBottom:'28px'}}>Everything you need to grow</p>
+              <div style={{flex:1}}>
+                {['Everything in Free','Priority support','More features coming'].map(f => (
+                  <div key={f} style={{display:'flex', alignItems:'center', gap:'12px', marginBottom:'14px'}}>
+                    <span style={{color:'#7c5cfc', fontWeight:'700', fontSize:'16px', lineHeight:1}}>✓</span>
+                    <span style={{color:'#d1d5db', fontSize:'14px'}}>{f}</span>
+                  </div>
+                ))}
+              </div>
+              <Link href="/signup" style={{display:'block', textAlign:'center', background:'#7c5cfc', color:'#fff', borderRadius:'12px', padding:'12px', fontWeight:'600', fontSize:'15px', marginTop:'28px', textDecoration:'none'}}>
+                Go Pro
+              </Link>
+            </div>
+
+          </div>
+        </div>
+
+      </main>
+
+      {/* Final CTA */}
+      <section style={{width:'100%', background:'linear-gradient(135deg, rgba(124,92,252,0.12) 0%, rgba(124,92,252,0.05) 50%, rgba(167,139,250,0.08) 100%)', borderTop:'1px solid rgba(124,92,252,0.15)', borderBottom:'1px solid rgba(124,92,252,0.15)', padding:'96px 24px', textAlign:'center', position:'relative', overflow:'hidden'}}>
+        <div style={{position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', width:'600px', height:'300px', background:'radial-gradient(ellipse at center, rgba(124,92,252,0.18) 0%, transparent 70%)', pointerEvents:'none'}} />
+        <div style={{maxWidth:'560px', margin:'0 auto', position:'relative', zIndex:1}}>
+          <h2 style={{color:'#fff', fontWeight:'700', fontSize:'clamp(24px, 4vw, 40px)', marginBottom:'16px', lineHeight:'1.2'}}>
+            Ready to get paid faster?
+          </h2>
+          <p style={{color:'#9ca3af', fontSize:'clamp(15px, 2vw, 18px)', marginBottom:'40px'}}>
+            Join Australian tradies already using BillMate.
+          </p>
+          <Link href="/signup" style={{display:'inline-block', background:'#7c5cfc', color:'#fff', padding:'14px 48px', borderRadius:'14px', fontWeight:'700', fontSize:'16px', textDecoration:'none'}}>
+            Try BillMate Free
+          </Link>
+          <p style={{color:'#4b5563', fontSize:'13px', marginTop:'20px'}}>
+            Australian-owned&nbsp;&nbsp;•&nbsp;&nbsp;Free to start&nbsp;&nbsp;•&nbsp;&nbsp;No credit card needed
           </p>
         </div>
-      </main>
+      </section>
+
+      {/* Footer */}
+      <footer style={{background:'#0a0a0f', borderTop:'1px solid #1a1a2e', padding:'48px 24px 36px'}}>
+        <div style={{maxWidth:'800px', margin:'0 auto'}}>
+          <div style={{display:'flex', flexWrap:'wrap', justifyContent:'space-between', alignItems:'flex-start', gap:'32px', marginBottom:'40px'}}>
+            <div>
+              <p style={{color:'#fff', fontWeight:'700', fontSize:'18px', marginBottom:'6px'}}>BillMate</p>
+              <p style={{color:'#4b5563', fontSize:'13px', margin:0}}>ABN 46 849 678 875</p>
+            </div>
+            <div style={{display:'flex', flexWrap:'wrap', gap:'8px 32px'}}>
+              {[
+                {label:'Privacy Policy', href:'/privacy'},
+                {label:'Terms', href:'/terms'},
+                {label:'Contact', href:'mailto:support@bill-mate.com.au'},
+                {label:'Feedback', href:'mailto:support@bill-mate.com.au?subject=BillMate%20Feedback'},
+              ].map(({label, href}) => (
+                <a key={label} href={href} style={{color:'#6b7280', fontSize:'14px', textDecoration:'none'}}>{label}</a>
+              ))}
+            </div>
+          </div>
+          <div style={{borderTop:'1px solid #2a2a3d', paddingTop:'24px', display:'flex', flexWrap:'wrap', justifyContent:'space-between', alignItems:'center', gap:'12px'}}>
+            <p style={{color:'#374151', fontSize:'13px', margin:0}}>© 2026 BillMate. All rights reserved.</p>
+            <p style={{color:'#4b5563', fontSize:'13px', margin:0}}>Built in Australia 🇦🇺</p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
