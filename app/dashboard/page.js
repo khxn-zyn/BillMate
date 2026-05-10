@@ -234,9 +234,9 @@ export default function Dashboard() {
             )}
           </div>
 
-          <Link href="/" style={{ fontSize: '1.8rem', fontWeight: 800, letterSpacing: '-0.04em', textDecoration: 'none' }}>
+          <span style={{ fontSize: '1.8rem', fontWeight: 800, letterSpacing: '-0.04em' }}>
             <span style={{ color: t.text }}>Bill</span><span style={{ color: '#7c5cfc' }}>Mate</span>
-          </Link>
+          </span>
           <p style={{ color: t.textMuted, fontSize: 15, marginTop: 6 }}>
             Welcome back 👋
           </p>
