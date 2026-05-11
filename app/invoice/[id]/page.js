@@ -3,10 +3,21 @@ import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 
+const themes = {
+  dark:  { bg: '#0a0a0f', backColor: '#6b7280', backHover: '#fff' },
+  light: { bg: '#f0f0f7', backColor: '#6b7280', backHover: '#111827' },
+}
+
 export default function ViewInvoice() {
   const { id } = useParams()
   const router = useRouter()
   const [inv, setInv] = useState(null)
+  const [theme, setTheme] = useState('dark')
+
+  useEffect(() => {
+    const saved = localStorage.getItem('billmate-theme')
+    if (saved === 'light' || saved === 'dark') setTheme(saved)
+  }, [])
 
   useEffect(() => {
     const fetchInvoice = async () => {
@@ -36,16 +47,18 @@ export default function ViewInvoice() {
     }
   }
 
-  if (!inv) return <div style={{minHeight:'100vh', background:'#0a0a0f', display:'flex', alignItems:'center', justifyContent:'center', color:'#9ca3af'}}>Invoice not found</div>
+  const t = themes[theme]
+
+  if (!inv) return <div style={{minHeight:'100vh', background:t.bg, display:'flex', alignItems:'center', justifyContent:'center', color:'#9ca3af'}}>Invoice not found</div>
 
   return (
-    <div id="invoice-page" style={{background:'#0a0a0f', position:'relative', overflow:'hidden', display:'flex', justifyContent:'center', paddingBottom:40}} className="p-4 sm:p-10">
+    <div id="invoice-page" style={{background:t.bg, position:'relative', overflow:'hidden', display:'flex', justifyContent:'center', paddingBottom:40}} className="p-4 sm:p-10">
       <div style={{position:'fixed', top:-200, left:'50%', transform:'translateX(-50%)', width:600, height:600, background:'rgba(99,102,241,0.1)', borderRadius:'50%', filter:'blur(120px)', pointerEvents:'none'}} className="no-print" />
 
       <div style={{width:'100%', maxWidth:768, position:'relative', zIndex:10, paddingTop:32, paddingBottom:40}}>
         {/* Action buttons - hidden on print */}
         <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:24, paddingTop:8, flexWrap:'wrap', gap:12}} className="print:hidden no-print">
-          <button onClick={() => router.push('/dashboard')} className="text-sm text-gray-500 hover:text-white transition bg-transparent" style={{flexShrink:0}}>
+          <button onClick={() => router.push('/dashboard')} style={{flexShrink:0, background:'transparent', border:'none', cursor:'pointer', fontSize:14, color:t.backColor, transition:'color 0.2s'}} onMouseEnter={e=>e.currentTarget.style.color=t.backHover} onMouseLeave={e=>e.currentTarget.style.color=t.backColor}>
             ← Back
           </button>
           <div style={{display:'flex', gap:8, flexWrap:'wrap'}}>
