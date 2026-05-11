@@ -30,6 +30,7 @@ export default function NewInvoice() {
           bizName: data.business_name || '',
           bizEmail: data.business_email || user.email || '',
           num: `INV-${String(nextNum).padStart(4, '0')}`,
+          logoUrl: data.logo_url || '',
         }))
       }
     }

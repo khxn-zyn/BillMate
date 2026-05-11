@@ -56,6 +56,9 @@ export default function Dashboard() {
   const [userName, setUserName] = useState('')
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [theme, setTheme] = useState('dark')
+  const [reminding, setReminding] = useState({})
+  const [reminded, setReminded] = useState({})
+  const [copied, setCopied] = useState({})
   const router = useRouter()
   const dropdownRef = useRef(null)
 
@@ -110,6 +113,32 @@ export default function Dashboard() {
     router.replace('/login')
   }
 
+  const copyLink = (invId, e) => {
+    e.stopPropagation()
+    const url = `${window.location.origin}/share/${invId}`
+    navigator.clipboard.writeText(url)
+    setCopied(c => ({ ...c, [invId]: true }))
+    setTimeout(() => setCopied(c => ({ ...c, [invId]: false })), 2000)
+  }
+
+  const sendReminder = async (invId, e) => {
+    e.stopPropagation()
+    setReminding(r => ({ ...r, [invId]: true }))
+    try {
+      const res = await fetch('/api/remind', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ invoiceId: invId }) })
+      const data = await res.json()
+      if (data.success) {
+        setReminded(r => ({ ...r, [invId]: true }))
+        setTimeout(() => setReminded(r => ({ ...r, [invId]: false })), 3000)
+      } else {
+        alert(data.error || 'Failed to send reminder')
+      }
+    } catch {
+      alert('Failed to send reminder')
+    }
+    setReminding(r => ({ ...r, [invId]: false }))
+  }
+
   const handleUpgrade = async () => {
     try {
       const response = await fetch('/api/checkout', { method: 'POST' })
@@ -160,15 +189,34 @@ export default function Dashboard() {
   const InvoiceRow = ({ inv }) => (
     <div
       onClick={() => router.push(`/invoice/${inv.id}`)}
-      style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 24px', borderBottom: `1px solid ${t.rowBorder}`, cursor: 'pointer', transition: 'background 0.15s' }}
+      style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 24px', borderBottom: `1px solid ${t.rowBorder}`, cursor: 'pointer', transition: 'background 0.15s', gap: 12 }}
       onMouseEnter={e => e.currentTarget.style.background = t.rowHover}
       onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
     >
-      <div>
+      <div style={{ flex: 1, minWidth: 0 }}>
         <p style={{ color: t.text, fontWeight: 600, fontSize: 15, margin: 0 }}>{inv.clientName}</p>
         <p style={{ color: t.textMuted, fontSize: 12, marginTop: 3, margin: 0 }}>{inv.num} · {inv.date}</p>
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+        {/* Copy link */}
+        <button
+          onClick={e => copyLink(inv.id, e)}
+          title="Copy client link"
+          style={{ background: copied[inv.id] ? 'rgba(74,222,128,0.1)' : 'transparent', border: `1px solid ${copied[inv.id] ? 'rgba(74,222,128,0.3)' : t.cardBorder}`, borderRadius: 8, padding: '5px 10px', fontSize: 11, fontWeight: 700, cursor: 'pointer', color: copied[inv.id] ? '#4ade80' : t.textMuted, transition: 'all 0.2s', whiteSpace: 'nowrap' }}
+        >
+          {copied[inv.id] ? 'Copied!' : 'Copy link'}
+        </button>
+        {/* Send reminder — unpaid only */}
+        {inv.status !== 'paid' && (
+          <button
+            onClick={e => sendReminder(inv.id, e)}
+            disabled={reminding[inv.id]}
+            title="Send payment reminder"
+            style={{ background: reminded[inv.id] ? 'rgba(74,222,128,0.1)' : 'rgba(124,92,252,0.1)', border: `1px solid ${reminded[inv.id] ? 'rgba(74,222,128,0.3)' : 'rgba(124,92,252,0.25)'}`, borderRadius: 8, padding: '5px 10px', fontSize: 11, fontWeight: 700, cursor: reminding[inv.id] ? 'not-allowed' : 'pointer', color: reminded[inv.id] ? '#4ade80' : '#a78bfa', transition: 'all 0.2s', whiteSpace: 'nowrap', opacity: reminding[inv.id] ? 0.6 : 1 }}
+          >
+            {reminding[inv.id] ? 'Sending…' : reminded[inv.id] ? 'Sent!' : 'Remind'}
+          </button>
+        )}
         <span style={{
           fontSize: 10, padding: '4px 10px', borderRadius: 999, fontWeight: 700, letterSpacing: '0.06em',
           background: inv.status === 'paid' ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)',

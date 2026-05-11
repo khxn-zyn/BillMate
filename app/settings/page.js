@@ -13,11 +13,13 @@ export default function Settings() {
     abn: '',
     phone: '',
     payment_terms: '14',
+    logo_url: '',
   })
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
   const [error, setError] = useState('')
+  const [logoUploading, setLogoUploading] = useState(false)
 
   useEffect(() => {
     const load = async () => {
@@ -39,6 +41,7 @@ export default function Settings() {
           abn: profile.abn || '',
           phone: profile.phone || '',
           payment_terms: profile.payment_terms || '14',
+          logo_url: profile.logo_url || '',
         })
       } else {
         setForm(f => ({ ...f, business_email: user.email || '' }))
@@ -49,6 +52,22 @@ export default function Settings() {
   }, [router])
 
   const updateForm = (k, v) => setForm(f => ({ ...f, [k]: v }))
+
+  const handleLogoUpload = async (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setLogoUploading(true)
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    const ext = file.name.split('.').pop()
+    const path = `${user.id}/logo.${ext}`
+    const { error: uploadError } = await supabase.storage.from('logos').upload(path, file, { upsert: true })
+    if (!uploadError) {
+      const { data: { publicUrl } } = supabase.storage.from('logos').getPublicUrl(path)
+      updateForm('logo_url', publicUrl)
+    }
+    setLogoUploading(false)
+  }
 
   const save = async () => {
     setSaving(true)
@@ -125,6 +144,31 @@ export default function Settings() {
           </span>
           <h1 style={{ fontSize: 22, fontWeight: 700, color: '#fff', letterSpacing: '-0.02em', marginTop: 16, marginBottom: 4 }}>Settings</h1>
           <p style={{ color: '#6b7280', fontSize: 14 }}>Your business profile</p>
+        </div>
+
+        {/* Logo */}
+        <div style={cardStyle}>
+          <p style={{ ...labelStyle, marginBottom: 16, color: '#a78bfa' }}>Business logo</p>
+          {form.logo_url && (
+            <div style={{ marginBottom: 14, padding: 12, background: '#0d0d16', borderRadius: 10, display: 'inline-block' }}>
+              <img src={form.logo_url} alt="Logo preview" style={{ height: 56, objectFit: 'contain', display: 'block', borderRadius: 4 }} />
+            </div>
+          )}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" onChange={handleLogoUpload} style={{ display: 'none' }} id="logo-input" />
+            <label
+              htmlFor="logo-input"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#0d0d16', border: '1px solid #1e1e30', borderRadius: 10, padding: '10px 18px', cursor: logoUploading ? 'not-allowed' : 'pointer', color: '#a78bfa', fontSize: 13, fontWeight: 600, opacity: logoUploading ? 0.6 : 1 }}
+            >
+              {logoUploading ? 'Uploading…' : form.logo_url ? 'Change logo' : 'Upload logo'}
+            </label>
+            {form.logo_url && (
+              <button onClick={() => updateForm('logo_url', '')} style={{ background: 'transparent', border: 'none', color: '#ef4444', fontSize: 13, cursor: 'pointer', fontWeight: 600 }}>
+                Remove
+              </button>
+            )}
+          </div>
+          <p style={{ color: '#4b5563', fontSize: 12, marginTop: 8 }}>PNG, JPG or SVG · Appears on your invoices and client portal</p>
         </div>
 
         {/* Business details */}
