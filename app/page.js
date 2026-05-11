@@ -172,7 +172,7 @@ export default function Home() {
             onClick={toggleTheme}
             className="theme-toggle-btn"
             aria-label="Toggle theme"
-            style={{ width: 36, height: 36, borderRadius: '50%', background: 'transparent', border: `1px solid ${theme === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.25)'}`, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'box-shadow 0.2s, border-color 0.2s, border-style 0.2s', flexShrink: 0, fontSize: 17, lineHeight: 1, color: theme === 'dark' ? '#ffffff' : '#111827' }}
+            style={{ width: 40, height: 40, borderRadius: '50%', background: 'transparent', border: `1px solid ${theme === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.25)'}`, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'box-shadow 0.2s, border-color 0.2s, border-style 0.2s', flexShrink: 0, fontSize: 20, lineHeight: 1, color: theme === 'dark' ? '#ffffff' : '#111827' }}
           >
             {theme === 'dark' ? '☀' : '☽'}
           </button>
