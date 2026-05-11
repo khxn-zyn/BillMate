@@ -172,10 +172,10 @@ export default function Home() {
             onClick={toggleTheme}
             className="theme-toggle-btn"
             aria-label="Toggle theme"
-            style={{ width: 38, height: 38, borderRadius: '50%', background: 'transparent', border: `1px solid ${theme === 'dark' ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.2)'}`, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'box-shadow 0.2s, border-color 0.2s, border-style 0.2s, color 0.2s', color: theme === 'dark' ? '#ffffff' : '#111827', flexShrink: 0 }}
+            style={{ width: 34, height: 34, borderRadius: '50%', background: 'transparent', border: `1px solid ${theme === 'dark' ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.2)'}`, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'box-shadow 0.2s, border-color 0.2s, border-style 0.2s, color 0.2s', color: theme === 'dark' ? '#ffffff' : '#111827', flexShrink: 0 }}
           >
             {theme === 'dark' ? (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="4"/>
                 <line x1="12" y1="2" x2="12" y2="6"/>
                 <line x1="12" y1="18" x2="12" y2="22"/>
@@ -187,7 +187,7 @@ export default function Home() {
                 <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/>
               </svg>
             ) : (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
               </svg>
             )}
