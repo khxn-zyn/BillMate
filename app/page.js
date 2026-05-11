@@ -126,7 +126,8 @@ export default function Home() {
         .industry-pill:hover { border-color: rgba(124,92,252,0.45) !important; color: #a78bfa !important; }
         .stat-cell { transition: background 0.2s, box-shadow 0.2s; }
         .stat-cell:hover { background: ${t.statHover} !important; box-shadow: inset 0 0 40px rgba(124,92,252,0.12); }
-.faq-item { transition: border-color 0.2s; }
+        .theme-toggle-btn:hover { box-shadow: 0 0 12px rgba(124,92,252,0.5), 0 0 4px rgba(124,92,252,0.3) !important; border-color: rgba(124,92,252,0.5) !important; }
+        .faq-item { transition: border-color 0.2s; }
         .faq-item:hover { border-color: rgba(124,92,252,0.3) !important; }
         .sticky-cta {
           position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
@@ -166,26 +167,23 @@ export default function Home() {
           Bill<span style={{ color: '#7c5cfc' }}>Mate</span>
         </Link>
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-          {/* Theme toggle pill */}
-          <div
+          {/* Theme toggle */}
+          <button
             onClick={toggleTheme}
-            style={{ display: 'flex', alignItems: 'center', background: t.card, border: `1px solid ${t.border}`, borderRadius: 100, padding: '3px', gap: '2px', cursor: 'pointer', userSelect: 'none' }}
+            className="theme-toggle-btn"
+            aria-label="Toggle theme"
+            style={{ width: 36, height: 36, borderRadius: '50%', background: t.card, border: `1px solid ${t.border}`, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'box-shadow 0.2s, border-color 0.2s', color: '#a78bfa', flexShrink: 0 }}
           >
-            {[{ icon: '☀️', val: 'light' }, { icon: '🌙', val: 'dark' }].map(({ icon, val }) => (
-              <span
-                key={val}
-                style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  width: 28, height: 28, borderRadius: 100, fontSize: '0.85rem',
-                  background: theme === val ? 'rgba(124,92,252,0.15)' : 'transparent',
-                  border: theme === val ? '1px solid rgba(124,92,252,0.3)' : '1px solid transparent',
-                  transition: 'background 0.2s, border-color 0.2s',
-                }}
-              >
-                {icon}
-              </span>
-            ))}
-          </div>
+            {theme === 'dark' ? (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+              </svg>
+            ) : (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              </svg>
+            )}
+          </button>
           <Link href="/login" style={{ color: t.navLogin, fontSize: '0.88rem', fontWeight: 500, padding: '8px 14px', textDecoration: 'none' }}>Log in</Link>
           <Link href="/signup" className="nav-cta" style={{ background: '#7c5cfc', color: '#fff', fontSize: '0.88rem', fontWeight: 600, padding: '9px 22px', borderRadius: '8px', textDecoration: 'none', transition: 'background 0.2s, transform 0.15s', display: 'inline-block' }}>
             Try Free
