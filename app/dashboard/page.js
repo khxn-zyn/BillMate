@@ -271,7 +271,7 @@ export default function Dashboard() {
                   Settings
                 </Link>
                 <a
-                  href="mailto:support@bill-mate.com.au?subject=BillMate%20Feedback"
+                  href="mailto:khenz.dev@gmail.com?subject=BillMate%20Feedback"
                   style={{ width: '100%', display: 'flex', alignItems: 'center', padding: '12px 16px', background: 'transparent', borderBottom: `1px solid ${t.divider}`, cursor: 'pointer', color: t.text, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}
                   onMouseEnter={e => e.currentTarget.style.background = t.dropdownHover}
                   onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
