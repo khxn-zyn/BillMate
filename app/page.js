@@ -146,6 +146,8 @@ export default function Home() {
         .stat-cell { transition:background 0.2s,box-shadow 0.2s; }
         .stat-cell:hover { background:${t.statHover}!important; box-shadow:inset 0 0 40px rgba(124,92,252,0.12); }
         .pain-item { transition:background 0.2s; }
+        .pain-strip-outer { margin-left:-24px; margin-right:-24px; }
+        @media(max-width:640px){ .pain-strip-outer{margin-left:-20px!important;margin-right:-20px!important;} }
         .theme-toggle-btn:hover { border-style:dashed!important; border-color:rgba(124,92,252,0.6)!important; box-shadow:0 0 10px rgba(124,92,252,0.35)!important; color:#c4b5fd!important; }
         .faq-item { transition:border-color 0.2s; }
         .faq-item:hover { border-color:rgba(124,92,252,0.3)!important; }
@@ -269,7 +271,7 @@ export default function Home() {
         </div>
 
         {/* Pain strip */}
-        <div className="reveal" style={{ background: t.painBg, borderTop: `1px solid ${t.border}`, borderBottom: `1px solid ${t.border}`, padding: '32px 24px', marginBottom: '5rem' }}>
+        <div className="reveal pain-strip-outer" style={{ background: t.painBg, borderTop: `1px solid ${t.border}`, borderBottom: `1px solid ${t.border}`, padding: '32px 24px', marginBottom: '5rem' }}>
           <div className="pain-strip-inner stagger" style={{ maxWidth: '700px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 1, background: t.painStrip, borderRadius: 14, overflow: 'hidden' }}>
             {[
               { path: '<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 12"/>', label: 'Sick of Sunday night paperwork?', desc: 'Invoice on-site, before you leave the driveway.' },
