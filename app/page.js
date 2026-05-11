@@ -126,7 +126,7 @@ export default function Home() {
         .industry-pill:hover { border-color: rgba(124,92,252,0.45) !important; color: #a78bfa !important; }
         .stat-cell { transition: background 0.2s, box-shadow 0.2s; }
         .stat-cell:hover { background: ${t.statHover} !important; box-shadow: inset 0 0 40px rgba(124,92,252,0.12); }
-        .theme-toggle-btn:hover { box-shadow: 0 0 12px rgba(124,92,252,0.5), 0 0 4px rgba(124,92,252,0.3) !important; border-color: rgba(124,92,252,0.5) !important; }
+        .theme-toggle-btn:hover { border-style: dashed !important; border-color: rgba(124,92,252,0.6) !important; box-shadow: 0 0 10px rgba(124,92,252,0.35) !important; color: #c4b5fd !important; }
         .faq-item { transition: border-color 0.2s; }
         .faq-item:hover { border-color: rgba(124,92,252,0.3) !important; }
         .sticky-cta {
@@ -172,7 +172,7 @@ export default function Home() {
             onClick={toggleTheme}
             className="theme-toggle-btn"
             aria-label="Toggle theme"
-            style={{ width: 36, height: 36, borderRadius: '50%', background: t.card, border: `1px solid ${t.border}`, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'box-shadow 0.2s, border-color 0.2s', color: '#a78bfa', flexShrink: 0 }}
+            style={{ width: 36, height: 36, borderRadius: '50%', background: 'transparent', border: `1px solid ${theme === 'dark' ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.15)'}`, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'box-shadow 0.2s, border-color 0.2s, border-style 0.2s, color 0.2s', color: theme === 'dark' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.5)', flexShrink: 0 }}
           >
             {theme === 'dark' ? (
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
