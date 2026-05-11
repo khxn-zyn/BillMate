@@ -2,8 +2,21 @@ import "./globals.css";
 import SupportChat from "./components/SupportChat";
 
 export const metadata = {
-  title: "BillMate",
-  description: "Simple invoicing for Australian businesses",
+  title: "BillMate — Free Invoicing for Australian Tradies",
+  description: "Create professional invoices in 30 seconds. GST auto-calculated, PDF export, payment tracking. Free forever. Built for Australian tradies.",
+  keywords: "invoicing software, free invoicing, Australian tradies, GST calculator, invoice app, plumber invoice, electrician invoice",
+  openGraph: {
+    title: "BillMate — Free Invoicing for Australian Tradies",
+    description: "Create professional invoices in 30 seconds. GST sorted automatically. Free forever. No credit card.",
+    url: "https://bill-mate.com.au",
+    siteName: "BillMate",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "BillMate — Free Invoicing for Australian Tradies",
+    description: "Create professional invoices in 30 seconds. GST sorted automatically. Free forever.",
+  },
 };
 
 export default function RootLayout({ children }) {

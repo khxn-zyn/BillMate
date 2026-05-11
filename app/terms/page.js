@@ -111,7 +111,7 @@ export default function TermsOfService() {
         </Section>
 
         <Section title="13. Contact">
-          <p>Questions about these Terms? Email us at <a href="mailto:support@bill-mate.com.au" style={{color:'#a78bfa'}}>support@bill-mate.com.au</a>.</p>
+          <p>Questions about these Terms? Email us at <a href="mailto:khenz.dev@gmail.com" style={{color:'#a78bfa'}}>khenz.dev@gmail.com</a>.</p>
         </Section>
 
         {/* Footer rule */}

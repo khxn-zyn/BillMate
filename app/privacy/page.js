@@ -37,7 +37,7 @@ export default function PrivacyPolicy() {
         </div>
 
         <Section title="1. Who we are">
-          <p>BillMate is operated by an Australian sole trader (ABN 46 849 678 875). We provide online invoicing software designed for Australian tradies and small businesses. You can contact us at <a href="mailto:support@bill-mate.com.au" style={{color:'#a78bfa'}}>support@bill-mate.com.au</a>.</p>
+          <p>BillMate is operated by an Australian sole trader (ABN 46 849 678 875). We provide online invoicing software designed for Australian tradies and small businesses. You can contact us at <a href="mailto:khenz.dev@gmail.com" style={{color:'#a78bfa'}}>khenz.dev@gmail.com</a>.</p>
         </Section>
 
         <Section title="2. What information we collect">
@@ -84,7 +84,7 @@ export default function PrivacyPolicy() {
             <li style={{marginBottom:'8px'}}>Request corrections to inaccurate information</li>
             <li style={{marginBottom:'8px'}}>Request deletion of your account and associated data</li>
           </ul>
-          <p style={{marginTop:'12px'}}>To exercise any of these rights, email us at <a href="mailto:support@bill-mate.com.au" style={{color:'#a78bfa'}}>support@bill-mate.com.au</a> and we will respond within 30 days.</p>
+          <p style={{marginTop:'12px'}}>To exercise any of these rights, email us at <a href="mailto:khenz.dev@gmail.com" style={{color:'#a78bfa'}}>khenz.dev@gmail.com</a> and we will respond within 30 days.</p>
         </Section>
 
         <Section title="7. Cookies">
@@ -96,7 +96,7 @@ export default function PrivacyPolicy() {
         </Section>
 
         <Section title="9. Contact">
-          <p>Questions about this policy? Email us at <a href="mailto:support@bill-mate.com.au" style={{color:'#a78bfa'}}>support@bill-mate.com.au</a>.</p>
+          <p>Questions about this policy? Email us at <a href="mailto:khenz.dev@gmail.com" style={{color:'#a78bfa'}}>khenz.dev@gmail.com</a>.</p>
         </Section>
 
         {/* Footer rule */}
