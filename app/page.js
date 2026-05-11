@@ -412,22 +412,6 @@ export default function Home() {
 
           {divider()}
 
-          {/* Who it's for */}
-          <div className="reveal" style={{ marginBottom: '5rem' }}>
-            {sectionLabel("Who it's for")}
-            {sectionHeading('Built for people on the tools.')}
-            {sectionSub('Not office workers. Not accountants. Tradies.')}
-            <div className="stagger" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.7rem', justifyContent: 'center' }}>
-              {[['🔨','Builders'],['⚡','Electricians'],['🔧','Plumbers'],['🌿','Landscapers'],['🏗️','Contractors'],['🔩','Handymen'],['🎨','Painters'],['🪵','Carpenters'],['🏠','Roofers'],['🪨','Concreters'],['🔲','Tilers'],['🌡️','Air Con & HVAC']].map(([emoji, label]) => (
-                <span key={label} className="industry-pill" style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: '100px', padding: '0.5rem 1.2rem', fontSize: '0.88rem', color: t.textSecondary, fontWeight: 500, cursor: 'default', transition: 'border-color 0.2s,color 0.2s' }}>
-                  {emoji} {label}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {divider()}
-
           {/* Testimonials */}
           <div className="reveal" style={{ marginBottom: '5rem' }}>
             {sectionLabel('What tradies say')}
@@ -456,29 +440,6 @@ export default function Home() {
             </div>
           </div>
 
-          {divider()}
-
-          {/* Founder */}
-          <div className="reveal" style={{ marginBottom: '5rem', background: t.card, border: `1px solid ${t.border}`, borderRadius: '20px', padding: '2.5rem', textAlign: 'center' }}>
-            <p style={{ color: t.textSecondary, fontSize: '1.1rem', lineHeight: 1.8, fontStyle: 'italic', maxWidth: '560px', margin: '0 auto 1.6rem' }}>
-              <span style={{ color: '#7c5cfc', fontSize: '1.6rem', lineHeight: 0, verticalAlign: '-0.4rem', marginRight: '4px' }}>&ldquo;</span>
-              I built BillMate because I was sick of watching tradies get slugged by overpriced invoicing software designed for office workers, not people on the tools.
-              <span style={{ color: '#7c5cfc', fontSize: '1.6rem', lineHeight: 0, verticalAlign: '-0.4rem', marginLeft: '4px' }}>&rdquo;</span>
-            </p>
-            <a href="https://portfolio-6yp743eos-khxn-zyns-projects.vercel.app" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', marginBottom: '1.5rem', textDecoration: 'none' }}>
-              <div style={{ width: '40px', height: '40px', background: 'rgba(124,92,252,0.15)', border: '1px solid rgba(124,92,252,0.3)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <span style={{ color: '#7c5cfc', fontWeight: 700, fontSize: '0.9rem' }}>K</span>
-              </div>
-              <div style={{ textAlign: 'left' }}>
-                <p style={{ color: t.text, fontWeight: 600, fontSize: '0.9rem', margin: 0 }}>Khenz ↗</p>
-                <p style={{ color: '#6b7280', fontSize: '0.78rem', margin: 0 }}>Founder, BillMate</p>
-              </div>
-            </a>
-            <div style={{ borderTop: `1px solid ${t.border}`, paddingTop: '1.2rem', display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ background: 'rgba(124,92,252,0.1)', border: '1px solid rgba(124,92,252,0.25)', color: '#a78bfa', fontSize: '0.75rem', fontWeight: 500, padding: '4px 12px', borderRadius: '100px' }}>Australian-owned</span>
-              <span style={{ color: t.text, fontSize: '0.8rem' }}>ABN 46 849 678 875</span>
-            </div>
-          </div>
 
         </div>
 
