@@ -126,8 +126,7 @@ export default function Home() {
         .industry-pill:hover { border-color: rgba(124,92,252,0.45) !important; color: #a78bfa !important; }
         .stat-cell { transition: background 0.2s, box-shadow 0.2s; }
         .stat-cell:hover { background: ${t.statHover} !important; box-shadow: inset 0 0 40px rgba(124,92,252,0.12); }
-        .theme-btn:hover { color: #7c5cfc !important; }
-        .faq-item { transition: border-color 0.2s; }
+.faq-item { transition: border-color 0.2s; }
         .faq-item:hover { border-color: rgba(124,92,252,0.3) !important; }
         .sticky-cta {
           position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
@@ -166,15 +165,27 @@ export default function Home() {
         <Link href="/" style={{ color: t.text, fontWeight: 800, fontSize: '1.15rem', letterSpacing: '-0.03em', textDecoration: 'none' }}>
           Bill<span style={{ color: '#7c5cfc' }}>Mate</span>
         </Link>
-        <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-          <button
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          {/* Theme toggle pill */}
+          <div
             onClick={toggleTheme}
-            className="theme-btn"
-            aria-label="Toggle theme"
-            style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#6b7280', fontSize: '1.05rem', padding: '7px 9px', lineHeight: 1, display: 'flex', alignItems: 'center', transition: 'color 0.2s', borderRadius: 8 }}
+            style={{ display: 'flex', alignItems: 'center', background: t.card, border: `1px solid ${t.border}`, borderRadius: 100, padding: '3px', gap: '2px', cursor: 'pointer', userSelect: 'none' }}
           >
-            {theme === 'dark' ? '☀️' : '🌙'}
-          </button>
+            {[{ icon: '☀️', val: 'light' }, { icon: '🌙', val: 'dark' }].map(({ icon, val }) => (
+              <span
+                key={val}
+                style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  width: 28, height: 28, borderRadius: 100, fontSize: '0.85rem',
+                  background: theme === val ? 'rgba(124,92,252,0.15)' : 'transparent',
+                  border: theme === val ? '1px solid rgba(124,92,252,0.3)' : '1px solid transparent',
+                  transition: 'background 0.2s, border-color 0.2s',
+                }}
+              >
+                {icon}
+              </span>
+            ))}
+          </div>
           <Link href="/login" style={{ color: t.navLogin, fontSize: '0.88rem', fontWeight: 500, padding: '8px 14px', textDecoration: 'none' }}>Log in</Link>
           <Link href="/signup" className="nav-cta" style={{ background: '#7c5cfc', color: '#fff', fontSize: '0.88rem', fontWeight: 600, padding: '9px 22px', borderRadius: '8px', textDecoration: 'none', transition: 'background 0.2s, transform 0.15s', display: 'inline-block' }}>
             Try Free
