@@ -587,7 +587,7 @@ export default function Home() {
               <p style={{ color: t.textDim, fontSize: '0.8rem', margin: 0 }}>ABN 46 849 678 875</p>
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 32px' }}>
-              {[{ label: 'Privacy Policy', href: '/privacy' },{ label: 'Terms', href: '/terms' },{ label: 'Contact', href: 'mailto:support@bill-mate.com.au' },{ label: 'Feedback', href: 'mailto:support@bill-mate.com.au?subject=BillMate%20Feedback' }].map(({ label, href }) => (
+              {[{ label: 'Privacy Policy', href: '/privacy' },{ label: 'Terms', href: '/terms' },{ label: 'Contact', href: 'mailto:khenz.dev@gmail.com' },{ label: 'Feedback', href: 'mailto:khenz.dev@gmail.com?subject=BillMate%20Feedback' }].map(({ label, href }) => (
                 <a key={label} href={href} style={{ color: '#6b7280', fontSize: '0.85rem', textDecoration: 'none', transition: 'color 0.2s' }}>{label}</a>
               ))}
             </div>
