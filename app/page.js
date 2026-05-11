@@ -146,7 +146,6 @@ export default function Home() {
         .stat-cell { transition:background 0.2s,box-shadow 0.2s; }
         .stat-cell:hover { background:${t.statHover}!important; box-shadow:inset 0 0 40px rgba(124,92,252,0.12); }
         .pain-item { transition:background 0.2s; }
-        .pain-item:hover { background:#151524!important; }
         .theme-toggle-btn:hover { border-style:dashed!important; border-color:rgba(124,92,252,0.6)!important; box-shadow:0 0 10px rgba(124,92,252,0.35)!important; color:#c4b5fd!important; }
         .faq-item { transition:border-color 0.2s; }
         .faq-item:hover { border-color:rgba(124,92,252,0.3)!important; }
@@ -278,7 +277,7 @@ export default function Home() {
               { path: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>', label: 'Getting GST wrong?', desc: 'Calculated automatically. Every invoice, every time.' },
               { path: '<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>', label: 'Paying $30+/month for Xero?', desc: 'BillMate is free. Forever. No credit card.' },
             ].map(({ path, label, desc }) => (
-              <div key={label} className="pain-item" style={{ background: t.card, padding: '24px 16px', textAlign: 'center' }}>
+              <div key={label} className="pain-item" style={{ background: t.card, padding: '24px 16px', textAlign: 'center' }} onMouseEnter={e => e.currentTarget.style.background = t.statHover} onMouseLeave={e => e.currentTarget.style.background = t.card}>
                 <div style={{ width: 44, height: 44, background: 'rgba(124,92,252,0.12)', border: '1px solid rgba(124,92,252,0.2)', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px', color: '#a78bfa' }}>
                   <svg viewBox="0 0 24 24" style={{ width: 20, height: 20, stroke: 'currentColor', fill: 'none', strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round' }} dangerouslySetInnerHTML={{ __html: path }} />
                 </div>
