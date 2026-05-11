@@ -4,6 +4,19 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 
+const themes = {
+  dark: {
+    bg: '#0a0a0f', card: '#13131a', cardBorder: '#1e1e30',
+    text: '#fff', input: '#0d0d16', inputBorder: '#1e1e30', divider: '#1e1e30',
+    cancelBorder: '#1e1e30', cancelColor: '#6b7280',
+  },
+  light: {
+    bg: '#f0f0f7', card: '#fff', cardBorder: 'rgba(0,0,0,0.08)',
+    text: '#111827', input: '#fff', inputBorder: 'rgba(0,0,0,0.12)', divider: 'rgba(0,0,0,0.09)',
+    cancelBorder: 'rgba(0,0,0,0.12)', cancelColor: '#6b7280',
+  },
+}
+
 export default function NewInvoice() {
   const router = useRouter()
   const [lines, setLines] = useState([{ id: 1, desc: '', qty: 1, price: '' }])
@@ -15,6 +28,12 @@ export default function NewInvoice() {
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState('')
   const [formError, setFormError] = useState('')
+  const [theme, setTheme] = useState('dark')
+
+  useEffect(() => {
+    const saved = localStorage.getItem('billmate-theme')
+    if (saved === 'light' || saved === 'dark') setTheme(saved)
+  }, [])
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -36,6 +55,8 @@ export default function NewInvoice() {
     }
     loadProfile()
   }, [])
+
+  const t = themes[theme]
 
   const updateForm = (k, v) => setForm(f => ({ ...f, [k]: v }))
   const addLine = () => setLines(l => [...l, { id: Date.now(), desc: '', qty: 1, price: '' }])
@@ -67,11 +88,11 @@ export default function NewInvoice() {
 
   const inputStyle = {
     width: '100%',
-    background: '#0d0d16',
-    border: '1px solid #1e1e30',
+    background: t.input,
+    border: `1px solid ${t.inputBorder}`,
     borderRadius: 10,
     padding: '11px 14px',
-    color: 'white',
+    color: t.text,
     fontSize: 14,
     outline: 'none',
     boxSizing: 'border-box',
@@ -79,8 +100,8 @@ export default function NewInvoice() {
   }
 
   const cardStyle = {
-    background: '#13131a',
-    border: '1px solid #1e1e30',
+    background: t.card,
+    border: `1px solid ${t.cardBorder}`,
     borderRadius: 16,
     padding: 24,
     marginBottom: 10,
@@ -97,10 +118,10 @@ export default function NewInvoice() {
   }
 
   const focusInput = (e) => e.target.style.borderColor = 'rgba(124,92,252,0.5)'
-  const blurInput = (e) => e.target.style.borderColor = '#1e1e30'
+  const blurInput = (e) => e.target.style.borderColor = t.inputBorder
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0f', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '60px 20px 100px' }}>
+    <div style={{ minHeight: '100vh', background: t.bg, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '60px 20px 100px' }}>
       <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
       <div style={{ position: 'fixed', top: -150, left: '50%', transform: 'translateX(-50%)', width: 600, height: 500, background: 'radial-gradient(ellipse, rgba(124,92,252,0.12) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
@@ -108,10 +129,10 @@ export default function NewInvoice() {
 
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 36 }}>
-          <Link href="/" style={{ fontSize: '1.8rem', fontWeight: 800, letterSpacing: '-0.04em', textDecoration: 'none' }}>
-            <span style={{ color: '#fff' }}>Bill</span><span style={{ color: '#7c5cfc' }}>Mate</span>
-          </Link>
-          <h1 style={{ fontSize: 22, fontWeight: 700, color: '#fff', letterSpacing: '-0.02em', marginTop: 16, marginBottom: 4 }}>New Invoice</h1>
+          <span style={{ fontSize: '1.8rem', fontWeight: 800, letterSpacing: '-0.04em' }}>
+            <span style={{ color: t.text }}>Bill</span><span style={{ color: '#7c5cfc' }}>Mate</span>
+          </span>
+          <h1 style={{ fontSize: 22, fontWeight: 700, color: t.text, letterSpacing: '-0.02em', marginTop: 16, marginBottom: 4 }}>New Invoice</h1>
           <p style={{ color: '#6b7280', fontSize: 14 }}>Fill in the details below</p>
         </div>
 
@@ -150,7 +171,7 @@ export default function NewInvoice() {
             </div>
             <div>
               <label style={labelStyle}>Due date</label>
-              <input style={{ ...inputStyle, colorScheme: 'dark' }} type="date" value={form.due} onChange={e => updateForm('due', e.target.value)} onFocus={focusInput} onBlur={blurInput} />
+              <input style={{ ...inputStyle, colorScheme: theme === 'dark' ? 'dark' : 'light' }} type="date" value={form.due} onChange={e => updateForm('due', e.target.value)} onFocus={focusInput} onBlur={blurInput} />
             </div>
           </div>
         </div>
@@ -177,14 +198,14 @@ export default function NewInvoice() {
           </button>
 
           {/* Totals */}
-          <div style={{ marginTop: 20, paddingTop: 16, borderTop: '1px solid #1e1e30' }}>
+          <div style={{ marginTop: 20, paddingTop: 16, borderTop: `1px solid ${t.divider}` }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', color: '#6b7280', fontSize: 13, marginBottom: 7 }}>
               <span>Subtotal</span><span>${subtotal.toFixed(2)}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', color: '#6b7280', fontSize: 13, marginBottom: 7 }}>
               <span>GST (10%)</span><span>${gst.toFixed(2)}</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', color: '#fff', fontSize: 16, fontWeight: 800, marginTop: 10, paddingTop: 10, borderTop: '1px solid #1e1e30' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', color: t.text, fontSize: 16, fontWeight: 800, marginTop: 10, paddingTop: 10, borderTop: `1px solid ${t.divider}` }}>
               <span>Total</span><span style={{ color: '#7c5cfc' }}>${total.toFixed(2)}</span>
             </div>
           </div>
@@ -220,7 +241,7 @@ export default function NewInvoice() {
           {saving ? 'Saving…' : 'Save Invoice'}
         </button>
 
-        <Link href="/dashboard" style={{ display: 'block', width: '100%', background: 'transparent', color: '#6b7280', padding: '13px', borderRadius: 12, fontWeight: 600, fontSize: 14, border: '1px solid #1e1e30', textAlign: 'center', textDecoration: 'none', boxSizing: 'border-box' }}>
+        <Link href="/dashboard" style={{ display: 'block', width: '100%', background: 'transparent', color: t.cancelColor, padding: '13px', borderRadius: 12, fontWeight: 600, fontSize: 14, border: `1px solid ${t.cancelBorder}`, textAlign: 'center', textDecoration: 'none', boxSizing: 'border-box' }}>
           Cancel
         </Link>
 
