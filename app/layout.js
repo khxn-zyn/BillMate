@@ -1,5 +1,6 @@
 import "./globals.css";
 import SupportChat from "./components/SupportChat";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
   title: "BillMate — Free Invoicing for Australian Tradies",
@@ -11,11 +12,13 @@ export const metadata = {
     url: "https://bill-mate.com.au",
     siteName: "BillMate",
     type: "website",
+    images: [{ url: "https://bill-mate.com.au/api/og", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "BillMate — Free Invoicing for Australian Tradies",
     description: "Create professional invoices in 30 seconds. GST sorted automatically. Free forever.",
+    images: ["https://bill-mate.com.au/api/og"],
   },
 };
 
@@ -25,6 +28,7 @@ export default function RootLayout({ children }) {
       <body>
         {children}
         <SupportChat />
+        <Analytics />
       </body>
     </html>
   );

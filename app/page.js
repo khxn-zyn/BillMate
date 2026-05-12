@@ -415,29 +415,23 @@ export default function Home() {
 
           {/* Testimonials */}
           <div className="reveal" style={{ marginBottom: '5rem' }}>
-            {sectionLabel('What tradies say')}
-            {sectionHeading('Real feedback from the tools.')}
-            {sectionSub('From the job site, not the boardroom.')}
-            <div className="testimonials-grid stagger" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1rem' }}>
-              {[
-                { quote: "Used to spend Sunday nights doing invoices. Now I send them before I leave the job. Game changer.", name: 'Damien C.', trade: 'Electrician, NSW' },
-                { quote: "Tried Xero, tried MYOB — too complicated, too expensive. BillMate just works. Set it up in 10 minutes.", name: 'Travis M.', trade: 'Plumber, QLD' },
-                { quote: "The GST sorting alone saves me an hour a week. No more second-guessing my totals.", name: 'Scott A.', trade: 'Builder, VIC' },
-              ].map(({ quote, name, trade }) => (
-                <div key={name} className="hover-card" style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: '14px', padding: '1.6rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  <p style={{ color: '#fbbf24', fontSize: '0.8rem', letterSpacing: 1, margin: 0 }}>★★★★★</p>
-                  <p style={{ color: t.textSecondary, fontSize: '0.9rem', lineHeight: 1.7, flex: 1, margin: 0 }}>&ldquo;{quote}&rdquo;</p>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', borderTop: `1px solid ${t.border}`, paddingTop: '1rem' }}>
-                    <div style={{ width: '32px', height: '32px', background: 'rgba(124,92,252,0.15)', border: '1px solid rgba(124,92,252,0.3)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <span style={{ color: '#7c5cfc', fontWeight: 700, fontSize: '0.78rem' }}>{name[0]}</span>
-                    </div>
-                    <div>
-                      <p style={{ color: t.text, fontWeight: 600, fontSize: '0.85rem', margin: 0 }}>{name}</p>
-                      <p style={{ color: '#6b7280', fontSize: '0.75rem', margin: 0 }}>{trade}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            {sectionLabel('Reviews')}
+            {sectionHeading('Be the first to review.')}
+            {sectionSub('Early access is open. Try it free and let us know what you think.')}
+            <div style={{ background: t.card, border: `1px dashed rgba(124,92,252,0.35)`, borderRadius: '20px', padding: '3rem 2rem', textAlign: 'center' }}>
+              <div style={{ width: 56, height: 56, background: 'rgba(124,92,252,0.1)', border: '1px solid rgba(124,92,252,0.25)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.2rem' }}>
+                <svg viewBox="0 0 24 24" style={{ width: 24, height: 24, stroke: '#a78bfa', fill: 'none', strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round' }}>
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+              </div>
+              <p style={{ color: t.text, fontWeight: 700, fontSize: '1.05rem', marginBottom: '0.5rem' }}>No reviews yet — yours could be first.</p>
+              <p style={{ color: '#6b7280', fontSize: '0.9rem', lineHeight: 1.7, maxWidth: 420, margin: '0 auto 1.8rem' }}>
+                BillMate is free to try. Sign up, create your first invoice, and tell us what you think.
+              </p>
+              <p style={{ color: '#fbbf24', fontSize: '1.1rem', letterSpacing: 3, margin: '0 0 1.8rem' }}>★★★★★</p>
+              <a href="mailto:khenz.dev@gmail.com?subject=BillMate%20Review" style={{ display: 'inline-block', background: 'rgba(124,92,252,0.12)', border: '1px solid rgba(124,92,252,0.35)', color: '#a78bfa', fontWeight: 600, fontSize: '0.9rem', padding: '11px 28px', borderRadius: '10px', textDecoration: 'none' }}>
+                Send your review →
+              </a>
             </div>
           </div>
 
