@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import SupportChat from '@/app/components/SupportChat'
 
 const themes = {
   dark: {
@@ -396,6 +397,7 @@ export default function Dashboard() {
         </div>
 
       </div>
+      <SupportChat />
     </div>
   )
 }

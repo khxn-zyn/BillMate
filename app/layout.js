@@ -1,5 +1,4 @@
 import "./globals.css";
-import SupportChat from "./components/SupportChat";
 import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
@@ -27,7 +26,6 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         {children}
-        <SupportChat />
         <Analytics />
       </body>
     </html>
