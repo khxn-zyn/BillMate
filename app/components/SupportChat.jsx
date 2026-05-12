@@ -95,14 +95,21 @@ export default function SupportChat() {
             flexShrink: 0,
           }}>
             <span style={{
-              width: 10,
-              height: 10,
+              width: 28,
+              height: 28,
               borderRadius: "50%",
               background: "#7c5cfc",
-              boxShadow: "0 0 6px #7c5cfc",
-              display: "inline-block",
+              boxShadow: "0 0 8px rgba(124,92,252,0.6)",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
               flexShrink: 0,
-            }} />
+              fontWeight: 800,
+              fontSize: 11,
+              letterSpacing: "-0.02em",
+            }}>
+              <span style={{ color: "#fff" }}>B</span><span style={{ color: "#c4b5fd" }}>M</span>
+            </span>
             <span style={{ color: "#fff", fontWeight: 600, fontSize: 15 }}>BillMate Support</span>
           </div>
 
@@ -230,11 +237,15 @@ export default function SupportChat() {
           alignItems: "center",
           justifyContent: "center",
           boxShadow: "0 4px 20px rgba(124,92,252,0.5)",
-          fontSize: 22,
-          color: "#fff",
         }}
       >
-        {open ? "✕" : "💬"}
+        {open ? (
+          <span style={{ color: "#fff", fontSize: 18, fontWeight: 700, lineHeight: 1 }}>✕</span>
+        ) : (
+          <span style={{ fontWeight: 800, fontSize: 16, letterSpacing: "-0.03em", lineHeight: 1 }}>
+            <span style={{ color: "#fff" }}>B</span><span style={{ color: "#c4b5fd" }}>M</span>
+          </span>
+        )}
       </button>
 
       <style>{`
