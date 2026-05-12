@@ -168,8 +168,6 @@ export default function Home() {
           .compare-table th,.compare-table td{padding:10px 8px!important;font-size:0.78rem!important;}
           .footer-inner{flex-direction:column!important;align-items:flex-start!important;}
           .pain-strip-inner{grid-template-columns:repeat(2,1fr)!important;}
-          .dash-body{grid-template-columns:1fr!important;}
-          .dash-sidebar{display:none!important;}
         }
       `}</style>
 
@@ -332,54 +330,54 @@ export default function Home() {
               {[['#ff5f57'],['#febc2e'],['#28c840']].map(([bg])=><div key={bg} style={{ width: 10, height: 10, borderRadius: '50%', background: bg }} />)}
               <span style={{ color: '#4b5563', fontSize: '0.78rem', marginLeft: 8 }}>bill-mate.com.au/dashboard</span>
             </div>
-            <div className="dash-body" style={{ padding: 32, display: 'grid', gridTemplateColumns: '260px 1fr', gap: 24, minHeight: 420 }}>
-              <div className="dash-sidebar" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                <p style={{ fontWeight: 800, fontSize: '1.2rem', letterSpacing: '-0.03em', color: t.text, marginBottom: 16 }}>Bill<span style={{ color: '#7c5cfc' }}>Mate</span></p>
-                {[
-                  { icon: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>', label: 'Dashboard', active: true },
-                  { icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>', label: 'Invoices', active: false },
-                  { icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>', label: 'Clients', active: false },
-                  { icon: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>', label: 'Settings', active: false },
-                ].map(({ icon, label, active }) => (
-                  <div key={label} style={{ padding: '11px 16px', borderRadius: 10, fontSize: '0.88rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10, background: active ? 'rgba(124,92,252,0.15)' : 'transparent', color: active ? '#a78bfa' : '#6b7280' }}>
-                    <svg viewBox="0 0 24 24" style={{ width: 16, height: 16, stroke: 'currentColor', fill: 'none', strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round', flexShrink: 0 }} dangerouslySetInnerHTML={{ __html: icon }} />
-                    {label}
+            <div style={{ padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+              {/* Header row */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>
+                  <p style={{ color: t.text, fontWeight: 800, fontSize: '1rem', margin: 0 }}>Bill<span style={{ color: '#7c5cfc' }}>Mate</span></p>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <p style={{ color: '#6b7280', fontSize: '0.8rem', margin: 0 }}>Welcome back 👋</p>
+                  <div style={{ background: '#7c5cfc', color: '#fff', fontWeight: 700, fontSize: '0.8rem', padding: '8px 16px', borderRadius: 8 }}>+ New Invoice</div>
+                  <div style={{ width: 32, height: 32, background: '#7c5cfc', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '0.85rem' }}>K</div>
+                </div>
+              </div>
+              {/* Stats */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 1, background: t.border, borderRadius: 12, overflow: 'hidden' }}>
+                {[['TOTAL INVOICED','$12,840',t.text],['PAID','$9,640','#4ade80'],['OUTSTANDING','$3,200','#fbbf24']].map(([lbl,val,col])=>(
+                  <div key={lbl} style={{ background: t.dashBg, padding: '14px 16px' }}>
+                    <div style={{ fontSize: '0.65rem', color: '#6b7280', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>{lbl}</div>
+                    <div style={{ fontSize: '1.2rem', fontWeight: 800, color: col }}>{val}</div>
                   </div>
                 ))}
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div>
-                    <p style={{ color: t.text, fontWeight: 700, fontSize: '1.1rem', margin: 0 }}>Welcome back 👋</p>
-                    <p style={{ color: '#6b7280', fontSize: '0.82rem', margin: 0 }}>Monday, 12 May 2026</p>
-                  </div>
-                  <div style={{ background: '#7c5cfc', color: '#fff', fontWeight: 700, fontSize: '0.85rem', padding: '10px 20px', borderRadius: 10 }}>+ New Invoice</div>
+              {/* Search + tabs */}
+              <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                <div style={{ flex: 1, background: t.dashBg, border: `1px solid ${t.border}`, borderRadius: 8, padding: '8px 12px', fontSize: '0.78rem', color: '#4b5563' }}>Search by client or invoice number…</div>
+                <div style={{ display: 'flex', gap: 4 }}>
+                  <span style={{ background: 'rgba(124,92,252,0.15)', color: '#a78bfa', fontWeight: 700, fontSize: '0.75rem', padding: '6px 14px', borderRadius: 8 }}>Active (3)</span>
+                  <span style={{ color: '#6b7280', fontSize: '0.75rem', padding: '6px 14px', borderRadius: 8 }}>History</span>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 1, background: t.border, borderRadius: 12, overflow: 'hidden' }}>
-                  {[['Total invoiced','$12,840',t.text],['Paid','$9,640','#4ade80'],['Outstanding','$3,200','#fbbf24']].map(([lbl,val,col])=>(
-                    <div key={lbl} style={{ background: t.dashBg, padding: '18px 16px' }}>
-                      <div style={{ fontSize: '0.7rem', color: '#6b7280', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>{lbl}</div>
-                      <div style={{ fontSize: '1.4rem', fontWeight: 800, color: col }}>{val}</div>
+              </div>
+              {/* Invoice rows */}
+              <div style={{ background: t.dashBg, border: `1px solid ${t.border}`, borderRadius: 12, overflow: 'hidden' }}>
+                <div style={{ padding: '10px 16px', borderBottom: `1px solid ${t.border}` }}>
+                  <p style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#6b7280', margin: 0 }}>Unpaid Invoices</p>
+                </div>
+                {[['ABC Plumbing Co.','INV-0042 · 12 May 2026','unpaid','$1,430.00'],['Harbour Constructions','INV-0041 · 12 May 2026','unpaid','$3,200.00'],['Metro Electrical','INV-0040 · 10 May 2026','paid','$880.00']].map(([client,num,status,amt])=>(
+                  <div key={num} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', borderBottom: `1px solid ${t.border}` }}>
+                    <div>
+                      <div style={{ fontWeight: 600, fontSize: '0.88rem', color: t.text }}>{client}</div>
+                      <div style={{ fontSize: '0.72rem', color: '#6b7280', marginTop: 2 }}>{num}</div>
                     </div>
-                  ))}
-                </div>
-                <div style={{ background: t.dashBg, borderRadius: 12, overflow: 'hidden' }}>
-                  <div style={{ padding: '14px 20px', borderBottom: `1px solid ${t.border}` }}>
-                    <p style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#6b7280', margin: 0 }}>Unpaid Invoices</p>
-                  </div>
-                  {[['ABC Plumbing Co.','INV-0042','unpaid','$1,430.00'],['Harbour Constructions','INV-0041','unpaid','$3,200.00'],['Metro Electrical','INV-0040','paid','$880.00']].map(([client,num,status,amt])=>(
-                    <div key={num} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', borderBottom: `1px solid ${t.border}` }}>
-                      <div>
-                        <div style={{ fontWeight: 600, fontSize: '0.9rem', color: t.text }}>{client}</div>
-                        <div style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: 2 }}>{num} · 12 May 2026</div>
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                        <span style={{ fontSize: '0.65rem', padding: '3px 10px', borderRadius: 999, fontWeight: 700, background: status === 'paid' ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)', color: status === 'paid' ? '#4ade80' : '#fbbf24' }}>{status.toUpperCase()}</span>
-                        <span style={{ fontWeight: 800, fontSize: '1rem', color: t.text }}>{amt}</span>
-                      </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      {status === 'unpaid' && <span style={{ fontSize: '0.65rem', padding: '3px 8px', borderRadius: 6, fontWeight: 700, background: 'rgba(124,92,252,0.1)', border: '1px solid rgba(124,92,252,0.25)', color: '#a78bfa' }}>Copy link</span>}
+                      {status === 'unpaid' && <span style={{ fontSize: '0.65rem', padding: '3px 8px', borderRadius: 6, fontWeight: 700, background: 'rgba(124,92,252,0.1)', border: '1px solid rgba(124,92,252,0.25)', color: '#a78bfa' }}>Remind</span>}
+                      <span style={{ fontSize: '0.6rem', padding: '3px 8px', borderRadius: 999, fontWeight: 700, background: status === 'paid' ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)', color: status === 'paid' ? '#4ade80' : '#fbbf24' }}>{status.toUpperCase()}</span>
+                      <span style={{ fontWeight: 800, fontSize: '0.95rem', color: t.text }}>{amt}</span>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
