@@ -5,6 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(request) {
   try {
+    const origin = new URL(request.url).origin
     const { invoiceId } = await request.json()
     if (!invoiceId) return Response.json({ error: 'Missing invoiceId' }, { status: 400 })
 
@@ -29,7 +30,7 @@ export async function POST(request) {
     if (!clientEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clientEmail))
       return Response.json({ error: 'This invoice has no valid client email address. Edit the invoice and add one first.' }, { status: 400 })
 
-    const portalUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/share/${invoiceId}`
+    const portalUrl = `${origin}/share/${invoiceId}`
     const dueText = d.due ? `due ${d.due}` : 'due soon'
     const fromName = d.bizName || 'Your supplier'
     const fromEmail = process.env.RESEND_FROM_EMAIL || 'invoices@bill-mate.com.au'
