@@ -5,7 +5,9 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(request) {
   try {
-    const origin = new URL(request.url).origin
+    const host = request.headers.get('x-forwarded-host') || request.headers.get('host')
+    const proto = request.headers.get('x-forwarded-proto') || 'https'
+    const origin = process.env.NEXT_PUBLIC_SITE_URL || `${proto}://${host}`
     const { invoiceId } = await request.json()
     if (!invoiceId) return Response.json({ error: 'Missing invoiceId' }, { status: 400 })
 
