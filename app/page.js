@@ -154,7 +154,7 @@ export default function Home() {
         .sticky-cta { position:fixed;bottom:0;left:0;right:0;z-index:200; background:${t.stickyBg};backdrop-filter:blur(12px); border-top:1px solid ${t.stickyBorder}; padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px; transition:transform 0.3s ease,opacity 0.3s ease; }
         .sticky-cta.hidden { transform:translateY(100%);opacity:0;pointer-events:none; }
         @media(min-width:641px){ .sticky-cta{display:none!important;} }
-        @media(max-width:900px){ .hero-grid{grid-template-columns:1fr!important;} .phone-wrap{display:none!important;} }
+        @media(max-width:900px){ .hero-grid{grid-template-columns:1fr!important;padding-bottom:32px!important;} .phone-wrap{display:none!important;} }
         @media(max-width:640px){
           .lp-nav{padding:14px 20px!important;}
           .lp-main{padding-left:20px!important;padding-right:20px!important;}
@@ -578,7 +578,8 @@ export default function Home() {
           <div className="footer-inner" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start', gap: '32px', marginBottom: '40px' }}>
             <div>
               <p style={{ color: t.text, fontWeight: 800, fontSize: '1.1rem', letterSpacing: '-0.02em', marginBottom: '4px' }}>Bill<span style={{ color: '#7c5cfc' }}>Mate</span></p>
-              <p style={{ color: t.textDim, fontSize: '0.8rem', margin: 0 }}>ABN 46 849 678 875</p>
+              <p style={{ color: t.textDim, fontSize: '0.8rem', margin: '0 0 2px' }}>ABN 46 849 678 875</p>
+              <a href="mailto:khenz.dev@gmail.com" style={{ color: t.textDim, fontSize: '0.8rem', textDecoration: 'none' }}>khenz.dev@gmail.com</a>
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 32px' }}>
               {[{ label: 'Privacy Policy', href: '/privacy' },{ label: 'Terms', href: '/terms' },{ label: 'Contact', href: 'mailto:khenz.dev@gmail.com' },{ label: 'Feedback', href: 'mailto:khenz.dev@gmail.com?subject=BillMate%20Feedback' }].map(({ label, href }) => (
