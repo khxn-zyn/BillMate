@@ -28,7 +28,7 @@ export async function POST(request) {
     const clientEmail = d.clientEmail
     if (!clientEmail) return Response.json({ error: 'No client email on this invoice' }, { status: 400 })
 
-    const portalUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/invoice/${invoiceId}`
+    const portalUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/share/${invoiceId}`
     const dueText = d.due ? `due ${d.due}` : 'due soon'
     const fromName = d.bizName || 'Your supplier'
     const fromEmail = process.env.RESEND_FROM_EMAIL || 'invoices@bill-mate.com.au'
