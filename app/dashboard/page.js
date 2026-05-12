@@ -58,6 +58,7 @@ export default function Dashboard() {
   const [theme, setTheme] = useState('dark')
   const [reminding, setReminding] = useState({})
   const [reminded, setReminded] = useState({})
+  const [remindError, setRemindError] = useState({})
   const [copied, setCopied] = useState({})
   const router = useRouter()
   const dropdownRef = useRef(null)
@@ -129,12 +130,15 @@ export default function Dashboard() {
       const data = await res.json()
       if (data.success) {
         setReminded(r => ({ ...r, [invId]: true }))
+        setRemindError(r => ({ ...r, [invId]: null }))
         setTimeout(() => setReminded(r => ({ ...r, [invId]: false })), 3000)
       } else {
-        alert(data.error || 'Failed to send reminder')
+        setRemindError(r => ({ ...r, [invId]: data.error || 'Failed to send reminder' }))
+        setTimeout(() => setRemindError(r => ({ ...r, [invId]: null })), 5000)
       }
     } catch {
-      alert('Failed to send reminder')
+      setRemindError(r => ({ ...r, [invId]: 'Failed to send reminder' }))
+      setTimeout(() => setRemindError(r => ({ ...r, [invId]: null })), 5000)
     }
     setReminding(r => ({ ...r, [invId]: false }))
   }
@@ -208,14 +212,19 @@ export default function Dashboard() {
         </button>
         {/* Send reminder — unpaid only */}
         {inv.status !== 'paid' && (
-          <button
-            onClick={e => sendReminder(inv.id, e)}
-            disabled={reminding[inv.id]}
-            title="Send payment reminder"
-            style={{ background: reminded[inv.id] ? 'rgba(74,222,128,0.1)' : 'rgba(124,92,252,0.1)', border: `1px solid ${reminded[inv.id] ? 'rgba(74,222,128,0.3)' : 'rgba(124,92,252,0.25)'}`, borderRadius: 8, padding: '5px 10px', fontSize: 11, fontWeight: 700, cursor: reminding[inv.id] ? 'not-allowed' : 'pointer', color: reminded[inv.id] ? '#4ade80' : '#a78bfa', transition: 'all 0.2s', whiteSpace: 'nowrap', opacity: reminding[inv.id] ? 0.6 : 1 }}
-          >
-            {reminding[inv.id] ? 'Sending…' : reminded[inv.id] ? 'Sent!' : 'Remind'}
-          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}>
+            <button
+              onClick={e => sendReminder(inv.id, e)}
+              disabled={reminding[inv.id]}
+              title="Send payment reminder"
+              style={{ background: reminded[inv.id] ? 'rgba(74,222,128,0.1)' : remindError[inv.id] ? 'rgba(248,113,113,0.1)' : 'rgba(124,92,252,0.1)', border: `1px solid ${reminded[inv.id] ? 'rgba(74,222,128,0.3)' : remindError[inv.id] ? 'rgba(248,113,113,0.3)' : 'rgba(124,92,252,0.25)'}`, borderRadius: 8, padding: '5px 10px', fontSize: 11, fontWeight: 700, cursor: reminding[inv.id] ? 'not-allowed' : 'pointer', color: reminded[inv.id] ? '#4ade80' : remindError[inv.id] ? '#f87171' : '#a78bfa', transition: 'all 0.2s', whiteSpace: 'nowrap', opacity: reminding[inv.id] ? 0.6 : 1 }}
+            >
+              {reminding[inv.id] ? 'Sending…' : reminded[inv.id] ? 'Sent!' : remindError[inv.id] ? 'Failed' : 'Remind'}
+            </button>
+            {remindError[inv.id] && (
+              <span style={{ fontSize: 10, color: '#f87171', maxWidth: 160, textAlign: 'right', lineHeight: 1.4 }}>{remindError[inv.id]}</span>
+            )}
+          </div>
         )}
         <span style={{
           fontSize: 10, padding: '4px 10px', borderRadius: 999, fontWeight: 700, letterSpacing: '0.06em',

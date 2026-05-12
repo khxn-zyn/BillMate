@@ -25,8 +25,9 @@ export async function POST(request) {
     if (invoice.status === 'paid') return Response.json({ error: 'Invoice is already paid' }, { status: 400 })
 
     const d = invoice.data
-    const clientEmail = d.clientEmail
-    if (!clientEmail) return Response.json({ error: 'No client email on this invoice' }, { status: 400 })
+    const clientEmail = (d.clientEmail || '').trim()
+    if (!clientEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clientEmail))
+      return Response.json({ error: 'This invoice has no valid client email address. Edit the invoice and add one first.' }, { status: 400 })
 
     const portalUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/share/${invoiceId}`
     const dueText = d.due ? `due ${d.due}` : 'due soon'
