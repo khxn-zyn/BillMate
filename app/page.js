@@ -168,14 +168,8 @@ export default function Home() {
           .compare-table th,.compare-table td{padding:10px 8px!important;font-size:0.78rem!important;}
           .footer-inner{flex-direction:column!important;align-items:flex-start!important;}
           .pain-strip-inner{grid-template-columns:repeat(2,1fr)!important;}
-          .dash-mockup-header-meta{display:none!important;}
-          .dash-mockup-actions{display:none!important;}
-          .dash-mockup-client{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-          .dash-mockup-row{gap:6px!important;}
-          .dash-mockup-row-right{gap:4px!important;}
-          .dash-mockup-stats div{padding:10px 8px!important;}
-          .dash-mockup-stats .stat-value{font-size:1rem!important;}
-          .dash-mockup-search-row{flex-direction:column!important;gap:6px!important;}
+          .dash-desktop-mockup{display:none!important;}
+          .dash-phone-mockup{display:flex!important;}
         }
       `}</style>
 
@@ -333,59 +327,129 @@ export default function Home() {
           {sectionLabel('See BillMate in action')}
           {sectionHeading('Your invoicing dashboard.')}
           {sectionSub('Everything you need. Nothing you don\'t.')}
-          <div style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: 20, overflow: 'hidden', boxShadow: `0 40px 80px rgba(0,0,0,0.3), 0 0 60px rgba(124,92,252,0.08)` }}>
+
+          {/* Desktop browser mockup — hidden on mobile */}
+          <div className="dash-desktop-mockup" style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: 20, overflow: 'hidden', boxShadow: `0 40px 80px rgba(0,0,0,0.3), 0 0 60px rgba(124,92,252,0.08)` }}>
             <div style={{ background: t.dashBg, borderBottom: `1px solid ${t.border}`, padding: '12px 20px', display: 'flex', alignItems: 'center', gap: 8 }}>
               {[['#ff5f57'],['#febc2e'],['#28c840']].map(([bg])=><div key={bg} style={{ width: 10, height: 10, borderRadius: '50%', background: bg }} />)}
               <span style={{ color: '#4b5563', fontSize: '0.78rem', marginLeft: 8 }}>bill-mate.com.au/dashboard</span>
             </div>
             <div style={{ padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: 16 }}>
-              {/* Header row */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div>
-                  <p style={{ color: t.text, fontWeight: 800, fontSize: '1rem', margin: 0 }}>Bill<span style={{ color: '#7c5cfc' }}>Mate</span></p>
-                </div>
+                <div><p style={{ color: t.text, fontWeight: 800, fontSize: '1rem', margin: 0 }}>Bill<span style={{ color: '#7c5cfc' }}>Mate</span></p></div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <p className="dash-mockup-header-meta" style={{ color: '#6b7280', fontSize: '0.8rem', margin: 0 }}>Welcome back 👋</p>
+                  <p style={{ color: '#6b7280', fontSize: '0.8rem', margin: 0 }}>Welcome back \uD83D\uDC4B</p>
                   <div style={{ background: '#7c5cfc', color: '#fff', fontWeight: 700, fontSize: '0.8rem', padding: '8px 16px', borderRadius: 8 }}>+ New Invoice</div>
-                  <div className="dash-mockup-header-meta" style={{ width: 32, height: 32, background: '#7c5cfc', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '0.85rem' }}>K</div>
+                  <div style={{ width: 32, height: 32, background: '#7c5cfc', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '0.85rem' }}>K</div>
                 </div>
               </div>
-              {/* Stats */}
-              <div className="dash-mockup-stats" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 1, background: t.border, borderRadius: 12, overflow: 'hidden' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 1, background: t.border, borderRadius: 12, overflow: 'hidden' }}>
                 {[['TOTAL INVOICED','$12,840',t.text],['PAID','$9,640','#4ade80'],['OUTSTANDING','$3,200','#fbbf24']].map(([lbl,val,col])=>(
                   <div key={lbl} style={{ background: t.dashBg, padding: '14px 16px' }}>
                     <div style={{ fontSize: '0.65rem', color: '#6b7280', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>{lbl}</div>
-                    <div className="stat-value" style={{ fontSize: '1.2rem', fontWeight: 800, color: col }}>{val}</div>
+                    <div style={{ fontSize: '1.2rem', fontWeight: 800, color: col }}>{val}</div>
                   </div>
                 ))}
               </div>
-              {/* Search + tabs */}
-              <div className="dash-mockup-search-row" style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-                <div style={{ flex: 1, background: t.dashBg, border: `1px solid ${t.border}`, borderRadius: 8, padding: '8px 12px', fontSize: '0.78rem', color: '#4b5563' }}>Search by client or invoice number…</div>
+              <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                <div style={{ flex: 1, background: t.dashBg, border: `1px solid ${t.border}`, borderRadius: 8, padding: '8px 12px', fontSize: '0.78rem', color: '#4b5563' }}>Search by client or invoice number\u2026</div>
                 <div style={{ display: 'flex', gap: 4 }}>
                   <span style={{ background: 'rgba(124,92,252,0.15)', color: '#a78bfa', fontWeight: 700, fontSize: '0.75rem', padding: '6px 14px', borderRadius: 8 }}>Active (3)</span>
                   <span style={{ color: '#6b7280', fontSize: '0.75rem', padding: '6px 14px', borderRadius: 8 }}>History</span>
                 </div>
               </div>
-              {/* Invoice rows */}
               <div style={{ background: t.dashBg, border: `1px solid ${t.border}`, borderRadius: 12, overflow: 'hidden' }}>
                 <div style={{ padding: '10px 16px', borderBottom: `1px solid ${t.border}` }}>
                   <p style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#6b7280', margin: 0 }}>Unpaid Invoices</p>
                 </div>
-                {[['ABC Plumbing Co.','INV-0042 · 12 May 2026','unpaid','$1,430.00'],['Harbour Constructions','INV-0041 · 12 May 2026','unpaid','$3,200.00'],['Metro Electrical','INV-0040 · 10 May 2026','paid','$880.00']].map(([client,num,status,amt])=>(
-                  <div key={num} className="dash-mockup-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', borderBottom: `1px solid ${t.border}`, gap: 12 }}>
+                {[['ABC Plumbing Co.','INV-0042 \u00b7 12 May 2026','unpaid','$1,430.00'],['Harbour Constructions','INV-0041 \u00b7 12 May 2026','unpaid','$3,200.00'],['Metro Electrical','INV-0040 \u00b7 10 May 2026','paid','$880.00']].map(([client,num,status,amt])=>(
+                  <div key={num} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', borderBottom: `1px solid ${t.border}`, gap: 12 }}>
                     <div style={{ minWidth: 0, flex: '1 1 0' }}>
-                      <div className="dash-mockup-client" style={{ fontWeight: 600, fontSize: '0.88rem', color: t.text }}>{client}</div>
+                      <div style={{ fontWeight: 600, fontSize: '0.88rem', color: t.text }}>{client}</div>
                       <div style={{ fontSize: '0.72rem', color: '#6b7280', marginTop: 2 }}>{num}</div>
                     </div>
-                    <div className="dash-mockup-row-right" style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
-                      {status === 'unpaid' && <span className="dash-mockup-actions" style={{ fontSize: '0.65rem', padding: '3px 8px', borderRadius: 6, fontWeight: 700, background: 'rgba(124,92,252,0.1)', border: '1px solid rgba(124,92,252,0.25)', color: '#a78bfa' }}>Copy link</span>}
-                      {status === 'unpaid' && <span className="dash-mockup-actions" style={{ fontSize: '0.65rem', padding: '3px 8px', borderRadius: 6, fontWeight: 700, background: 'rgba(124,92,252,0.1)', border: '1px solid rgba(124,92,252,0.25)', color: '#a78bfa' }}>Remind</span>}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+                      {status === 'unpaid' && <span style={{ fontSize: '0.65rem', padding: '3px 8px', borderRadius: 6, fontWeight: 700, background: 'rgba(124,92,252,0.1)', border: '1px solid rgba(124,92,252,0.25)', color: '#a78bfa' }}>Copy link</span>}
+                      {status === 'unpaid' && <span style={{ fontSize: '0.65rem', padding: '3px 8px', borderRadius: 6, fontWeight: 700, background: 'rgba(124,92,252,0.1)', border: '1px solid rgba(124,92,252,0.25)', color: '#a78bfa' }}>Remind</span>}
                       <span style={{ fontSize: '0.6rem', padding: '3px 8px', borderRadius: 999, fontWeight: 700, background: status === 'paid' ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)', color: status === 'paid' ? '#4ade80' : '#fbbf24' }}>{status.toUpperCase()}</span>
                       <span style={{ fontWeight: 800, fontSize: '0.95rem', color: t.text }}>{amt}</span>
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Phone mockup — visible only on mobile */}
+          <div className="dash-phone-mockup" style={{ display: 'none', justifyContent: 'center' }}>
+            <div style={{ width: 320, background: t.card, borderRadius: 36, border: `3px solid ${t.border}`, boxShadow: `0 40px 80px rgba(0,0,0,0.4), 0 0 60px rgba(124,92,252,0.1)`, overflow: 'hidden', position: 'relative' }}>
+              {/* Phone notch / status bar */}
+              <div style={{ background: t.dashBg, padding: '8px 20px 6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ color: '#6b7280', fontSize: '0.7rem', fontWeight: 600 }}>9:41</span>
+                <div style={{ width: 60, height: 22, background: t.border, borderRadius: 12 }} />
+                <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+                  <span style={{ color: '#6b7280', fontSize: '0.6rem' }}>\u25CF\u25CF\u25CF\u25CF</span>
+                  <div style={{ width: 18, height: 9, border: `1.5px solid #6b7280`, borderRadius: 2 }}>
+                    <div style={{ width: '70%', height: '100%', background: '#4ade80', borderRadius: 1 }} />
+                  </div>
+                </div>
+              </div>
+              {/* Phone content */}
+              <div style={{ padding: '12px 16px 20px', display: 'flex', flexDirection: 'column', gap: 12, background: t.dashBg }}>
+                {/* Header */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    <p style={{ color: t.text, fontWeight: 800, fontSize: '1.05rem', margin: 0 }}>Bill<span style={{ color: '#7c5cfc' }}>Mate</span></p>
+                    <p style={{ color: '#6b7280', fontSize: '0.7rem', margin: '2px 0 0' }}>Welcome back \uD83D\uDC4B</p>
+                  </div>
+                  <div style={{ width: 30, height: 30, background: '#7c5cfc', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '0.8rem' }}>K</div>
+                </div>
+                {/* Stats card */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 1, background: t.border, borderRadius: 12, overflow: 'hidden' }}>
+                  {[['TOTAL','$8,200',t.text],['PAID','$5,400','#4ade80'],['OWED','$2,800','#fbbf24']].map(([lbl,val,col])=>(
+                    <div key={lbl} style={{ background: t.card, padding: '10px 8px', textAlign: 'center' }}>
+                      <div style={{ fontSize: '0.55rem', color: '#6b7280', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 3 }}>{lbl}</div>
+                      <div style={{ fontSize: '0.95rem', fontWeight: 800, color: col }}>{val}</div>
+                    </div>
+                  ))}
+                </div>
+                {/* New Invoice button */}
+                <div style={{ background: '#7c5cfc', color: '#fff', fontWeight: 700, fontSize: '0.85rem', padding: '10px 0', borderRadius: 50, textAlign: 'center' }}>+ New Invoice</div>
+                {/* Search */}
+                <div style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: 10, padding: '8px 12px', fontSize: '0.72rem', color: '#4b5563' }}>Search by client or invoice number\u2026</div>
+                {/* Tabs */}
+                <div style={{ display: 'flex', gap: 6 }}>
+                  <span style={{ background: 'rgba(124,92,252,0.15)', color: '#a78bfa', fontWeight: 700, fontSize: '0.7rem', padding: '5px 12px', borderRadius: 8 }}>Active (3)</span>
+                  <span style={{ color: '#6b7280', fontSize: '0.7rem', padding: '5px 12px' }}>History (2)</span>
+                </div>
+                {/* Invoice list */}
+                <div style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: 12, overflow: 'hidden' }}>
+                  <div style={{ padding: '8px 12px', borderBottom: `1px solid ${t.border}` }}>
+                    <p style={{ fontSize: '0.58rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#6b7280', margin: 0 }}>Unpaid Invoices</p>
+                  </div>
+                  {[['ABC Plumbing','INV-0042 \u00b7 Today','unpaid','$1,430'],['Dan\u2019s Electrics','INV-0041 \u00b7 May 9','paid','$880'],['Harbour Builds','INV-0040 \u00b7 May 7','paid','$3,200']].map(([client,num,status,amt])=>(
+                    <div key={num} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 12px', borderBottom: `1px solid ${t.border}` }}>
+                      <div>
+                        <div style={{ fontWeight: 600, fontSize: '0.82rem', color: t.text }}>{client}</div>
+                        <div style={{ fontSize: '0.65rem', color: '#6b7280', marginTop: 1 }}>{num}</div>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <span style={{ fontSize: '0.55rem', padding: '2px 6px', borderRadius: 999, fontWeight: 700, background: status === 'paid' ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)', color: status === 'paid' ? '#4ade80' : '#fbbf24' }}>{status.toUpperCase()}</span>
+                        <span style={{ fontWeight: 800, fontSize: '0.85rem', color: t.text }}>{amt}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {/* Upgrade card */}
+                <div style={{ background: 'linear-gradient(135deg, rgba(124,92,252,0.15) 0%, rgba(124,92,252,0.05) 100%)', border: `1px solid rgba(124,92,252,0.2)`, borderRadius: 12, padding: '14px', textAlign: 'center' }}>
+                  <p style={{ color: t.text, fontWeight: 700, fontSize: '0.82rem', margin: '0 0 4px' }}>Upgrade to Pro</p>
+                  <p style={{ color: '#6b7280', fontSize: '0.62rem', margin: '0 0 10px' }}>Custom branding, reminders & more</p>
+                  <div style={{ background: '#7c5cfc', color: '#fff', fontWeight: 700, fontSize: '0.72rem', padding: '8px 0', borderRadius: 50 }}>Go Pro \u2014 A$7/month \u2192</div>
+                </div>
+              </div>
+              {/* Phone home bar */}
+              <div style={{ background: t.dashBg, padding: '6px 0 8px', display: 'flex', justifyContent: 'center' }}>
+                <div style={{ width: 100, height: 4, background: t.border, borderRadius: 4 }} />
               </div>
             </div>
           </div>
