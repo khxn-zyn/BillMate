@@ -168,6 +168,14 @@ export default function Home() {
           .compare-table th,.compare-table td{padding:10px 8px!important;font-size:0.78rem!important;}
           .footer-inner{flex-direction:column!important;align-items:flex-start!important;}
           .pain-strip-inner{grid-template-columns:repeat(2,1fr)!important;}
+          .dash-mockup-header-meta{display:none!important;}
+          .dash-mockup-actions{display:none!important;}
+          .dash-mockup-client{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+          .dash-mockup-row{gap:6px!important;}
+          .dash-mockup-row-right{gap:4px!important;}
+          .dash-mockup-stats div{padding:10px 8px!important;}
+          .dash-mockup-stats .stat-value{font-size:1rem!important;}
+          .dash-mockup-search-row{flex-direction:column!important;gap:6px!important;}
         }
       `}</style>
 
@@ -337,22 +345,22 @@ export default function Home() {
                   <p style={{ color: t.text, fontWeight: 800, fontSize: '1rem', margin: 0 }}>Bill<span style={{ color: '#7c5cfc' }}>Mate</span></p>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <p style={{ color: '#6b7280', fontSize: '0.8rem', margin: 0 }}>Welcome back 👋</p>
+                  <p className="dash-mockup-header-meta" style={{ color: '#6b7280', fontSize: '0.8rem', margin: 0 }}>Welcome back 👋</p>
                   <div style={{ background: '#7c5cfc', color: '#fff', fontWeight: 700, fontSize: '0.8rem', padding: '8px 16px', borderRadius: 8 }}>+ New Invoice</div>
-                  <div style={{ width: 32, height: 32, background: '#7c5cfc', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '0.85rem' }}>K</div>
+                  <div className="dash-mockup-header-meta" style={{ width: 32, height: 32, background: '#7c5cfc', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '0.85rem' }}>K</div>
                 </div>
               </div>
               {/* Stats */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 1, background: t.border, borderRadius: 12, overflow: 'hidden' }}>
+              <div className="dash-mockup-stats" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 1, background: t.border, borderRadius: 12, overflow: 'hidden' }}>
                 {[['TOTAL INVOICED','$12,840',t.text],['PAID','$9,640','#4ade80'],['OUTSTANDING','$3,200','#fbbf24']].map(([lbl,val,col])=>(
                   <div key={lbl} style={{ background: t.dashBg, padding: '14px 16px' }}>
                     <div style={{ fontSize: '0.65rem', color: '#6b7280', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>{lbl}</div>
-                    <div style={{ fontSize: '1.2rem', fontWeight: 800, color: col }}>{val}</div>
+                    <div className="stat-value" style={{ fontSize: '1.2rem', fontWeight: 800, color: col }}>{val}</div>
                   </div>
                 ))}
               </div>
               {/* Search + tabs */}
-              <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+              <div className="dash-mockup-search-row" style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
                 <div style={{ flex: 1, background: t.dashBg, border: `1px solid ${t.border}`, borderRadius: 8, padding: '8px 12px', fontSize: '0.78rem', color: '#4b5563' }}>Search by client or invoice number…</div>
                 <div style={{ display: 'flex', gap: 4 }}>
                   <span style={{ background: 'rgba(124,92,252,0.15)', color: '#a78bfa', fontWeight: 700, fontSize: '0.75rem', padding: '6px 14px', borderRadius: 8 }}>Active (3)</span>
@@ -365,14 +373,14 @@ export default function Home() {
                   <p style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#6b7280', margin: 0 }}>Unpaid Invoices</p>
                 </div>
                 {[['ABC Plumbing Co.','INV-0042 · 12 May 2026','unpaid','$1,430.00'],['Harbour Constructions','INV-0041 · 12 May 2026','unpaid','$3,200.00'],['Metro Electrical','INV-0040 · 10 May 2026','paid','$880.00']].map(([client,num,status,amt])=>(
-                  <div key={num} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', borderBottom: `1px solid ${t.border}` }}>
-                    <div>
-                      <div style={{ fontWeight: 600, fontSize: '0.88rem', color: t.text }}>{client}</div>
+                  <div key={num} className="dash-mockup-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', borderBottom: `1px solid ${t.border}`, gap: 12 }}>
+                    <div style={{ minWidth: 0, flex: '1 1 0' }}>
+                      <div className="dash-mockup-client" style={{ fontWeight: 600, fontSize: '0.88rem', color: t.text }}>{client}</div>
                       <div style={{ fontSize: '0.72rem', color: '#6b7280', marginTop: 2 }}>{num}</div>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                      {status === 'unpaid' && <span style={{ fontSize: '0.65rem', padding: '3px 8px', borderRadius: 6, fontWeight: 700, background: 'rgba(124,92,252,0.1)', border: '1px solid rgba(124,92,252,0.25)', color: '#a78bfa' }}>Copy link</span>}
-                      {status === 'unpaid' && <span style={{ fontSize: '0.65rem', padding: '3px 8px', borderRadius: 6, fontWeight: 700, background: 'rgba(124,92,252,0.1)', border: '1px solid rgba(124,92,252,0.25)', color: '#a78bfa' }}>Remind</span>}
+                    <div className="dash-mockup-row-right" style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+                      {status === 'unpaid' && <span className="dash-mockup-actions" style={{ fontSize: '0.65rem', padding: '3px 8px', borderRadius: 6, fontWeight: 700, background: 'rgba(124,92,252,0.1)', border: '1px solid rgba(124,92,252,0.25)', color: '#a78bfa' }}>Copy link</span>}
+                      {status === 'unpaid' && <span className="dash-mockup-actions" style={{ fontSize: '0.65rem', padding: '3px 8px', borderRadius: 6, fontWeight: 700, background: 'rgba(124,92,252,0.1)', border: '1px solid rgba(124,92,252,0.25)', color: '#a78bfa' }}>Remind</span>}
                       <span style={{ fontSize: '0.6rem', padding: '3px 8px', borderRadius: 999, fontWeight: 700, background: status === 'paid' ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)', color: status === 'paid' ? '#4ade80' : '#fbbf24' }}>{status.toUpperCase()}</span>
                       <span style={{ fontWeight: 800, fontSize: '0.95rem', color: t.text }}>{amt}</span>
                     </div>
