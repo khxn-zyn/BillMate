@@ -383,17 +383,7 @@ export default function Home() {
           {/* Phone mockup — visible only on mobile */}
           <div className="dash-phone-mockup" style={{ display: 'none', justifyContent: 'center' }}>
             <div style={{ width: 320, background: t.card, borderRadius: 36, border: `3px solid ${t.border}`, boxShadow: `0 40px 80px rgba(0,0,0,0.4), 0 0 60px rgba(124,92,252,0.1)`, overflow: 'hidden', position: 'relative' }}>
-              {/* Phone notch / status bar */}
-              <div style={{ background: t.dashBg, padding: '8px 20px 6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: '#6b7280', fontSize: '0.7rem', fontWeight: 600 }}>9:41</span>
-                <div style={{ width: 60, height: 22, background: t.border, borderRadius: 12 }} />
-                <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-                  <span style={{ color: '#6b7280', fontSize: '0.6rem' }}>●●●●</span>
-                  <div style={{ width: 18, height: 9, border: `1.5px solid #6b7280`, borderRadius: 2 }}>
-                    <div style={{ width: '70%', height: '100%', background: '#4ade80', borderRadius: 1 }} />
-                  </div>
-                </div>
-              </div>
+
               {/* Phone content */}
               <div style={{ padding: '12px 16px 20px', display: 'flex', flexDirection: 'column', gap: 12, background: t.dashBg }}>
                 {/* Header */}
