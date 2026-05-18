@@ -338,7 +338,7 @@ export default function Home() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div><p style={{ color: t.text, fontWeight: 800, fontSize: '1rem', margin: 0 }}>Bill<span style={{ color: '#7c5cfc' }}>Mate</span></p></div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <p style={{ color: '#6b7280', fontSize: '0.8rem', margin: 0 }}>Welcome back \uD83D\uDC4B</p>
+                  <p style={{ color: '#6b7280', fontSize: '0.8rem', margin: 0 }}>Welcome back 👋</p>
                   <div style={{ background: '#7c5cfc', color: '#fff', fontWeight: 700, fontSize: '0.8rem', padding: '8px 16px', borderRadius: 8 }}>+ New Invoice</div>
                   <div style={{ width: 32, height: 32, background: '#7c5cfc', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '0.85rem' }}>K</div>
                 </div>
@@ -352,7 +352,7 @@ export default function Home() {
                 ))}
               </div>
               <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-                <div style={{ flex: 1, background: t.dashBg, border: `1px solid ${t.border}`, borderRadius: 8, padding: '8px 12px', fontSize: '0.78rem', color: '#4b5563' }}>Search by client or invoice number\u2026</div>
+                <div style={{ flex: 1, background: t.dashBg, border: `1px solid ${t.border}`, borderRadius: 8, padding: '8px 12px', fontSize: '0.78rem', color: '#4b5563' }}>Search by client or invoice number…</div>
                 <div style={{ display: 'flex', gap: 4 }}>
                   <span style={{ background: 'rgba(124,92,252,0.15)', color: '#a78bfa', fontWeight: 700, fontSize: '0.75rem', padding: '6px 14px', borderRadius: 8 }}>Active (3)</span>
                   <span style={{ color: '#6b7280', fontSize: '0.75rem', padding: '6px 14px', borderRadius: 8 }}>History</span>
@@ -362,7 +362,7 @@ export default function Home() {
                 <div style={{ padding: '10px 16px', borderBottom: `1px solid ${t.border}` }}>
                   <p style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#6b7280', margin: 0 }}>Unpaid Invoices</p>
                 </div>
-                {[['ABC Plumbing Co.','INV-0042 \u00b7 12 May 2026','unpaid','$1,430.00'],['Harbour Constructions','INV-0041 \u00b7 12 May 2026','unpaid','$3,200.00'],['Metro Electrical','INV-0040 \u00b7 10 May 2026','paid','$880.00']].map(([client,num,status,amt])=>(
+                {[['ABC Plumbing Co.','INV-0042 · 12 May 2026','unpaid','$1,430.00'],['Harbour Constructions','INV-0041 · 12 May 2026','unpaid','$3,200.00'],['Metro Electrical','INV-0040 · 10 May 2026','paid','$880.00']].map(([client,num,status,amt])=>(
                   <div key={num} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', borderBottom: `1px solid ${t.border}`, gap: 12 }}>
                     <div style={{ minWidth: 0, flex: '1 1 0' }}>
                       <div style={{ fontWeight: 600, fontSize: '0.88rem', color: t.text }}>{client}</div>
@@ -388,7 +388,7 @@ export default function Home() {
                 <span style={{ color: '#6b7280', fontSize: '0.7rem', fontWeight: 600 }}>9:41</span>
                 <div style={{ width: 60, height: 22, background: t.border, borderRadius: 12 }} />
                 <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-                  <span style={{ color: '#6b7280', fontSize: '0.6rem' }}>\u25CF\u25CF\u25CF\u25CF</span>
+                  <span style={{ color: '#6b7280', fontSize: '0.6rem' }}>●●●●</span>
                   <div style={{ width: 18, height: 9, border: `1.5px solid #6b7280`, borderRadius: 2 }}>
                     <div style={{ width: '70%', height: '100%', background: '#4ade80', borderRadius: 1 }} />
                   </div>
@@ -400,7 +400,7 @@ export default function Home() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <p style={{ color: t.text, fontWeight: 800, fontSize: '1.05rem', margin: 0 }}>Bill<span style={{ color: '#7c5cfc' }}>Mate</span></p>
-                    <p style={{ color: '#6b7280', fontSize: '0.7rem', margin: '2px 0 0' }}>Welcome back \uD83D\uDC4B</p>
+                    <p style={{ color: '#6b7280', fontSize: '0.7rem', margin: '2px 0 0' }}>Welcome back 👋</p>
                   </div>
                   <div style={{ width: 30, height: 30, background: '#7c5cfc', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '0.8rem' }}>K</div>
                 </div>
@@ -416,7 +416,7 @@ export default function Home() {
                 {/* New Invoice button */}
                 <div style={{ background: '#7c5cfc', color: '#fff', fontWeight: 700, fontSize: '0.85rem', padding: '10px 0', borderRadius: 50, textAlign: 'center' }}>+ New Invoice</div>
                 {/* Search */}
-                <div style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: 10, padding: '8px 12px', fontSize: '0.72rem', color: '#4b5563' }}>Search by client or invoice number\u2026</div>
+                <div style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: 10, padding: '8px 12px', fontSize: '0.72rem', color: '#4b5563' }}>Search by client or invoice number…</div>
                 {/* Tabs */}
                 <div style={{ display: 'flex', gap: 6 }}>
                   <span style={{ background: 'rgba(124,92,252,0.15)', color: '#a78bfa', fontWeight: 700, fontSize: '0.7rem', padding: '5px 12px', borderRadius: 8 }}>Active (3)</span>
@@ -427,7 +427,7 @@ export default function Home() {
                   <div style={{ padding: '8px 12px', borderBottom: `1px solid ${t.border}` }}>
                     <p style={{ fontSize: '0.58rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#6b7280', margin: 0 }}>Unpaid Invoices</p>
                   </div>
-                  {[['ABC Plumbing','INV-0042 \u00b7 Today','unpaid','$1,430'],['Dan\u2019s Electrics','INV-0041 \u00b7 May 9','paid','$880'],['Harbour Builds','INV-0040 \u00b7 May 7','paid','$3,200']].map(([client,num,status,amt])=>(
+                  {[['ABC Plumbing','INV-0042 · Today','unpaid','$1,430'],['Dan\'s Electrics','INV-0041 · May 9','paid','$880'],['Harbour Builds','INV-0040 · May 7','paid','$3,200']].map(([client,num,status,amt])=>(
                     <div key={num} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 12px', borderBottom: `1px solid ${t.border}` }}>
                       <div>
                         <div style={{ fontWeight: 600, fontSize: '0.82rem', color: t.text }}>{client}</div>
@@ -444,7 +444,7 @@ export default function Home() {
                 <div style={{ background: 'linear-gradient(135deg, rgba(124,92,252,0.15) 0%, rgba(124,92,252,0.05) 100%)', border: `1px solid rgba(124,92,252,0.2)`, borderRadius: 12, padding: '14px', textAlign: 'center' }}>
                   <p style={{ color: t.text, fontWeight: 700, fontSize: '0.82rem', margin: '0 0 4px' }}>Upgrade to Pro</p>
                   <p style={{ color: '#6b7280', fontSize: '0.62rem', margin: '0 0 10px' }}>Custom branding, reminders & more</p>
-                  <div style={{ background: '#7c5cfc', color: '#fff', fontWeight: 700, fontSize: '0.72rem', padding: '8px 0', borderRadius: 50 }}>Go Pro \u2014 A$7/month \u2192</div>
+                  <div style={{ background: '#7c5cfc', color: '#fff', fontWeight: 700, fontSize: '0.72rem', padding: '8px 0', borderRadius: 50 }}>Go Pro — A$7/month →</div>
                 </div>
               </div>
               {/* Phone home bar */}
