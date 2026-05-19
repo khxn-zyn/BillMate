@@ -51,7 +51,7 @@ export async function POST(request) {
           </p>
           <a href="${portalUrl}"
             style="display:inline-block;background:#7c5cfc;color:#fff;font-weight:700;font-size:0.95rem;padding:12px 32px;border-radius:10px;text-decoration:none;margin-bottom:32px;">
-            View & pay invoice →
+            View invoice →
           </a>
           <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0;" />
           <p style="color:#9ca3af;font-size:0.82rem;">
